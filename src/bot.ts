@@ -14,7 +14,7 @@ export class Bot {
     }
 
     start() {
-        this.client.login('');
+        this.client.login(process.env.APP_KEY);
     }
 
     registerActions() {

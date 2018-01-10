@@ -10,7 +10,7 @@ class Bot {
         this.start();
     }
     start() {
-        this.client.login('');
+        this.client.login(process.env.APP_KEY);
     }
     registerActions() {
         this.client.on('ready', () => {
