@@ -2,7 +2,7 @@
   "name": "vybot",
   "version": "0.0.1",
   "description": "This project contains all of the code required to run an instance of VyBot.",
-  "main": "index.js",
+  "main": "./dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Vyserion/vybot#readme",
   "dependencies": {
+    "@types/node": "^9.3.0",
     "bufferutil": "^3.0.3",
     "discord.js": "^11.2.1",
     "erlpack": "github:hammerandchisel/erlpack",
