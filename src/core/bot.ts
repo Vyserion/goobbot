@@ -1,4 +1,5 @@
-import { Client } from 'discord.js';
+import { Client, Message } from 'discord.js';
+import { isPluginMessage, handlePluginMessage } from './pluginManager';
 
 export class Bot {
 
@@ -6,16 +7,16 @@ export class Bot {
 
     constructor() {
         this.client = new Client();
-    }
+    };
 
     startup() {
         this.registerActions();
         this.start();
-    }
+    };
 
     start() {
         this.client.login(process.env.APP_KEY);
-    }
+    };
 
     registerActions() {
         this.client.on('ready', () => {
@@ -23,10 +24,9 @@ export class Bot {
         });
 
         this.client.on('message', message => {
-            if (message.content === 'ping') {
-                message.channel.send('pong');
+            if (isPluginMessage(message.content)) {
+                handlePluginMessage(message);
             }
         });
-    }
-}
-
+    };
+};

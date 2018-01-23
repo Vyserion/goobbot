@@ -1,4 +1,4 @@
-import { Bot } from './bot';
+import { Bot } from './core/bot';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
