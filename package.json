@@ -4,7 +4,7 @@
   "description": "This project contains all of the code required to run an instance of VyBot.",
   "main": "./dist/app.js",
   "scripts": {
-    "start": "node ./dist/app.js",
+    "start": "tsc && node ./dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
