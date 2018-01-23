@@ -1,6 +1,6 @@
 import { Command } from "./command";
 import { Message } from 'discord.js';
-import { handleCommand } from "../plugin_leaderboards/plugin";
+import { handleCommand } from "../plugin_leaderboards/commandHandler";
 
 export const isPluginMessage = (message: string) => {
     if (message.startsWith(process.env.PREFIX))
