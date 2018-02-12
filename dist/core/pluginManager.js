@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const command_1 = require("./command");
-const plugin_1 = require("../plugins/leaderboards/plugin");
+const commandHandler_1 = require("../plugin_leaderboards/commandHandler");
 exports.isPluginMessage = (message) => {
     if (message.startsWith(process.env.PREFIX))
         return true;
@@ -21,7 +21,7 @@ function isPluginValid(plugin) {
 }
 ;
 function sendMessage(command) {
-    plugin_1.handleCommand(command);
+    commandHandler_1.handleCommand(command);
 }
 ;
 //# sourceMappingURL=pluginManager.js.map

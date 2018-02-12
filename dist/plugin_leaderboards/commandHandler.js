@@ -3,4 +3,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleCommand = (command) => {
     command.originalMessage.channel.send('command got to plugin');
 };
-//# sourceMappingURL=plugin.js.map
+//# sourceMappingURL=commandHandler.js.map
