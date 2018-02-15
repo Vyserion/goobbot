@@ -1,13 +1,11 @@
 import { Bot } from './core/bot';
-import { Data } from './core/data';
+import { DataManager } from './core/dataManager';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const data = new Data();
-data.connect();
-data.query();
+const dataManager = new DataManager();
 
-const bot = new Bot();
+const bot = new Bot(dataManager);
 bot.registerActions();
 bot.start();

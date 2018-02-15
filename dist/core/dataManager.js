@@ -9,7 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
-class Data {
+class DataManager {
+    constructor() {
+        this.connect();
+    }
     connect() {
         // This is pretty hacky, but as we're in control of the .env variables,
         // it doesn't matter.
@@ -34,18 +37,15 @@ class Data {
                 console.log(e);
             }
             if (results.rows.length == 0) {
-                return;
-            }
-            else if (results.rows.length > 1) {
-                return results.rows;
+                return [];
             }
             else {
-                return results.rows[0];
+                return results.rows;
             }
         });
     }
     ;
 }
-exports.Data = Data;
+exports.DataManager = DataManager;
 ;
-//# sourceMappingURL=data.js.map
+//# sourceMappingURL=dataManager.js.map
