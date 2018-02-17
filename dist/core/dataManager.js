@@ -9,29 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
-class DataManager {
-    constructor() {
-        this.connect();
-    }
-    connect() {
-        // This is pretty hacky, but as we're in control of the .env variables,
-        // it doesn't matter.
-        const port = process.env.POSTGRES_PORT;
-        // TODO: try catch this - fails on fail connect
-        this.pool = new pg_1.Pool({
-            user: process.env.POSTGRES_USER,
-            host: process.env.POSTGRES_HOST,
-            database: process.env.POSTGRES_DATABASE,
-            password: process.env.POSTGRES_PASSWORD,
-            port: port
-        });
-    }
-    ;
-    query(query) {
+var DataManager;
+(function (DataManager) {
+    const port = process.env.POSTGRES_PORT;
+    let pool = new pg_1.Pool({
+        user: process.env.POSTGRES_USER,
+        host: process.env.POSTGRES_HOST,
+        database: process.env.POSTGRES_DATABASE,
+        password: process.env.POSTGRES_PASSWORD,
+        port: port
+    });
+    console.log(process.env.POSTGRES_USER);
+    function query(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let results;
             try {
-                results = yield this.pool.query(query);
+                results = yield pool.query(query);
             }
             catch (e) {
                 console.log(e);
@@ -44,8 +37,7 @@ class DataManager {
             }
         });
     }
+    DataManager.query = query;
     ;
-}
-exports.DataManager = DataManager;
-;
+})(DataManager = exports.DataManager || (exports.DataManager = {}));
 //# sourceMappingURL=dataManager.js.map

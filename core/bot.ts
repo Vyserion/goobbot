@@ -1,15 +1,12 @@
 import { Client, Message } from 'discord.js';
 import { isPluginMessage, handlePluginMessage } from './pluginManager';
-import { DataManager } from './dataManager';
 
 export class Bot {
 
     client: Client;
-    dataManager: DataManager;
 
-    constructor(dataManager: DataManager) {
+    constructor() {
         this.client = new Client();
-        this.dataManager = dataManager;
     };
 
     startup() {
@@ -28,7 +25,7 @@ export class Bot {
 
         this.client.on('message', message => {
             if (isPluginMessage(message.content)) {
-                handlePluginMessage(this.dataManager, message);
+                handlePluginMessage(message);
             }
         });
     };

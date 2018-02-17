@@ -7,21 +7,21 @@ exports.isPluginMessage = (message) => {
         return true;
     return false;
 };
-exports.handlePluginMessage = (dataManager, message) => {
+exports.handlePluginMessage = (message) => {
     let input = message.content;
     let command = new command_1.Command(message);
     if (!isPluginValid(command.plugin)) {
         // TODO: Do some message handling for missing plugin
     }
-    sendMessage(dataManager, command);
+    sendMessage(command);
 };
 function isPluginValid(plugin) {
     // TODO: Validate plugins
     return true;
 }
 ;
-function sendMessage(dataManager, command) {
-    commandHandler_1.handleCommand(dataManager, command);
+function sendMessage(command) {
+    commandHandler_1.handleCommand(command);
 }
 ;
 //# sourceMappingURL=pluginManager.js.map

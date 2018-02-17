@@ -8,16 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleCommand = (dataManager, command) => __awaiter(this, void 0, void 0, function* () {
-    // command.originalMessage.channel.send('command got to plugin');
-    let results = yield dataManager.query("SELECT NOW()");
-    try {
-        console.log(results[0]);
-        command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
-    }
-    catch (e) {
-        console.log(e);
-    }
+const dataManager_1 = require("../core/dataManager");
+exports.handleCommand = (command) => __awaiter(this, void 0, void 0, function* () {
+    let results = yield dataManager_1.DataManager.query("SELECT NOW()");
+    command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
     return;
 });
 //# sourceMappingURL=commandHandler.js.map

@@ -3,9 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const pluginManager_1 = require("./pluginManager");
 class Bot {
-    constructor(dataManager) {
+    constructor() {
         this.client = new discord_js_1.Client();
-        this.dataManager = dataManager;
     }
     ;
     startup() {
@@ -23,7 +22,7 @@ class Bot {
         });
         this.client.on('message', message => {
             if (pluginManager_1.isPluginMessage(message.content)) {
-                pluginManager_1.handlePluginMessage(this.dataManager, message);
+                pluginManager_1.handlePluginMessage(message);
             }
         });
     }
