@@ -22,6 +22,7 @@ function isPluginValid(plugin) {
 ;
 function sendMessage(command) {
     commandHandler_1.handleCommand(command);
+    console.log('got here');
 }
 ;
 //# sourceMappingURL=pluginManager.js.map

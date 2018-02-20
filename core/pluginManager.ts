@@ -25,4 +25,5 @@ function isPluginValid(plugin: string): boolean {
 
 function sendMessage(command: Command) {
     handleCommand(command);
+    console.log('got here');
 };

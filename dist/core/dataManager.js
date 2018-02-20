@@ -19,7 +19,10 @@ var DataManager;
         password: process.env.POSTGRES_PASSWORD,
         port: port
     });
-    console.log(process.env.POSTGRES_USER);
+    pool.on('error', (err, client) => {
+        console.error('Unexpected error on idle client', err);
+        process.exit(-1);
+    });
     function query(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let results;
@@ -27,7 +30,9 @@ var DataManager;
                 results = yield pool.query(query);
             }
             catch (e) {
-                console.log(e);
+                console.error('Error running query: ' + query);
+                console.error('Error code: ' + e.code);
+                return;
             }
             if (results.rows.length == 0) {
                 return [];

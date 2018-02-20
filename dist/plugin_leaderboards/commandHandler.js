@@ -8,10 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dataManager_1 = require("../core/dataManager");
 exports.handleCommand = (command) => __awaiter(this, void 0, void 0, function* () {
-    let results = yield dataManager_1.DataManager.query("SELECT NOW()");
-    command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
+    // let results = await DataManager.query("SELECT NOW()");
+    // command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
+    if (command.action === 'add') {
+        console.log('adding leaderboard');
+    }
     return;
 });
 //# sourceMappingURL=commandHandler.js.map
