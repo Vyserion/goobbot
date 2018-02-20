@@ -3,9 +3,7 @@ import { Message } from 'discord.js';
 import { handleCommand } from "../plugin_leaderboards/commandHandler";
 
 export const isPluginMessage = (message: string) => {
-    if (message.startsWith(process.env.PREFIX))
-        return true;
-    return false;
+    return message.startsWith(process.env.PREFIX) && message.length > 1;
 };
 
 export const handlePluginMessage = (message: Message) => {

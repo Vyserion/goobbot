@@ -8,7 +8,7 @@ export const handleCommand = async (command: Command) => {
 
     if (command.action === 'add') {
         console.log('adding leaderboard');
-        
+
     }
 
     return;

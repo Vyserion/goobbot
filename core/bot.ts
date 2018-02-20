@@ -1,5 +1,6 @@
-import { Client, Message } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import { isPluginMessage, handlePluginMessage } from './pluginManager';
+import logger from './logger';
 
 export class Bot {
 
@@ -15,18 +16,42 @@ export class Bot {
     };
 
     start() {
+        logger.info('Logging into Discord API...');
         this.client.login(process.env.APP_KEY);
     };
 
     registerActions() {
-        this.client.on('ready', () => {
-            console.log('I am ready!');
-        });
+        logger.info('Registering actions...');
 
-        this.client.on('message', message => {
-            if (isPluginMessage(message.content)) {
-                handlePluginMessage(message);
-            }
-        });
+        this.client.on('ready', this.onReady);
+        this.client.on('message', this.onMessage);
     };
+
+    onReady() {
+        const showWelcomeMessage: boolean = (process.env.SEND_WELCOME_MESSAGE === 'true');
+
+            if (showWelcomeMessage) {
+                this.client.guilds.forEach(guild => {
+                    guild.channels.forEach(channel => {
+                        if (channel.name === 'bot_test') {
+                            let chan: TextChannel = <TextChannel> this.client.channels.get(channel.id);
+                            chan.send('Hello, ' + guild.name + '!');
+                        }
+                    });
+                });
+            } else {
+                logger.debug('Bypassing channel welcome messages')
+            }
+
+            logger.info('VyBot is ready!');
+    };
+
+    onMessage(message: Message) {
+        if (isPluginMessage(message.content)) {
+            logger.debug('Command recieved: ');
+            logger.debug('                 ' + message.content);
+
+            handlePluginMessage(message);
+        }
+    }
 };

@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const command_1 = require("./command");
 const commandHandler_1 = require("../plugin_leaderboards/commandHandler");
 exports.isPluginMessage = (message) => {
-    if (message.startsWith(process.env.PREFIX))
-        return true;
-    return false;
+    return message.startsWith(process.env.PREFIX) && message.length > 1;
 };
 exports.handlePluginMessage = (message) => {
     let input = message.content;
