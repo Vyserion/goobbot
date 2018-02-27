@@ -13,12 +13,12 @@ export class Command {
 
         this.plugin = parts[0];
 
-        if (parts.length > 1) {
+        if (parts.length >= 2) {
             this.action = parts[1];
         }
 
-        if (parts.length > 2) {
-            parts = parts.splice(0, 2);
+        if (parts.length >= 3) {
+            parts = parts.splice(2, parts.length);
             this.arguments = parts;
         }
 

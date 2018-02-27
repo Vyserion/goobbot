@@ -8,13 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dataManager_1 = require("../core/dataManager");
-exports.insertLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
-    let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
-    let params = [name];
-    console.log(params);
-    let results = yield dataManager_1.DataManager.query(query, params);
-    console.log(results);
-    return results;
+const dao_1 = require("./dao");
+exports.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
+    // TODO: Validate leaderboard name
+    if (command.arguments.length != 1) {
+        return 'Number of arguments incorrect.';
+    }
+    let name = command.arguments[0];
+    console.log('inserting');
+    let result = yield dao_1.insertLeaderboard(name);
+    console.log('done inserting');
+    return 'Successfully created leaderboard.';
 });
-//# sourceMappingURL=dao.js.map
+//# sourceMappingURL=controller.js.map

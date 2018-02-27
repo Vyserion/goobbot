@@ -17,10 +17,14 @@ export namespace DataManager {
         process.exit(-1);
     });
 
-    export async function query (query: string) {
+    export async function query (query: string,  params?: any[]) {
         let results;
         try {
-            results = await pool.query(query);
+            if (params) {
+                results = await pool.query(query, params);
+            } else {
+                results = await pool.query(query);
+            }
         } catch (e) {
             console.error('Error running query: ' + query);
             console.error('Error code: ' + e.code);

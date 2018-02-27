@@ -1,7 +1,7 @@
 -- Create required leaderboard tables
 CREATE TABLE IF NOT EXISTS LEADERBOARDS (
-    ID      INT PRIMARY KEY NOT NULL,
-    NAME    TEXT            NOT NULL
+    ID      SERIAL  PRIMARY KEY     NOT NULL,
+    NAME    TEXT                    NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS LEADERBOARD_COLUMNS (

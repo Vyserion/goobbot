@@ -1,14 +1,13 @@
 import { Command } from "../core/command";
 import { DataManager } from "../core/dataManager";
+import { insertLeaderboard } from "./controller";
+import { Message } from 'discord.js';
 
-export const handleCommand = async (command: Command) => {
-    // let results = await DataManager.query("SELECT NOW()");
-    
-    // command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
-
+export const handleLeaderboardCommand = async (command: Command, message: Message) => {
     if (command.action === 'add') {
-        console.log('adding leaderboard');
-
+        let result = await insertLeaderboard(command);
+        console.log(result);
+        message.channel.send(result);
     }
 
     return;

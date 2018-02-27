@@ -23,11 +23,16 @@ var DataManager;
         console.error('Unexpected error on idle client', err);
         process.exit(-1);
     });
-    function query(query) {
+    function query(query, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let results;
             try {
-                results = yield pool.query(query);
+                if (params) {
+                    results = yield pool.query(query, params);
+                }
+                else {
+                    results = yield pool.query(query);
+                }
             }
             catch (e) {
                 console.error('Error running query: ' + query);

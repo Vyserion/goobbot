@@ -8,11 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleCommand = (command) => __awaiter(this, void 0, void 0, function* () {
-    // let results = await DataManager.query("SELECT NOW()");
-    // command.originalMessage.channel.send('hello ' + JSON.stringify(results[0]));
+const controller_1 = require("./controller");
+exports.handleLeaderboardCommand = (command, message) => __awaiter(this, void 0, void 0, function* () {
     if (command.action === 'add') {
-        console.log('adding leaderboard');
+        let result = yield controller_1.insertLeaderboard(command);
+        console.log(result);
+        message.channel.send(result);
     }
     return;
 });
