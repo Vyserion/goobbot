@@ -1,10 +1,16 @@
 import { Command } from "../core/command";
 import { 
+    getLeaderboards as getLeaderboardsData,
     insertLeaderboard as insertLeaderboardData,
     getLeaderboard
 } from "./dao";
 import logger from '../core/logger';
 import { ErrorCodes } from "./errorCodes";
+
+export const getLeaderboards = async () => {
+    let leaderboards = await getLeaderboardsData();
+    return leaderboards;
+}
 
 export const insertLeaderboard = async (command: Command) => {
     if (command.arguments.length != 1) {
