@@ -1,6 +1,8 @@
 import { Command } from "./command";
+import logger from './logger';
 import { Message } from 'discord.js';
-import { handleCommand } from "../plugin_leaderboards/commandHandler";
+import { handleLeaderboardCommand } from "../plugin_leaderboards/commandHandler";
+import { notAPluginMessage } from "./messages";
 
 export const isPluginMessage = (message: string) => {
     return message.startsWith(process.env.PREFIX) && message.length > 1;
@@ -9,19 +11,25 @@ export const isPluginMessage = (message: string) => {
 export const handlePluginMessage = (message: Message) => {
     let input: string = message.content;
     let command: Command = new Command(message);
+
     if (!isPluginValid(command.plugin)) {
-        // TODO: Do some message handling for missing plugin
+        message.channel.send(notAPluginMessage);
+        return;
     }
     
-    sendMessage(command);
+    handleMessage(command, message);
 };
 
 function isPluginValid(plugin: string): boolean {
-    // TODO: Validate plugins
-    return true;
+    let allowedPlugins = [
+        'leaderboards'
+    ];
+
+    return allowedPlugins.indexOf(plugin) > -1;
 };
 
-function sendMessage(command: Command) {
-    handleCommand(command);
-    console.log('got here');
+function handleMessage(command: Command, message: Message) {
+    if (command.plugin === 'leaderboards') {
+        handleLeaderboardCommand(command, message);
+    }
 };

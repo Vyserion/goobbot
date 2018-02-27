@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
+const logger_1 = require("./logger");
 var DataManager;
 (function (DataManager) {
     const port = process.env.POSTGRES_PORT;
@@ -20,18 +21,23 @@ var DataManager;
         port: port
     });
     pool.on('error', (err, client) => {
-        console.error('Unexpected error on idle client', err);
+        logger_1.default.error('Unexpected error on idle client', err);
         process.exit(-1);
     });
-    function query(query) {
+    function query(query, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let results;
             try {
-                results = yield pool.query(query);
+                if (params) {
+                    results = yield pool.query(query, params);
+                }
+                else {
+                    results = yield pool.query(query);
+                }
             }
             catch (e) {
-                console.error('Error running query: ' + query);
-                console.error('Error code: ' + e.code);
+                logger_1.default.error('Error running query: ' + query);
+                logger_1.default.error('Error code: ' + e.code);
                 return;
             }
             if (results.rows.length == 0) {

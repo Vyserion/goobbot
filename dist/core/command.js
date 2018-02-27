@@ -8,11 +8,12 @@ class Command {
         let input = this.stripPrefix(message.content);
         let parts = input.split(' ');
         this.plugin = parts[0];
-        if (parts.length > 1) {
+        if (parts.length >= 2) {
             this.action = parts[1];
+            this.arguments = [];
         }
-        if (parts.length > 2) {
-            parts = parts.splice(0, 2);
+        if (parts.length >= 3) {
+            parts = parts.splice(2, parts.length);
             this.arguments = parts;
         }
         this.originalMessage = message;
