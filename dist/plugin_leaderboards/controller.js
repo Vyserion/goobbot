@@ -9,15 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dao_1 = require("./dao");
+const logger_1 = require("../core/logger");
+const errorCodes_1 = require("./errorCodes");
 exports.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
-    // TODO: Validate leaderboard name
     if (command.arguments.length != 1) {
-        return 'Number of arguments incorrect.';
+        logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+        return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
     }
     let name = command.arguments[0];
-    console.log('inserting');
-    let result = yield dao_1.insertLeaderboard(name);
-    console.log('done inserting');
-    return 'Successfully created leaderboard.';
+    let existingLeaderboards = yield dao_1.getLeaderboard(name);
+    if (existingLeaderboards.length > 0) {
+        logger_1.default.warn('LDBD_DUP_NAME: A leaderboard with that name already exists');
+        return errorCodes_1.ErrorCodes.LDBD_DUP_NAME;
+    }
+    logger_1.default.info('Created new leaderboard ' + name);
+    yield dao_1.insertLeaderboard(name);
+    return true;
 });
 //# sourceMappingURL=controller.js.map

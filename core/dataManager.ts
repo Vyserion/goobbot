@@ -1,4 +1,5 @@
 import { Pool, Client } from 'pg';
+import logger from './logger';
 
 export namespace DataManager {
 
@@ -13,7 +14,7 @@ export namespace DataManager {
     });
 
     pool.on('error', (err, client) => {
-        console.error('Unexpected error on idle client', err);
+        logger.error('Unexpected error on idle client', err);
         process.exit(-1);
     });
 
@@ -26,8 +27,8 @@ export namespace DataManager {
                 results = await pool.query(query);
             }
         } catch (e) {
-            console.error('Error running query: ' + query);
-            console.error('Error code: ' + e.code);
+            logger.error('Error running query: ' + query);
+            logger.error('Error code: ' + e.code);
             return;
         }
     
