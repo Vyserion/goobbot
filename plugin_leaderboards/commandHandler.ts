@@ -1,6 +1,6 @@
 import { Command } from "../core/command";
 import { DataManager } from "../core/dataManager";
-import { insertLeaderboard } from "./controller";
+import { getLeaderboards, insertLeaderboard } from "./controller";
 import { Message } from 'discord.js';
 import { ErrorCodes } from './errorCodes';
 
@@ -11,10 +11,29 @@ export const handleLeaderboardCommand = async (command: Command, message: Messag
             break;
         }
         default: {
+            handleGetCommand(command, message);
             break;
         }
     }
 };
+
+async function handleGetCommand (command: Command, message: Message) {
+    let results = await getLeaderboards();
+
+    let response = '';
+
+    if (results.length === 0) {
+        response = 'There are currently no leaderboards';
+    } else {
+        for (let leaderboardIdx in results) {
+            let leaderboard = results[leaderboardIdx];
+            response += leaderboard.name;
+            response += '\n';
+        }
+    }
+
+    message.channel.send(response);
+}
 
 async function handleAddCommand (command: Command, message: Message) {
     let result = await insertLeaderboard(command);

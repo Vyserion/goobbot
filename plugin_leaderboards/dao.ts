@@ -1,6 +1,22 @@
 import { DataManager } from '../core/dataManager';
 import logger from '../core/logger';
 
+export const getLeaderboards = async () => {
+    let query = ` SELECT * FROM leaderboards`;
+
+    logger.debug('Running query:');
+    logger.debug(query);
+
+    try {
+        let results = await DataManager.query(query);
+        return results;
+    } catch (e) {
+        logger.error('Unexpected error when inserting leaderboard');
+        logger.error(e);
+        return;
+    }
+}
+
 export const insertLeaderboard = async (name: string) => {
     let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
     let params = [name];

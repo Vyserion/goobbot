@@ -17,10 +17,28 @@ exports.handleLeaderboardCommand = (command, message) => __awaiter(this, void 0,
             break;
         }
         default: {
+            handleGetCommand(command, message);
             break;
         }
     }
 });
+function handleGetCommand(command, message) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let results = yield controller_1.getLeaderboards();
+        let response = '';
+        if (results.length === 0) {
+            response = 'There are currently no leaderboards';
+        }
+        else {
+            for (let leaderboardIdx in results) {
+                let leaderboard = results[leaderboardIdx];
+                response += leaderboard.name;
+                response += '\n';
+            }
+        }
+        message.channel.send(response);
+    });
+}
 function handleAddCommand(command, message) {
     return __awaiter(this, void 0, void 0, function* () {
         let result = yield controller_1.insertLeaderboard(command);
