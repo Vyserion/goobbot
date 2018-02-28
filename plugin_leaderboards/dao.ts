@@ -38,6 +38,8 @@ export const insertLeaderboard = async (name: string) => {
     let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
     let params = [name];
 
+    // TODO: WE NEED TO DO SOMETHING WITH NAMES WITH SPACES HERE - hash the name?
+
     logger.debug('Running query:');
     logger.debug(query);
     
