@@ -16,6 +16,10 @@ exports.handleLeaderboardCommand = (command, message) => __awaiter(this, void 0,
             handleAddCommand(command, message);
             break;
         }
+        case 'update': {
+            handleUpdateCommand(command, message);
+            break;
+        }
         default: {
             handleGetCommand(command, message);
             break;
@@ -54,6 +58,27 @@ function handleAddCommand(command, message) {
             }
             default: {
                 response = 'Successfully created leaderboard ' + command.arguments[0];
+                break;
+            }
+        }
+        message.channel.send(response);
+    });
+}
+function handleUpdateCommand(command, message) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let result = yield controller_1.updateLeaderboard(command);
+        let response;
+        switch (result) {
+            case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+                response = 'No names were provided for the leaderboard';
+                break;
+            }
+            case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+                response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+                break;
+            }
+            default: {
+                response = 'Successfully updated leaderboard ' + command.arguments[0];
                 break;
             }
         }

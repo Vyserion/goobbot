@@ -20,7 +20,7 @@ exports.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, functio
         logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
         return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
     }
-    let name = command.arguments[0];
+    const name = command.arguments[0];
     let existingLeaderboards = yield dao_1.getLeaderboard(name);
     if (existingLeaderboards.length > 0) {
         logger_1.default.warn('LDBD_DUP_NAME: A leaderboard with that name already exists');
@@ -28,6 +28,23 @@ exports.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, functio
     }
     yield dao_1.insertLeaderboard(name);
     logger_1.default.info('Created new leaderboard ' + name);
+    return true;
+});
+exports.updateLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
+    if (command.arguments.length != 2) {
+        logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+        return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+    }
+    const name = command.arguments[0];
+    const newName = command.arguments[1];
+    let existingLeaderboards = yield dao_1.getLeaderboard(name);
+    if (existingLeaderboards.length == 0) {
+        logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+        return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+    }
+    const id = existingLeaderboards[0].id;
+    yield dao_1.updateLeaderboard(id, newName);
+    logger_1.default.info('Updated leaderboard ' + name + ' to ' + newName);
     return true;
 });
 //# sourceMappingURL=controller.js.map
