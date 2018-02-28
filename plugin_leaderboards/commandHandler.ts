@@ -22,12 +22,14 @@ async function handleGetCommand (command: Command, message: Message) {
 
     let response = '';
 
-    // TODO: No results response
-
-    for (let leaderboardIdx in results) {
-        let leaderboard = results[leaderboardIdx];
-        response += leaderboard.name;
-        response += '\n';
+    if (results.length === 0) {
+        response = 'There are currently no leaderboards';
+    } else {
+        for (let leaderboardIdx in results) {
+            let leaderboard = results[leaderboardIdx];
+            response += leaderboard.name;
+            response += '\n';
+        }
     }
 
     message.channel.send(response);
