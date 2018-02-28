@@ -18,7 +18,7 @@ export const getLeaderboards = async () => {
 }
 
 export const getLeaderboard = async (name: string) => {
-    let query = ` SELECT * FROM leaderboards WHERE name = $1`;
+    let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
     let params = [name];
 
     logger.debug('Running query');
@@ -52,8 +52,8 @@ export const insertLeaderboard = async (name: string) => {
 }
 
 export const updateLeaderboard = async (id: number, name: string) => {
-    let query = ` UPDATE leaderboards SET name = $1 WHERE id = $1`;
-    let params = [id, name];
+    let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
+    let params = [name, id];
 
     logger.debug('Running query');
     logger.debug(query);
@@ -63,6 +63,23 @@ export const updateLeaderboard = async (id: number, name: string) => {
         return results;
     } catch (e) {
         logger.error('Unexpected error when updating leaderboard');
+        logger.error(e);
+        return;
+    }
+}
+
+export const deleteLeaderboards = async (id: number) => {
+    let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
+    let params = [id];
+
+    logger.debug('Running query');
+    logger.debug(query);
+
+    try {
+        let results = await DataManager.query(query, params);
+        return results;
+    } catch (e) {
+        logger.error('Unexpected error when deleting leaderboard');
         logger.error(e);
         return;
     }

@@ -25,7 +25,7 @@ exports.getLeaderboards = () => __awaiter(this, void 0, void 0, function* () {
     }
 });
 exports.getLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
-    let query = ` SELECT * FROM leaderboards WHERE name = $1`;
+    let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
     let params = [name];
     logger_1.default.debug('Running query');
     logger_1.default.debug(query);
@@ -55,8 +55,8 @@ exports.insertLeaderboard = (name) => __awaiter(this, void 0, void 0, function* 
     }
 });
 exports.updateLeaderboard = (id, name) => __awaiter(this, void 0, void 0, function* () {
-    let query = ` UPDATE leaderboards SET name = $1 WHERE id = $1`;
-    let params = [id, name];
+    let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
+    let params = [name, id];
     logger_1.default.debug('Running query');
     logger_1.default.debug(query);
     try {
@@ -65,6 +65,21 @@ exports.updateLeaderboard = (id, name) => __awaiter(this, void 0, void 0, functi
     }
     catch (e) {
         logger_1.default.error('Unexpected error when updating leaderboard');
+        logger_1.default.error(e);
+        return;
+    }
+});
+exports.deleteLeaderboards = (id) => __awaiter(this, void 0, void 0, function* () {
+    let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
+    let params = [id];
+    logger_1.default.debug('Running query');
+    logger_1.default.debug(query);
+    try {
+        let results = yield dataManager_1.DataManager.query(query, params);
+        return results;
+    }
+    catch (e) {
+        logger_1.default.error('Unexpected error when deleting leaderboard');
         logger_1.default.error(e);
         return;
     }

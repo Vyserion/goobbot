@@ -3,7 +3,8 @@ import {
     getLeaderboards as getLeaderboardsData,
     getLeaderboard,
     insertLeaderboard as insertLeaderboardData,
-    updateLeaderboard as updateLeaderboardData
+    updateLeaderboard as updateLeaderboardData,
+    deleteLeaderboards as deleteLeaderboardsData
 } from "./dao";
 import logger from '../core/logger';
 import { ErrorCodes } from "./errorCodes";
@@ -50,5 +51,25 @@ export const updateLeaderboard = async (command: Command) => {
     const id = existingLeaderboards[0].id;
     await updateLeaderboardData(id, newName);
     logger.info('Updated leaderboard ' + name + ' to ' + newName);
+    return true;
+}
+
+export const deleteLeaderboard =  async (command: Command) => {
+    if (command.arguments.length != 1) {
+        logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+        return ErrorCodes.LDBD_BAD_PARAM;
+    }
+
+    const name = command.arguments[0];
+
+    let existingLeaderboards = await getLeaderboard(name);
+    if (existingLeaderboards.length == 0) {
+        logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+        return ErrorCodes.LDBD_NOT_FOUND;
+    }
+
+    const id = existingLeaderboards[0].id;
+    await deleteLeaderboardsData(id);
+    logger.info('Deleted leaderboard ' + name);
     return true;
 }
