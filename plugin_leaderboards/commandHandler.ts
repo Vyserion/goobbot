@@ -1,6 +1,6 @@
 import { Command } from "../core/command";
 import { DataManager } from "../core/dataManager";
-import { getLeaderboards, insertLeaderboard, updateLeaderboard } from "./controller";
+import { getLeaderboards, insertLeaderboard, updateLeaderboard, deleteLeaderboard } from "./controller";
 import { Message } from 'discord.js';
 import { ErrorCodes } from './errorCodes';
 
@@ -12,6 +12,10 @@ export const handleLeaderboardCommand = async (command: Command, message: Messag
         }
         case 'update': {
             handleUpdateCommand(command, message);
+            break;
+        }
+        case 'delete': {
+            handleDeleteCommand(command, message);
             break;
         }
         default: {
@@ -76,6 +80,28 @@ async function handleUpdateCommand (command: Command, message: Message) {
         }
         default: {
             response = 'Successfully updated leaderboard ' + command.arguments[0];
+            break;
+        }
+    }
+
+    message.channel.send(response);
+}
+
+async function handleDeleteCommand (command: Command, message: Message) {
+    let result = await deleteLeaderboard(command);
+
+    let response;
+    switch(result) {
+        case ErrorCodes.LDBD_BAD_PARAM: {
+            response = 'No names were provided for the leaderboard';
+            break;
+        }
+        case ErrorCodes.LDBD_NOT_FOUND: {
+            response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+            break;
+        }
+        default: {
+            response = 'Successfully deleted leaderboard ' + command.arguments[0];
             break;
         }
     }
