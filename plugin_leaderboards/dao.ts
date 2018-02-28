@@ -51,3 +51,19 @@ export const insertLeaderboard = async (name: string) => {
     }
 }
 
+export const updateLeaderboard = async (id: number, name: string) => {
+    let query = ` UPDATE leaderboards SET name = $1 WHERE id = $1`;
+    let params = [id, name];
+
+    logger.debug('Running query');
+    logger.debug(query);
+
+    try {
+        let results = await DataManager.query(query, params);
+        return results;
+    } catch (e) {
+        logger.error('Unexpected error when updating leaderboard');
+        logger.error(e);
+        return;
+    }
+}

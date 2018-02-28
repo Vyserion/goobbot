@@ -54,4 +54,19 @@ exports.insertLeaderboard = (name) => __awaiter(this, void 0, void 0, function* 
         return;
     }
 });
+exports.updateLeaderboard = (id, name) => __awaiter(this, void 0, void 0, function* () {
+    let query = ` UPDATE leaderboards SET name = $1 WHERE id = $1`;
+    let params = [id, name];
+    logger_1.default.debug('Running query');
+    logger_1.default.debug(query);
+    try {
+        let results = yield dataManager_1.DataManager.query(query, params);
+        return results;
+    }
+    catch (e) {
+        logger_1.default.error('Unexpected error when updating leaderboard');
+        logger_1.default.error(e);
+        return;
+    }
+});
 //# sourceMappingURL=dao.js.map
