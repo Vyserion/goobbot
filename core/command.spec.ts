@@ -4,7 +4,7 @@ import { Command } from "./command";
 import { Message } from 'discord.js';
 import { mock, instance, when } from 'ts-mockito';
 
-describe('Command Class ::', () => {
+describe('Command ::', () => {
 
     let env;
 

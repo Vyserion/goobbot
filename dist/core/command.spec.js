@@ -5,7 +5,7 @@ const chai_1 = require("chai");
 const command_1 = require("./command");
 const discord_js_1 = require("discord.js");
 const ts_mockito_1 = require("ts-mockito");
-describe('Command Class ::', () => {
+describe('Command ::', () => {
     let env;
     beforeEach(() => {
         env = process.env;
