@@ -5,7 +5,8 @@
   "main": "./dist/app.js",
   "scripts": {
     "start": "tsc && node ./dist/app.js",
-    "test": "tsc && mocha ./dist/**/*.spec.js"
+    "test": "tsc && mocha ./dist/**/*.spec.js",
+    "test:watch": "tsc && mocha -w ./dist/**/*.spec.js"
   },
   "repository": {
     "type": "git",

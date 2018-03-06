@@ -7,7 +7,6 @@ class Command {
             this.plugin = parts[0];
             if (parts.length >= 2) {
                 this.action = parts[1];
-                this.arguments = [];
             }
             if (parts.length >= 3) {
                 parts = parts.splice(2, parts.length);

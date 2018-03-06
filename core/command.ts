@@ -20,7 +20,6 @@ export class Command {
 
         if (parts.length >= 2) {
             this.action = parts[1];
-            this.arguments = [];
         }
 
         if (parts.length >= 3) {
