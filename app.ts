@@ -1,5 +1,5 @@
-import { Bot } from './core/bot';
-import logger from './core/logger';
+import { Bot } from './src/core/bot';
+import logger from './src/core/logger';
 
 logger.info('VyBot is starting up...');
 

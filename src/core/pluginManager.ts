@@ -1,6 +1,7 @@
 import { Command } from "./command";
 import logger from './logger';
 import { Message } from 'discord.js';
+import {} from "../plugin_leaderboards/commandHandler";
 import { handleLeaderboardCommand } from "../plugin_leaderboards/commandHandler";
 import { notAPluginMessage } from "./messages";
 
