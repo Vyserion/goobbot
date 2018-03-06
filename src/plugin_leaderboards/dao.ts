@@ -1,88 +1,91 @@
 import { DataManager } from '../core/dataManager';
 import logger from '../core/logger';
 
-export const getLeaderboards = async () => {
-    let query = ` SELECT * FROM leaderboards`;
+export class LeaderboardDAO {
 
-    logger.debug('Running query:');
-    logger.debug(query);
+    getLeaderboards = async () => {
+        let query = ` SELECT * FROM leaderboards`;
 
-    try {
-        let results = await DataManager.query(query);
-        return results;
-    } catch (e) {
-        logger.error('Unexpected error when inserting leaderboard');
-        logger.error(e);
-        return;
+        logger.debug('Running query:');
+        logger.debug(query);
+
+        try {
+            let results = await DataManager.query(query);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when inserting leaderboard');
+            logger.error(e);
+            return;
+        }
     }
-}
 
-export const getLeaderboard = async (name: string) => {
-    let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
-    let params = [name];
+    getLeaderboard = async (name: string) => {
+        let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
+        let params = [name];
 
-    logger.debug('Running query');
-    logger.debug(query);
+        logger.debug('Running query');
+        logger.debug(query);
 
-    try {
-        let results = await DataManager.query(query, params);
-        return results;
-    } catch (e) {
-        logger.error('Unexpected error when getting leaderboard');
-        logger.error(e);
-        return;
+        try {
+            let results = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when getting leaderboard');
+            logger.error(e);
+            return;
+        }
     }
-}
 
-export const insertLeaderboard = async (name: string) => {
-    let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
-    let params = [name];
-
-    // TODO: WE NEED TO DO SOMETHING WITH NAMES WITH SPACES HERE - hash the name?
-
-    logger.debug('Running query:');
-    logger.debug(query);
+    insertLeaderboard = async (name: string) => {
+        let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
+        let params = [name];
     
-    try {
-        let results = await DataManager.query(query, params);
-        return results;
-    } catch (e) {
-        logger.error('Unexpected error when inserting leaderboard');
-        logger.error(e);
-        return;
+        // TODO: WE NEED TO DO SOMETHING WITH NAMES WITH SPACES HERE - hash the name?
+    
+        logger.debug('Running query:');
+        logger.debug(query);
+        
+        try {
+            let results = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when inserting leaderboard');
+            logger.error(e);
+            return;
+        }
     }
-}
 
-export const updateLeaderboard = async (id: number, name: string) => {
-    let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
-    let params = [name, id];
-
-    logger.debug('Running query');
-    logger.debug(query);
-
-    try {
-        let results = await DataManager.query(query, params);
-        return results;
-    } catch (e) {
-        logger.error('Unexpected error when updating leaderboard');
-        logger.error(e);
-        return;
+    updateLeaderboard = async (id: number, name: string) => {
+        let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
+        let params = [name, id];
+    
+        logger.debug('Running query');
+        logger.debug(query);
+    
+        try {
+            let results = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when updating leaderboard');
+            logger.error(e);
+            return;
+        }
     }
-}
 
-export const deleteLeaderboards = async (id: number) => {
-    let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
-    let params = [id];
-
-    logger.debug('Running query');
-    logger.debug(query);
-
-    try {
-        let results = await DataManager.query(query, params);
-        return results;
-    } catch (e) {
-        logger.error('Unexpected error when deleting leaderboard');
-        logger.error(e);
-        return;
+    deleteLeaderboard = async (id: number) => {
+        let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
+        let params = [id];
+    
+        logger.debug('Running query');
+        logger.debug(query);
+    
+        try {
+            let results = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when deleting leaderboard');
+            logger.error(e);
+            return;
+        }
     }
 }
