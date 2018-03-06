@@ -29,19 +29,20 @@ class PluginManager {
         return message.startsWith(process.env.PREFIX) && message.length > 1;
     }
 
-    isPluginValid = (plugin: string): boolean => {
-        let allowedPlugins = [
-            'leaderboards'
-        ];
+    isPluginValid = (pluginName: string): boolean => {
+        for (let pIdx in this.plugins) {
+            let plugin: any = this.plugins[pIdx];
+            if (plugin.name === pluginName) {
+                return true;
+            }
+        }
     
-        return allowedPlugins.indexOf(plugin) > -1;
+        return false;
     }
 
     handleMessage = (command: Command, message: Message) => {
-        if (command.plugin === 'leaderboards') {
-            let plugin = this.plugins.find(p => p.name === command.plugin);
-            plugin.handleCommand(command, message);
-        }
+        let plugin = this.plugins.find(p => p.name === command.plugin);
+        plugin.handleCommand(command, message);
     }
 }
 

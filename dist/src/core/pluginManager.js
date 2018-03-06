@@ -17,17 +17,18 @@ class PluginManager {
         this.isPluginMessage = (message) => {
             return message.startsWith(process.env.PREFIX) && message.length > 1;
         };
-        this.isPluginValid = (plugin) => {
-            let allowedPlugins = [
-                'leaderboards'
-            ];
-            return allowedPlugins.indexOf(plugin) > -1;
+        this.isPluginValid = (pluginName) => {
+            for (let pIdx in this.plugins) {
+                let plugin = this.plugins[pIdx];
+                if (plugin.name === pluginName) {
+                    return true;
+                }
+            }
+            return false;
         };
         this.handleMessage = (command, message) => {
-            if (command.plugin === 'leaderboards') {
-                let plugin = this.plugins.find(p => p.name === command.plugin);
-                plugin.handleCommand(command, message);
-            }
+            let plugin = this.plugins.find(p => p.name === command.plugin);
+            plugin.handleCommand(command, message);
         };
         this.plugins = [];
         this.plugins.push(new leaderboardHandler_1.LeaderboardHandler());
