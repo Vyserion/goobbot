@@ -1,36 +1,48 @@
 import { Command } from "./command";
-import logger from './logger';
-import { Message } from 'discord.js';
-import {} from "../plugin_leaderboards/commandHandler";
-import { handleLeaderboardCommand } from "../plugin_leaderboards/commandHandler";
 import { notAPluginMessage } from "./messages";
+import { LeaderboardHandler } from '../plugin_leaderboards/leaderboardHandler';
+import { Message } from 'discord.js';
 
-export const isPluginMessage = (message: string) => {
-    return message.startsWith(process.env.PREFIX) && message.length > 1;
-};
-
-export const handlePluginMessage = (message: Message) => {
-    let input: string = message.content;
-    let command: Command = new Command(message);
-
-    if (!isPluginValid(command.plugin)) {
-        message.channel.send(notAPluginMessage);
-        return;
-    }
+class PluginManager {
     
-    handleMessage(command, message);
-};
+    plugins: any[];
 
-function isPluginValid(plugin: string): boolean {
-    let allowedPlugins = [
-        'leaderboards'
-    ];
+    constructor() {
+        this.plugins = [];
 
-    return allowedPlugins.indexOf(plugin) > -1;
-};
-
-function handleMessage(command: Command, message: Message) {
-    if (command.plugin === 'leaderboards') {
-        handleLeaderboardCommand(command, message);
+        this.plugins.push(new LeaderboardHandler());
     }
-};
+
+    handlePluginMessage = (message: Message) => {
+        let input: string = message.content;
+        let command: Command = new Command(message);
+
+        if (!this.isPluginValid(command.plugin)) {
+            message.channel.send(notAPluginMessage);
+            return;
+        }
+        
+        this.handleMessage(command, message);
+    }
+
+    isPluginMessage = (message: string): boolean => {
+        return message.startsWith(process.env.PREFIX) && message.length > 1;
+    }
+
+    isPluginValid = (plugin: string): boolean => {
+        let allowedPlugins = [
+            'leaderboards'
+        ];
+    
+        return allowedPlugins.indexOf(plugin) > -1;
+    }
+
+    handleMessage = (command: Command, message: Message) => {
+        if (command.plugin === 'leaderboards') {
+            let plugin = this.plugins.find(p => p.name === command.plugin);
+            plugin.handleCommand(command, message);
+        }
+    }
+}
+
+export default new PluginManager();

@@ -1,5 +1,5 @@
 import { Client, Message, TextChannel } from 'discord.js';
-import { isPluginMessage, handlePluginMessage } from './pluginManager';
+import pluginManager from './pluginManager';
 import logger from './logger';
 
 export class Bot {
@@ -47,11 +47,11 @@ export class Bot {
     };
 
     onMessage(message: Message) {
-        if (isPluginMessage(message.content)) {
+        if (pluginManager.isPluginMessage(message.content)) {
             logger.debug('Command recieved: ');
             logger.debug('                 ' + message.content);
 
-            handlePluginMessage(message);
+            pluginManager.handlePluginMessage(message);
         }
     }
 };

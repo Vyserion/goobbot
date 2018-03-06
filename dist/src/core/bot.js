@@ -43,10 +43,10 @@ class Bot {
     }
     ;
     onMessage(message) {
-        if (pluginManager_1.isPluginMessage(message.content)) {
+        if (pluginManager_1.default.isPluginMessage(message.content)) {
             logger_1.default.debug('Command recieved: ');
             logger_1.default.debug('                 ' + message.content);
-            pluginManager_1.handlePluginMessage(message);
+            pluginManager_1.default.handlePluginMessage(message);
         }
     }
 }
