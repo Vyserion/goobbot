@@ -9,8 +9,13 @@ export class Command {
 
     constructor(message: Message) {
         let input = this.stripPrefix(message.content);
-        let parts: string[] = input.split(' ');
+        this.assignParts(input);
+        this.originalMessage = message;
+    };
 
+    assignParts = (message: string): void => {
+        let parts: string[] = message.split(' ');
+        
         this.plugin = parts[0];
 
         if (parts.length >= 2) {
@@ -22,9 +27,7 @@ export class Command {
             parts = parts.splice(2, parts.length);
             this.arguments = parts;
         }
-
-        this.originalMessage = message;
-    };
+    }
 
     stripPrefix = (message: string): string => {
         return message.substr(process.env.PREFIX.length);

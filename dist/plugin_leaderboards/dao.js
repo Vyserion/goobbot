@@ -42,6 +42,7 @@ exports.getLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () 
 exports.insertLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
     let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
     let params = [name];
+    // TODO: WE NEED TO DO SOMETHING WITH NAMES WITH SPACES HERE - hash the name?
     logger_1.default.debug('Running query:');
     logger_1.default.debug(query);
     try {
