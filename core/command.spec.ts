@@ -5,6 +5,7 @@ import { Message } from 'discord.js';
 import { mock, instance, when } from 'ts-mockito';
 
 describe('Command Class ::', () => {
+
     let env;
 
     beforeEach(() => {
@@ -14,15 +15,16 @@ describe('Command Class ::', () => {
         };
     });
 
-    describe('assignParts', () => {
+    describe('assignParts()', () => {
 
         // Assumption: assignParts is called indirectly from the constructor.
         // There's no need to explicitly call it at this time.
 
         it('should map the plugin correctly.', () => {
             const message: Message = mock(Message);
-            const pluginMessage: string = '!pluginName'
             const expectedPlugin: string = 'pluginName';
+            const pluginMessage: string = process.env.PREFIX + expectedPlugin;
+            
             when(message.content).thenReturn(pluginMessage);
 
             const command: Command = new Command(instance(message));
@@ -32,7 +34,7 @@ describe('Command Class ::', () => {
 
         it('should not map an action when one is not provided.', () => {
             const message: Message = mock(Message);
-            const messageText: string = '!pluginName';
+            const messageText: string = process.env.PREFIX + 'pluginName';
             when(message.content).thenReturn(messageText);
 
             const command:Command = new Command(instance(message));
@@ -43,7 +45,7 @@ describe('Command Class ::', () => {
         it('should map an action when one is provided.', () => {
             const message: Message = mock(Message);
             const expectedAction: string = 'action';
-            const messageText: string = '!pluginName ' + expectedAction;
+            const messageText: string = process.env.PREFIX + 'pluginName ' + expectedAction;
             when(message.content).thenReturn(messageText);
 
             const command: Command = new Command(instance(message));
@@ -53,7 +55,7 @@ describe('Command Class ::', () => {
 
         it('should map no arguments when none are provided.', () => {
             const message: Message = mock(Message);
-            const messageText: string = '!pluginName action';
+            const messageText: string = process.env.PREFIX + 'pluginName action';
             when(message.content).thenReturn(messageText);
 
             const command: Command = new Command(instance(message));
@@ -64,7 +66,7 @@ describe('Command Class ::', () => {
         it('should map a single argument when one is provided.', () => {
             const message: Message = mock(Message);
             const expectedArgument: string = 'argumentOne';
-            const messageText: string = '!pluginName action ' + expectedArgument;
+            const messageText: string = process.env.PREFIX + 'pluginName action ' + expectedArgument;
             when(message.content).thenReturn(messageText);
 
             const command: Command = new Command(instance(message));
@@ -78,7 +80,7 @@ describe('Command Class ::', () => {
             const message: Message = mock(Message);
             const expectedFirstArgument: string = 'argumentOne';
             const expectedSecondArgument: string = 'argumentTwo';
-            const messageText: string = '!pluginName action ' + expectedFirstArgument + ' ' + expectedSecondArgument;
+            const messageText: string = process.env.PREFIX + 'pluginName action ' + expectedFirstArgument + ' ' + expectedSecondArgument;
             when(message.content).thenReturn(messageText);
 
             const command: Command = new Command(instance(message));
@@ -92,7 +94,7 @@ describe('Command Class ::', () => {
 
     });
 
-    describe('stripPrefix', () => {
+    describe('stripPrefix()', () => {
 
         it('should strip a single character prefix.', () => {
             process.env.PREFIX = '!';

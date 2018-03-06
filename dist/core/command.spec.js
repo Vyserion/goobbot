@@ -13,20 +13,20 @@ describe('Command Class ::', () => {
             PREFIX: '!'
         };
     });
-    describe('assignParts', () => {
+    describe('assignParts()', () => {
         // Assumption: assignParts is called indirectly from the constructor.
         // There's no need to explicitly call it at this time.
         it('should map the plugin correctly.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
-            const pluginMessage = '!pluginName';
             const expectedPlugin = 'pluginName';
+            const pluginMessage = process.env.PREFIX + expectedPlugin;
             ts_mockito_1.when(message.content).thenReturn(pluginMessage);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.plugin).to.equal(expectedPlugin);
         });
         it('should not map an action when one is not provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
-            const messageText = '!pluginName';
+            const messageText = process.env.PREFIX + 'pluginName';
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.action).to.be.undefined;
@@ -34,14 +34,14 @@ describe('Command Class ::', () => {
         it('should map an action when one is provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
             const expectedAction = 'action';
-            const messageText = '!pluginName ' + expectedAction;
+            const messageText = process.env.PREFIX + 'pluginName ' + expectedAction;
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.action).to.equal(expectedAction);
         });
         it('should map no arguments when none are provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
-            const messageText = '!pluginName action';
+            const messageText = process.env.PREFIX + 'pluginName action';
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.arguments).to.be.undefined;
@@ -49,7 +49,7 @@ describe('Command Class ::', () => {
         it('should map a single argument when one is provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
             const expectedArgument = 'argumentOne';
-            const messageText = '!pluginName action ' + expectedArgument;
+            const messageText = process.env.PREFIX + 'pluginName action ' + expectedArgument;
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.arguments.length).to.equal(1);
@@ -60,7 +60,7 @@ describe('Command Class ::', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
             const expectedFirstArgument = 'argumentOne';
             const expectedSecondArgument = 'argumentTwo';
-            const messageText = '!pluginName action ' + expectedFirstArgument + ' ' + expectedSecondArgument;
+            const messageText = process.env.PREFIX + 'pluginName action ' + expectedFirstArgument + ' ' + expectedSecondArgument;
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
             chai_1.expect(command.arguments.length).to.equal(2);
@@ -70,7 +70,7 @@ describe('Command Class ::', () => {
             chai_1.expect(returnedArgumentTwo).to.equal(expectedSecondArgument);
         });
     });
-    describe('stripPrefix', () => {
+    describe('stripPrefix()', () => {
         it('should strip a single character prefix.', () => {
             process.env.PREFIX = '!';
             const message = ts_mockito_1.mock(discord_js_1.Message);
