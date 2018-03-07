@@ -19,29 +19,29 @@ describe('PluginManager ::', () => {
         it('should return true when the prefix and a length is found.', () => {
             const input = process.env.PREFIX + 'message';
             const result = pluginManager_1.default.isPluginMessage(input);
-            chai_1.expect(result).to.equal(true);
+            chai_1.expect(result).to.be.true;
         });
         it('should return false when just the prefix is provided.', () => {
             const input = process.env.PREFIX;
             const result = pluginManager_1.default.isPluginMessage(input);
-            chai_1.expect(result).to.equal(false);
+            chai_1.expect(result).to.be.false;
         });
         it('should return false when a string without the prefix is provided.', () => {
             const input = 'message';
             const result = pluginManager_1.default.isPluginMessage(input);
-            chai_1.expect(result).to.equal(false);
+            chai_1.expect(result).to.be.false;
         });
     });
     describe('isPluginValid()', () => {
         it('should return true when the leaderboards plugin is provided.', () => {
             const input = 'leaderboards';
             const result = pluginManager_1.default.isPluginValid(input);
-            chai_1.expect(result).to.equal(true);
+            chai_1.expect(result).to.be.true;
         });
         it('should return false when the value provided is not a plugin', () => {
             const input = 'notaplugin';
             const result = pluginManager_1.default.isPluginValid(input);
-            chai_1.expect(result).to.equal(false);
+            chai_1.expect(result).to.be.false;
         });
     });
     describe('handleMessage()', () => {

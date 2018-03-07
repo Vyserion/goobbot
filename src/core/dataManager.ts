@@ -18,7 +18,7 @@ export namespace DataManager {
         process.exit(-1);
     });
 
-    export async function query (query: string,  params?: any[]) {
+    export async function query (query: string, params?: any[]) {
         let results;
         try {
             if (params) {
