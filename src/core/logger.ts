@@ -14,7 +14,10 @@ const logger = createLogger({
     ),
     level: logLevel,
     transports: [
-        new transports.Console({ colorize: true })
+        new transports.Console({
+            name: 'console',
+            colorize: true
+        })
     ]
 });
 

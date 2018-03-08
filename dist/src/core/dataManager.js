@@ -25,6 +25,12 @@ var DataManager;
         process.exit(-1);
     });
     function query(query, params) {
+        let results = this.doQuery(query, params);
+        return results.rows;
+    }
+    DataManager.query = query;
+    ;
+    function doQuery(query, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let results;
             try {
@@ -34,21 +40,16 @@ var DataManager;
                 else {
                     results = yield pool.query(query);
                 }
+                return results;
             }
             catch (e) {
                 logger_1.default.error('Error running query: ' + query);
                 logger_1.default.error('Error code: ' + e.code);
-                return;
-            }
-            if (results.rows.length == 0) {
-                return [];
-            }
-            else {
-                return results.rows;
+                return {
+                    rows: []
+                };
             }
         });
     }
-    DataManager.query = query;
-    ;
 })(DataManager = exports.DataManager || (exports.DataManager = {}));
 //# sourceMappingURL=dataManager.js.map

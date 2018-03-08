@@ -10,7 +10,10 @@ const logger = winston_1.createLogger({
     format: combine(timestamp(), vybotLogFormat),
     level: logLevel,
     transports: [
-        new winston_1.transports.Console({ colorize: true })
+        new winston_1.transports.Console({
+            name: 'console',
+            colorize: true
+        })
     ]
 });
 logger.debug('Logging set to ' + logLevel);

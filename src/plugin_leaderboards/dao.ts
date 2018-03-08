@@ -3,14 +3,14 @@ import logger from '../core/logger';
 
 export class LeaderboardDAO {
 
-    getLeaderboards = async () => {
+    getLeaderboards = () => {
         let query = ` SELECT * FROM leaderboards`;
 
         logger.debug('Running query:');
         logger.debug(query);
 
         try {
-            let results = await DataManager.query(query);
+            let results: any[] = DataManager.query(query);
             return results;
         } catch (e) {
             logger.error('Unexpected error when inserting leaderboard');
@@ -19,7 +19,7 @@ export class LeaderboardDAO {
         }
     }
 
-    getLeaderboard = async (name: string) => {
+    getLeaderboard = (name: string) => {
         let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
         let params = [name];
 
@@ -27,7 +27,7 @@ export class LeaderboardDAO {
         logger.debug(query);
 
         try {
-            let results = await DataManager.query(query, params);
+            let results: any[] = DataManager.query(query, params);
             return results;
         } catch (e) {
             logger.error('Unexpected error when getting leaderboard');
@@ -36,7 +36,7 @@ export class LeaderboardDAO {
         }
     }
 
-    insertLeaderboard = async (name: string) => {
+    insertLeaderboard = (name: string) => {
         let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
         let params = [name];
     
@@ -46,7 +46,7 @@ export class LeaderboardDAO {
         logger.debug(query);
         
         try {
-            let results = await DataManager.query(query, params);
+            let results: any[] = DataManager.query(query, params);
             return results;
         } catch (e) {
             logger.error('Unexpected error when inserting leaderboard');
@@ -55,7 +55,7 @@ export class LeaderboardDAO {
         }
     }
 
-    updateLeaderboard = async (id: number, name: string) => {
+    updateLeaderboard = (id: number, name: string) => {
         let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
         let params = [name, id];
     
@@ -63,7 +63,7 @@ export class LeaderboardDAO {
         logger.debug(query);
     
         try {
-            let results = await DataManager.query(query, params);
+            let results: any[] = DataManager.query(query, params);
             return results;
         } catch (e) {
             logger.error('Unexpected error when updating leaderboard');
@@ -72,7 +72,7 @@ export class LeaderboardDAO {
         }
     }
 
-    deleteLeaderboard = async (id: number) => {
+    deleteLeaderboard = (id: number) => {
         let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
         let params = [id];
     
@@ -80,7 +80,7 @@ export class LeaderboardDAO {
         logger.debug(query);
     
         try {
-            let results = await DataManager.query(query, params);
+            let results: any[] = DataManager.query(query, params);
             return results;
         } catch (e) {
             logger.error('Unexpected error when deleting leaderboard');

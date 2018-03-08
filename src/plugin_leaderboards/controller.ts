@@ -13,11 +13,11 @@ export class LeaderboardController {
         this.dao = new LeaderboardDAO();
     }
 
-    getLeaderboards = async (): Promise<any[]> => {
-        return await this.dao.getLeaderboards();
+    getLeaderboards =  (): Promise<any[]> => {
+        return this.dao.getLeaderboards();
     }
 
-    insertLeaderboard = async (command: Command) => {
+    insertLeaderboard = (command: Command) => {
         if (command.arguments.length != 1) {
             logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
             return ErrorCodes.LDBD_BAD_PARAM;
@@ -25,13 +25,13 @@ export class LeaderboardController {
     
         const name = command.arguments[0];
     
-        let existingLeaderboards = await this.dao.getLeaderboard(name);
+        let existingLeaderboards = this.dao.getLeaderboard(name);
         if (existingLeaderboards.length > 0) {
             logger.warn('LDBD_DUP_NAME: A leaderboard with that name already exists');
             return ErrorCodes.LDBD_DUP_NAME;
         }
     
-        await this.dao.insertLeaderboard(name);
+        this.dao.insertLeaderboard(name);
         logger.info('Created new leaderboard ' + name);
         return true;
     }

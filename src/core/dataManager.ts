@@ -1,4 +1,4 @@
-import { Pool, Client } from 'pg';
+import { Pool, Client, QueryResult } from 'pg';
 import logger from './logger';
 
 export namespace DataManager {
@@ -18,24 +18,28 @@ export namespace DataManager {
         process.exit(-1);
     });
 
-    export async function query (query: string, params?: any[]) {
-        let results;
+    export function query (query: string, params?: any[]): any[] {
+        let results: QueryResult = this.doQuery(query, params);
+        return results.rows;
+    };
+
+    async function doQuery (query: string, params?: any[]) {
+        let results: QueryResult;
+
         try {
             if (params) {
-                results = await pool.query(query, params);
+                results = await pool.query(query, params)
             } else {
                 results = await pool.query(query);
             }
+            
+            return results;
         } catch (e) {
             logger.error('Error running query: ' + query);
             logger.error('Error code: ' + e.code);
-            return;
+            return {
+                rows: []
+            };
         }
-    
-        if (results.rows.length == 0) {
-            return [];
-        } else {
-            return results.rows;
-        }
-    };
+    }
 }
