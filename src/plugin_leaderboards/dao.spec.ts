@@ -21,7 +21,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedQuery: string = ` SELECT * FROM leaderboards`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result: boolean = await dao.getLeaderboards();
+            const result = await dao.getLeaderboards();
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -38,7 +38,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedQuery: string = ` SELECT * FROM leaderboards WHERE name = ($1)`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result: boolean = await dao.getLeaderboard(expectedName);
+            const result = await dao.getLeaderboard(expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -59,7 +59,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedQuery: string = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result: boolean = await dao.insertLeaderboard(expectedName);
+            const result = await dao.insertLeaderboard(expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -81,7 +81,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedQuery: string = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result: boolean = await dao.updateLeaderboard(expectedId, expectedName);
+            const result = await dao.updateLeaderboard(expectedId, expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -105,7 +105,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedQuery: string = ` DELETE FROM leaderboards WHERE id = ($1)`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result: boolean = await dao.deleteLeaderboard(expectedId);
+            const result = await dao.deleteLeaderboard(expectedId);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);

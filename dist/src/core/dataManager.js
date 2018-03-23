@@ -25,8 +25,10 @@ var DataManager;
         process.exit(-1);
     });
     function query(query, params) {
-        let results = this.doQuery(query, params);
-        return results.rows;
+        return __awaiter(this, void 0, void 0, function* () {
+            let results = yield doQuery(query, params);
+            return results.rows;
+        });
     }
     DataManager.query = query;
     ;

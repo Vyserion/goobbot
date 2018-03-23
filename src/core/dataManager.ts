@@ -18,8 +18,8 @@ export namespace DataManager {
         process.exit(-1);
     });
 
-    export function query (query: string, params?: any[]): any[] {
-        let results: QueryResult = this.doQuery(query, params);
+    export async function query (query: string, params?: any[]) {
+        let results = await doQuery(query, params);
         return results.rows;
     };
 
