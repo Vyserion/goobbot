@@ -31,7 +31,7 @@ export class LeaderboardDAO {
     }
 
     getLeaderboardColumns = async (leaderboardId: number) => {
-        let query = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1`;
+        let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
         let params = [leaderboardId];
 
         try {
@@ -45,7 +45,7 @@ export class LeaderboardDAO {
     }
 
     getLeaderboardColumn = async (leaderboardId: number, columnName: string) => {
-        let query = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1 AND name = $2`;
+        let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
         let params = [leaderboardId, columnName];
 
         try {

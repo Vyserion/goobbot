@@ -49,7 +49,7 @@ describe('LeaderboardDAO ::', () => {
     describe('getLeaderboardColumns()', () => {
         it('should query for leaderboard columns with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
             const expectedId = 1;
-            const expectedQuery = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1`;
+            const expectedQuery = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
             const dao = new dao_1.LeaderboardDAO();
             const result = yield dao.getLeaderboardColumns(expectedId);
             chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
@@ -65,7 +65,7 @@ describe('LeaderboardDAO ::', () => {
         it('should query for a leaderboard column with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
             const expectedId = 1;
             const columnName = 'name';
-            const expectedQuery = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1 AND name = $2`;
+            const expectedQuery = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
             const dao = new dao_1.LeaderboardDAO();
             const result = yield dao.getLeaderboardColumn(expectedId, columnName);
             chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;

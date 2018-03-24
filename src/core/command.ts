@@ -17,6 +17,7 @@ export class Command {
         let parts: string[] = message.split(' ');
         
         this.plugin = parts[0];
+        this.arguments = [];
 
         if (parts.length >= 2) {
             this.action = parts[1];

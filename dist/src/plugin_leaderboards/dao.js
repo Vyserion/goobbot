@@ -38,7 +38,7 @@ class LeaderboardDAO {
             }
         });
         this.getLeaderboardColumns = (leaderboardId) => __awaiter(this, void 0, void 0, function* () {
-            let query = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1`;
+            let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
             let params = [leaderboardId];
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);
@@ -51,7 +51,7 @@ class LeaderboardDAO {
             }
         });
         this.getLeaderboardColumn = (leaderboardId, columnName) => __awaiter(this, void 0, void 0, function* () {
-            let query = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1 AND name = $2`;
+            let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
             let params = [leaderboardId, columnName];
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);

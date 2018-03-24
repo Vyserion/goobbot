@@ -20,6 +20,10 @@ export class LeaderboardHandler {
                 this.handleAddCommand(command, message);
                 break;
             }
+            case 'addcol': {
+                this.handleAddColumnCommand(command, message);
+                break;
+            }
             case 'update': {
                 this.handleUpdateCommand(command, message);
                 break;
@@ -53,7 +57,7 @@ export class LeaderboardHandler {
         message.channel.send(response);
     }
 
-    handleAddCommand = async (command:Command, message: Message) => {
+    handleAddCommand = async (command: Command, message: Message) => {
         let result = await this.controller.insertLeaderboard(command);
 
         let response;
@@ -70,6 +74,37 @@ export class LeaderboardHandler {
                 response = 'Successfully created leaderboard ' + command.arguments[0];
                 break;
             }
+        }
+
+        message.channel.send(response);
+    }
+
+    handleAddColumnCommand = async (command: Command, message: Message) => {
+        let result = await this.controller.insertLeaderboardColumn(command);
+
+        let response;
+        switch (result) {
+            case ErrorCodes.LDBD_BAD_PARAM: {
+                if (command.arguments.length < 2) {
+                    response = 'No leaderboard or column name was provided';
+                } else {
+                    response = 'Too many arguments were provided';
+                }
+                break;
+            }
+            case ErrorCodes.LDBD_NOT_FOUND: {
+                response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+                break;
+            }
+            case ErrorCodes.LDBD_DUP_NAME: {
+                response = 'A column with the name ' + command.arguments[1] + ' for leaderboard ' + command.arguments[0] + ' already exists';
+                break;
+            }
+            default: {
+                response = 'Successfully created leaderboard column ' + command.arguments[1];
+                break;
+            }
+
         }
 
         message.channel.send(response);

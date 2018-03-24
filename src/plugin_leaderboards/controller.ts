@@ -37,6 +37,7 @@ export class LeaderboardController {
     }
 
     insertLeaderboardColumn = async (command: Command) => {
+        console.log(command.arguments);
         if (command.arguments.length < 2 || command.arguments.length > 3) {
             logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
             return ErrorCodes.LDBD_BAD_PARAM;

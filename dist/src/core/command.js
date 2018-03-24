@@ -5,6 +5,7 @@ class Command {
         this.assignParts = (message) => {
             let parts = message.split(' ');
             this.plugin = parts[0];
+            this.arguments = [];
             if (parts.length >= 2) {
                 this.action = parts[1];
             }

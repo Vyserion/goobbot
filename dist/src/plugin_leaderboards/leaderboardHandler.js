@@ -20,6 +20,10 @@ class LeaderboardHandler {
                     this.handleAddCommand(command, message);
                     break;
                 }
+                case 'addcol': {
+                    this.handleAddColumnCommand(command, message);
+                    break;
+                }
                 case 'update': {
                     this.handleUpdateCommand(command, message);
                     break;
@@ -63,6 +67,34 @@ class LeaderboardHandler {
                 }
                 default: {
                     response = 'Successfully created leaderboard ' + command.arguments[0];
+                    break;
+                }
+            }
+            message.channel.send(response);
+        });
+        this.handleAddColumnCommand = (command, message) => __awaiter(this, void 0, void 0, function* () {
+            let result = yield this.controller.insertLeaderboardColumn(command);
+            let response;
+            switch (result) {
+                case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+                    if (command.arguments.length < 2) {
+                        response = 'No leaderboard or column name was provided';
+                    }
+                    else {
+                        response = 'Too many arguments were provided';
+                    }
+                    break;
+                }
+                case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+                    response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+                    break;
+                }
+                case errorCodes_1.ErrorCodes.LDBD_DUP_NAME: {
+                    response = 'A column with the name ' + command.arguments[1] + ' for leaderboard ' + command.arguments[0] + ' already exists';
+                    break;
+                }
+                default: {
+                    response = 'Successfully created leaderboard column ' + command.arguments[1];
                     break;
                 }
             }

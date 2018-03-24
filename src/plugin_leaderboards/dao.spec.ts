@@ -56,7 +56,7 @@ describe('LeaderboardDAO ::', () => {
 
         it('should query for leaderboard columns with the correct parameters', async () => {
             const expectedId: number = 1;
-            const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1`;
+            const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
             const result = await dao.getLeaderboardColumns(expectedId);
@@ -78,7 +78,7 @@ describe('LeaderboardDAO ::', () => {
         it('should query for a leaderboard column with the correct parameters', async () => {
             const expectedId: number = 1;
             const columnName: string = 'name';
-            const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboardId = $1 AND name = $2`;
+            const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
             const result = await dao.getLeaderboardColumn(expectedId, columnName);

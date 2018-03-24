@@ -60,7 +60,7 @@ describe('Command ::', () => {
 
             const command: Command = new Command(instance(message));
 
-            expect(command.arguments).to.be.undefined;
+            expect(command.arguments.length).to.equal(0);
         });
 
         it('should map a single argument when one is provided.', () => {

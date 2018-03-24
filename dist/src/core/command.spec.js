@@ -44,7 +44,7 @@ describe('Command ::', () => {
             const messageText = process.env.PREFIX + 'pluginName action';
             ts_mockito_1.when(message.content).thenReturn(messageText);
             const command = new command_1.Command(ts_mockito_1.instance(message));
-            chai_1.expect(command.arguments).to.be.undefined;
+            chai_1.expect(command.arguments.length).to.equal(0);
         });
         it('should map a single argument when one is provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
