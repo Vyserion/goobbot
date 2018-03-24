@@ -76,6 +76,20 @@ describe('Command ::', () => {
             expect(returnedArgument).to.equal(expectedArgument);
         });
 
+        it('should map a single argument when a multi-word argument is provided', () => {
+            const message: Message = mock(Message);
+            const expectedArgument: string = "three word argument";
+            const arrangedArgument: string = "'" + expectedArgument + "'";
+            const messageText: string = process.env.PREFIX + 'pluginName action ' + arrangedArgument;
+            when(message.content).thenReturn(messageText);
+
+            const command: Command = new Command(instance(message));
+
+            expect(command.arguments.length).to.equal(1);
+            const returnedArgument: string = command.arguments[0];
+            expect(returnedArgument).to.equal(expectedArgument);
+        });
+
         it('should map multiple arguments when multiple are provided.', () => {
             const message: Message = mock(Message);
             const expectedFirstArgument: string = 'argumentOne';
@@ -90,6 +104,26 @@ describe('Command ::', () => {
             expect(returnedArgumentOne).to.equal(expectedFirstArgument);
             const returnedArgumentTwo: string = command.arguments[1];
             expect(returnedArgumentTwo).to.equal(expectedSecondArgument);
+        });
+
+        it('should map multiple arguments when multiple are provided, as a mix of single and multi-word arguments', () => {
+            const message: Message = mock(Message);
+            const expectedFirstArgument: string = 'argumentOne';
+            const expectedSecondArgument: string = 'argument Two Multiword';
+            const arrangedSecondArgument: string = "'" + expectedSecondArgument + "'";
+            const expectedThirdArgument: string = 'argumentThree';
+            const messageText: string = process.env.PREFIX + 'pluginName action ' + expectedFirstArgument + ' ' + arrangedSecondArgument + ' ' + expectedThirdArgument;
+            when(message.content).thenReturn(messageText);
+
+            const command: Command = new Command(instance(message));
+
+            expect(command.arguments.length).to.equal(3);
+            const returnedArgumentOne: string = command.arguments[0];
+            expect(returnedArgumentOne).to.equal(expectedFirstArgument);
+            const returnedArgumentTwo: string = command.arguments[1];
+            expect(returnedArgumentTwo).to.equal(expectedSecondArgument);
+            const returnedArgumentThree: string = command.arguments[2];
+            expect(returnedArgumentThree).to.equal(expectedThirdArgument);
         });
 
     });
@@ -122,6 +156,78 @@ describe('Command ::', () => {
             const result: string = command.stripPrefix(input);
 
             expect(result).to.equal(text);
+        });
+
+    });
+
+    describe('parseArguments()', () => {
+
+        it('should return an array of single word arguments', () => {
+            const message: Message = mock(Message);
+            when(message.content).thenReturn('');
+            const command: Command = new Command(instance(message));
+
+            const input: string[] = [
+                'one',
+                'two',
+                'three'
+            ];
+
+            let results: string[] = command.parseArguments(input);
+            expect(results.length).to.equal(input.length);
+            for (let i = 0; i < input.length; i++) {
+                expect(results[i]).to.equal(input[i]);
+            }
+        });
+
+        it('should return an array of multi word arguments', () => {
+            const message: Message = mock(Message);
+            when(message.content).thenReturn('');
+            const command: Command = new Command(instance(message));
+
+            const input: string[] = [
+                "'one", "two", "three'",
+                "'four", "five", "six'"
+            ];
+
+            const expectedOutput: string[] = [
+                'one two three',
+                'four five six'
+            ];
+
+            let results: string[] = command.parseArguments(input);
+            expect(results.length).to.equal(expectedOutput.length);
+            for (let i = 0; i < expectedOutput.length; i++) {
+                expect(results[i]).to.equal(expectedOutput[i]);
+            }
+        });
+
+        it('should return an array of single and multi word arguments', () => {
+            const message: Message = mock(Message);
+            when(message.content).thenReturn('');
+            const command: Command = new Command(instance(message));
+
+            const input: string[] = [
+                "one",
+                "'two", "three", "four'",
+                "five",
+                "'six", "seven'",
+                "eight"
+            ];
+
+            const expectedOutput: string[] = [
+                'one',
+                'two three four',
+                'five',
+                'six seven',
+                'eight'
+            ];
+
+            let results: string[] = command.parseArguments(input);
+            expect(results.length).to.equal(expectedOutput.length);
+            for (let i = 0; i < expectedOutput.length; i++) {
+                expect(results[i]).to.equal(expectedOutput[i]);
+            }
         });
 
     });

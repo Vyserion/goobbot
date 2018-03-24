@@ -56,6 +56,17 @@ describe('Command ::', () => {
             const returnedArgument = command.arguments[0];
             chai_1.expect(returnedArgument).to.equal(expectedArgument);
         });
+        it('should map a single argument when a multi-word argument is provided', () => {
+            const message = ts_mockito_1.mock(discord_js_1.Message);
+            const expectedArgument = "three word argument";
+            const arrangedArgument = "'" + expectedArgument + "'";
+            const messageText = process.env.PREFIX + 'pluginName action ' + arrangedArgument;
+            ts_mockito_1.when(message.content).thenReturn(messageText);
+            const command = new command_1.Command(ts_mockito_1.instance(message));
+            chai_1.expect(command.arguments.length).to.equal(1);
+            const returnedArgument = command.arguments[0];
+            chai_1.expect(returnedArgument).to.equal(expectedArgument);
+        });
         it('should map multiple arguments when multiple are provided.', () => {
             const message = ts_mockito_1.mock(discord_js_1.Message);
             const expectedFirstArgument = 'argumentOne';
@@ -68,6 +79,23 @@ describe('Command ::', () => {
             chai_1.expect(returnedArgumentOne).to.equal(expectedFirstArgument);
             const returnedArgumentTwo = command.arguments[1];
             chai_1.expect(returnedArgumentTwo).to.equal(expectedSecondArgument);
+        });
+        it('should map multiple arguments when multiple are provided, as a mix of single and multi-word arguments', () => {
+            const message = ts_mockito_1.mock(discord_js_1.Message);
+            const expectedFirstArgument = 'argumentOne';
+            const expectedSecondArgument = 'argument Two Multiword';
+            const arrangedSecondArgument = "'" + expectedSecondArgument + "'";
+            const expectedThirdArgument = 'argumentThree';
+            const messageText = process.env.PREFIX + 'pluginName action ' + expectedFirstArgument + ' ' + arrangedSecondArgument + ' ' + expectedThirdArgument;
+            ts_mockito_1.when(message.content).thenReturn(messageText);
+            const command = new command_1.Command(ts_mockito_1.instance(message));
+            chai_1.expect(command.arguments.length).to.equal(3);
+            const returnedArgumentOne = command.arguments[0];
+            chai_1.expect(returnedArgumentOne).to.equal(expectedFirstArgument);
+            const returnedArgumentTwo = command.arguments[1];
+            chai_1.expect(returnedArgumentTwo).to.equal(expectedSecondArgument);
+            const returnedArgumentThree = command.arguments[2];
+            chai_1.expect(returnedArgumentThree).to.equal(expectedThirdArgument);
         });
     });
     describe('stripPrefix()', () => {
@@ -90,6 +118,65 @@ describe('Command ::', () => {
             const input = process.env.PREFIX + text;
             const result = command.stripPrefix(input);
             chai_1.expect(result).to.equal(text);
+        });
+    });
+    describe('parseArguments()', () => {
+        it('should return an array of single word arguments', () => {
+            const message = ts_mockito_1.mock(discord_js_1.Message);
+            ts_mockito_1.when(message.content).thenReturn('');
+            const command = new command_1.Command(ts_mockito_1.instance(message));
+            const input = [
+                'one',
+                'two',
+                'three'
+            ];
+            let results = command.parseArguments(input);
+            chai_1.expect(results.length).to.equal(input.length);
+            for (let i = 0; i < input.length; i++) {
+                chai_1.expect(results[i]).to.equal(input[i]);
+            }
+        });
+        it('should return an array of multi word arguments', () => {
+            const message = ts_mockito_1.mock(discord_js_1.Message);
+            ts_mockito_1.when(message.content).thenReturn('');
+            const command = new command_1.Command(ts_mockito_1.instance(message));
+            const input = [
+                "'one", "two", "three'",
+                "'four", "five", "six'"
+            ];
+            const expectedOutput = [
+                'one two three',
+                'four five six'
+            ];
+            let results = command.parseArguments(input);
+            chai_1.expect(results.length).to.equal(expectedOutput.length);
+            for (let i = 0; i < expectedOutput.length; i++) {
+                chai_1.expect(results[i]).to.equal(expectedOutput[i]);
+            }
+        });
+        it('should return an array of single and multi word arguments', () => {
+            const message = ts_mockito_1.mock(discord_js_1.Message);
+            ts_mockito_1.when(message.content).thenReturn('');
+            const command = new command_1.Command(ts_mockito_1.instance(message));
+            const input = [
+                "one",
+                "'two", "three", "four'",
+                "five",
+                "'six", "seven'",
+                "eight"
+            ];
+            const expectedOutput = [
+                'one',
+                'two three four',
+                'five',
+                'six seven',
+                'eight'
+            ];
+            let results = command.parseArguments(input);
+            chai_1.expect(results.length).to.equal(expectedOutput.length);
+            for (let i = 0; i < expectedOutput.length; i++) {
+                chai_1.expect(results[i]).to.equal(expectedOutput[i]);
+            }
         });
     });
 });

@@ -23,12 +23,35 @@ export class Command {
         }
 
         if (parts.length >= 3) {
-            parts = parts.splice(2, parts.length);
-            this.arguments = parts;
+            const remainingParts: string[] = parts.splice(2, parts.length);
+            this.arguments = this.parseArguments(remainingParts);
         }
     }
 
     stripPrefix = (message: string): string => {
         return message.substr(process.env.PREFIX.length);
+    };
+
+    parseArguments = (inputs: string[]): string[] => {
+        let parsedArguments: string[] = [];
+
+        let buffer: string = '';
+        for (let input of inputs) {
+            if (input.startsWith("'")) {
+                let temp: string = input.substring(1, input.length);
+                buffer = temp;
+            } else if (input.endsWith("'")) {
+                let temp: string = input.substring(0, input.length - 1);
+                buffer += ' ' + temp;
+                parsedArguments.push(buffer);
+                buffer = '';
+            } else if (buffer.length > 0) {
+                buffer += ' ' + input;
+            } else {
+                parsedArguments.push(input);
+            }
+        }
+
+        return parsedArguments;
     };
 };
