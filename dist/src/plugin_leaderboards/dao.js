@@ -14,8 +14,6 @@ class LeaderboardDAO {
     constructor() {
         this.getLeaderboards = () => __awaiter(this, void 0, void 0, function* () {
             let query = ` SELECT * FROM leaderboards`;
-            logger_1.default.debug('Running query:');
-            logger_1.default.debug(query);
             try {
                 let results = yield dataManager_1.DataManager.query(query);
                 return results;
@@ -29,8 +27,6 @@ class LeaderboardDAO {
         this.getLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
             let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
             let params = [name];
-            logger_1.default.debug('Running query');
-            logger_1.default.debug(query);
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);
                 return results;
@@ -44,9 +40,6 @@ class LeaderboardDAO {
         this.insertLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
             let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
             let params = [name];
-            // TODO: WE NEED TO DO SOMETHING WITH NAMES WITH SPACES HERE - hash the name?
-            logger_1.default.debug('Running query:');
-            logger_1.default.debug(query);
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);
                 return results;
@@ -57,11 +50,22 @@ class LeaderboardDAO {
                 return;
             }
         });
+        this.insertLeaderboardColumn = (leaderboardId, name, type) => __awaiter(this, void 0, void 0, function* () {
+            let query = ' INSERT INTO leaderboardColumns VALUES (DEFAULT, $1, $2, $3)';
+            let params = [leaderboardId, name, type];
+            try {
+                let results = yield dataManager_1.DataManager.query(query, params);
+                return results;
+            }
+            catch (e) {
+                logger_1.default.error('Unexpected error when inserting leaderboard column');
+                logger_1.default.error(e);
+                return;
+            }
+        });
         this.updateLeaderboard = (id, name) => __awaiter(this, void 0, void 0, function* () {
             let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
             let params = [name, id];
-            logger_1.default.debug('Running query');
-            logger_1.default.debug(query);
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);
                 return results;
@@ -75,8 +79,6 @@ class LeaderboardDAO {
         this.deleteLeaderboard = (id) => __awaiter(this, void 0, void 0, function* () {
             let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
             let params = [id];
-            logger_1.default.debug('Running query');
-            logger_1.default.debug(query);
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);
                 return results;

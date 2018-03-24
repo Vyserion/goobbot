@@ -26,6 +26,8 @@ var DataManager;
     });
     function query(query, params) {
         return __awaiter(this, void 0, void 0, function* () {
+            logger_1.default.debug('Running query:');
+            logger_1.default.debug(query);
             let results = yield doQuery(query, params);
             return results.rows;
         });

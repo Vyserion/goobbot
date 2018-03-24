@@ -61,6 +61,27 @@ describe('LeaderboardDAO ::', () => {
             chai_1.expect(name).to.equal(expectedName);
         }));
     });
+    describe('insertLeaderboardColumn()', () => {
+        it('should insert a leaderboard column with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
+            const leaderboardId = 1;
+            const expectedColumnName = 'columnName';
+            const expectedColumnType = 'col';
+            const expectedQuery = ' INSERT INTO leaderboardColumns VALUES (DEFAULT, $1, $2, $3)';
+            const dao = new dao_1.LeaderboardDAO();
+            const result = yield dao.insertLeaderboardColumn(leaderboardId, expectedColumnName, expectedColumnType);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const query = call.args[0];
+            chai_1.expect(query).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const id = queryArguments[0];
+            chai_1.expect(id).to.equal(leaderboardId);
+            const name = queryArguments[1];
+            chai_1.expect(name).to.equal(expectedColumnName);
+            const type = queryArguments[2];
+            chai_1.expect(type).to.equal(expectedColumnType);
+        }));
+    });
     describe('updateLeaderboard()', () => {
         it('should update a leaderboard with the correct parameters.', () => __awaiter(this, void 0, void 0, function* () {
             const expectedId = 123;

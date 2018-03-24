@@ -44,6 +44,20 @@ export class LeaderboardDAO {
         }
     }
 
+    insertLeaderboardColumn = async (leaderboardId: number, name: string, type: string) => {
+        let query = ' INSERT INTO leaderboardColumns VALUES (DEFAULT, $1, $2, $3)';
+        let params = [leaderboardId, name, type];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when inserting leaderboard column');
+            logger.error(e);
+            return;
+        }
+    }
+
     updateLeaderboard = async (id: number, name: string) => {
         let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
         let params = [name, id];
