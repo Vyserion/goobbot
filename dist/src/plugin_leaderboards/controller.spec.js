@@ -171,7 +171,47 @@ describe('LeaderboardController ::', () => {
             chai_1.expect(result).to.be.true;
         }));
     });
-    // TODO: Test for update leaderboard
-    // TODO: Test for delete leaderboard
+    describe('deleteLeaderboard()', () => {
+        it('should check for less than 1 arguments', () => __awaiter(this, void 0, void 0, function* () {
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([]);
+            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+        }));
+        it('should check for more than 1 argument', () => __awaiter(this, void 0, void 0, function* () {
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn(['', '']);
+            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+        }));
+        it('should return an error when no leaderboard is found with that name', () => __awaiter(this, void 0, void 0, function* () {
+            const leaderboardName = 'leaderboardName';
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
+            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
+            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
+            controller.dao = ts_mockito_1.instance(dao);
+            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
+        }));
+        it('should return true when the leaderboard column is updated', () => __awaiter(this, void 0, void 0, function* () {
+            const leaderboardName = 'leaderboardName';
+            const leaderboardId = 1;
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
+            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
+            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+                { id: leaderboardId }
+            ]);
+            ts_mockito_1.when(dao.deleteLeaderboard(leaderboardId)).thenResolve();
+            controller.dao = ts_mockito_1.instance(dao);
+            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.be.true;
+        }));
+    });
 });
 //# sourceMappingURL=controller.spec.js.map

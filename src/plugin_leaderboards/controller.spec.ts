@@ -227,8 +227,64 @@ describe('LeaderboardController ::', () => {
 
     });
 
-    // TODO: Test for update leaderboard
+    describe('deleteLeaderboard()', () => {
 
-    // TODO: Test for delete leaderboard
+        it('should check for less than 1 arguments', async () => {
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([]);
+
+            const result = await controller.deleteLeaderboard(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should check for more than 1 argument', async () => {
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn(['', '']);
+
+            const result = await controller.deleteLeaderboard(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should return an error when no leaderboard is found with that name', async () => {
+            const leaderboardName: string = 'leaderboardName';
+
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName]);
+
+            const dao: LeaderboardDAO = mock(LeaderboardDAO);
+            when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
+            controller.dao = instance(dao);
+
+            const result = await controller.deleteLeaderboard(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+        });
+
+        it('should return true when the leaderboard column is updated', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const leaderboardId: number = 1;
+
+            const controller: LeaderboardController = new LeaderboardController();
+            
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName]);
+
+            const dao: LeaderboardDAO = mock(LeaderboardDAO);
+            when(dao.getLeaderboard(leaderboardName)).thenResolve([
+                { id: leaderboardId }
+            ]);
+            when(dao.deleteLeaderboard(leaderboardId)).thenResolve();
+            controller.dao = instance(dao);
+
+            const result = await controller.deleteLeaderboard(instance(command));
+            expect(result).to.be.true;
+        });
+        
+    });
 
 });
