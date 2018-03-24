@@ -46,6 +46,39 @@ describe('LeaderboardDAO ::', () => {
             chai_1.expect(name).to.equal(expectedName);
         }));
     });
+    describe('getLeaderboardColumns()', () => {
+        it('should query for leaderboard columns with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
+            const expectedId = 1;
+            const expectedQuery = ` SELECT * FROM leaderboardColumns WHERE leaderboardId = $1`;
+            const dao = new dao_1.LeaderboardDAO();
+            const result = yield dao.getLeaderboardColumns(expectedId);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const query = call.args[0];
+            chai_1.expect(query).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const id = queryArguments[0];
+            chai_1.expect(id).to.equal(expectedId);
+        }));
+    });
+    describe('getLeaderboardColumn()', () => {
+        it('should query for a leaderboard column with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
+            const expectedId = 1;
+            const columnName = 'name';
+            const expectedQuery = ` SELECT * FROM leaderboardColumns WHERE leaderboardId = $1 AND name = $2`;
+            const dao = new dao_1.LeaderboardDAO();
+            const result = yield dao.getLeaderboardColumn(expectedId, columnName);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const query = call.args[0];
+            chai_1.expect(query).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const id = queryArguments[0];
+            chai_1.expect(id).to.equal(expectedId);
+            const name = queryArguments[1];
+            chai_1.expect(name).to.equal(columnName);
+        }));
+    });
     describe('insertLeaderboard()', () => {
         it('should insert a leaderboard with the correct parameters.', () => __awaiter(this, void 0, void 0, function* () {
             const expectedName = 'leaderboardname';
@@ -62,7 +95,7 @@ describe('LeaderboardDAO ::', () => {
         }));
     });
     describe('insertLeaderboardColumn()', () => {
-        it('should insert a leaderboard column with the correct parameters', () => __awaiter(this, void 0, void 0, function* () {
+        it('should insert a leaderboard column with the correct parameters.', () => __awaiter(this, void 0, void 0, function* () {
             const leaderboardId = 1;
             const expectedColumnName = 'columnName';
             const expectedColumnType = 'col';

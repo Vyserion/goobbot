@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const controller_1 = require("./controller");
-const errorCodes_1 = require("./errorCodes");
+const errorCodes_1 = require("./config/errorCodes");
 class LeaderboardHandler {
     constructor() {
         this.name = 'leaderboards';

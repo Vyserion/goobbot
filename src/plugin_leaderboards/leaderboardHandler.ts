@@ -1,6 +1,6 @@
 import { Command } from "../core/command";
 import { LeaderboardController } from "./controller";
-import { ErrorCodes } from './errorCodes';
+import { ErrorCodes } from './config/errorCodes';
 import { Message } from 'discord.js';
 
 export class LeaderboardHandler {

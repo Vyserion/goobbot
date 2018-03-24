@@ -30,6 +30,34 @@ export class LeaderboardDAO {
         }
     }
 
+    getLeaderboardColumns = async (leaderboardId: number) => {
+        let query = ` SELECT * FROM leaderboardColumns WHERE leaderboardId = $1`;
+        let params = [leaderboardId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when getting leaderboard');
+            logger.error(e);
+            return;
+        }
+    }
+
+    getLeaderboardColumn = async (leaderboardId: number, columnName: string) => {
+        let query = ` SELECT * FROM leaderboardColumns WHERE leaderboardId = $1 AND name = $2`;
+        let params = [leaderboardId, columnName];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when getting leaderboard');
+            logger.error(e);
+            return;
+        }
+    }
+
     insertLeaderboard = async (name: string) => {
         let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
         let params = [name];
