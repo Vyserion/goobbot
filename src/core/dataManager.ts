@@ -19,6 +19,9 @@ export namespace DataManager {
     });
 
     export async function query (query: string, params?: any[]) {
+        logger.debug('Running query:');
+        logger.debug(query);
+
         let results = await doQuery(query, params);
         return results.rows;
     };
