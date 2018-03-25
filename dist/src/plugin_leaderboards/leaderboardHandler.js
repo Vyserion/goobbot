@@ -24,6 +24,10 @@ class LeaderboardHandler {
                     this.handleAddColumnCommand(command, message);
                     break;
                 }
+                case 'show': {
+                    this.handleShowLeaderboard(command, message);
+                    break;
+                }
                 case 'update': {
                     this.handleUpdateCommand(command, message);
                     break;
@@ -99,6 +103,9 @@ class LeaderboardHandler {
                 }
             }
             message.channel.send(response);
+        });
+        this.handleShowLeaderboard = (command, message) => __awaiter(this, void 0, void 0, function* () {
+            let result = yield this.controller.getLeaderboard(command);
         });
         this.handleUpdateCommand = (command, message) => __awaiter(this, void 0, void 0, function* () {
             let result = yield this.controller.updateLeaderboard(command);

@@ -17,6 +17,27 @@ export class LeaderboardController {
         return await this.dao.getLeaderboards();
     }
 
+    getLeaderboard = async (command: Command) => {
+        if (command.arguments.length != 1) {
+            logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return ErrorCodes.LDBD_BAD_PARAM;
+        }
+
+        const leaderboardName = command.arguments[0];
+
+        let existingLeaderboards = await this.dao.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length > 0) {
+            logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return ErrorCodes.LDBD_NOT_FOUND;
+        }
+
+        let leaderboard = existingLeaderboards[0];
+        let columns = await this.dao.getLeaderboardColumns(leaderboard.id);
+        console.log(columns);
+
+        return true;
+    }
+
     insertLeaderboard = async (command: Command) => {
         if (command.arguments.length != 1) {
             logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');

@@ -25,7 +25,7 @@ class LeaderboardDAO {
             }
         });
         this.getLeaderboard = (name) => __awaiter(this, void 0, void 0, function* () {
-            let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
+            let query = ` SELECT * FROM leaderboards WHERE name = $1`;
             let params = [name];
             try {
                 let results = yield dataManager_1.DataManager.query(query, params);

@@ -17,7 +17,7 @@ export class LeaderboardDAO {
     }
 
     getLeaderboard = async (name: string) => {
-        let query = ` SELECT * FROM leaderboards WHERE name = ($1)`;
+        let query = ` SELECT * FROM leaderboards WHERE name = $1`;
         let params = [name];
 
         try {

@@ -16,6 +16,22 @@ class LeaderboardController {
         this.getLeaderboards = () => __awaiter(this, void 0, void 0, function* () {
             return yield this.dao.getLeaderboards();
         });
+        this.getLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
+            if (command.arguments.length != 1) {
+                logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+                return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+            }
+            const leaderboardName = command.arguments[0];
+            let existingLeaderboards = yield this.dao.getLeaderboard(leaderboardName);
+            if (existingLeaderboards.length > 0) {
+                logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+                return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+            }
+            let leaderboard = existingLeaderboards[0];
+            let columns = yield this.dao.getLeaderboardColumns(leaderboard.id);
+            console.log(columns);
+            return true;
+        });
         this.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
             if (command.arguments.length != 1) {
                 logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');

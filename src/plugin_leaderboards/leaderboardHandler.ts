@@ -24,6 +24,10 @@ export class LeaderboardHandler {
                 this.handleAddColumnCommand(command, message);
                 break;
             }
+            case 'show': {
+                this.handleShowLeaderboard(command, message);
+                break;
+            }
             case 'update': {
                 this.handleUpdateCommand(command, message);
                 break;
@@ -108,6 +112,10 @@ export class LeaderboardHandler {
         }
 
         message.channel.send(response);
+    }
+
+    handleShowLeaderboard = async (command: Command, message: Message) => {
+        let result = await this.controller.getLeaderboard(command);
     }
 
     handleUpdateCommand = async (command: Command, message: Message) => {
