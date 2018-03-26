@@ -34,7 +34,7 @@ describe('LeaderboardDAO ::', () => {
     describe('getLeaderboard()', () => {
         it('should query for a leaderboard with the correct parameters.', () => __awaiter(this, void 0, void 0, function* () {
             const expectedName = 'leaderboardname';
-            const expectedQuery = ` SELECT * FROM leaderboards WHERE name = ($1)`;
+            const expectedQuery = ` SELECT * FROM leaderboards WHERE name = $1`;
             const dao = new dao_1.LeaderboardDAO();
             const result = yield dao.getLeaderboard(expectedName);
             chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;

@@ -11,6 +11,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dao_1 = require("./dao");
 const errorCodes_1 = require("./config/errorCodes");
 const logger_1 = require("../core/logger");
+const Leaderboard_1 = require("./models/Leaderboard");
+const Column_1 = require("./models/Column");
+const columnTypes_1 = require("./config/columnTypes");
 class LeaderboardController {
     constructor() {
         this.getLeaderboards = () => __awaiter(this, void 0, void 0, function* () {
@@ -23,14 +26,21 @@ class LeaderboardController {
             }
             const leaderboardName = command.arguments[0];
             let existingLeaderboards = yield this.dao.getLeaderboard(leaderboardName);
-            if (existingLeaderboards.length > 0) {
+            if (existingLeaderboards.length == 0) {
                 logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
                 return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
             }
             let leaderboard = existingLeaderboards[0];
             let columns = yield this.dao.getLeaderboardColumns(leaderboard.id);
-            console.log(columns);
-            return true;
+            let leaderboardObj = new Leaderboard_1.default();
+            leaderboardObj.name = leaderboard.name;
+            for (let column of columns) {
+                let col = new Column_1.default();
+                col.name = column.name;
+                col.type = columnTypes_1.ColumnTypes[col.type];
+                leaderboardObj.columns.push(col);
+            }
+            return leaderboardObj;
         });
         this.insertLeaderboard = (command) => __awaiter(this, void 0, void 0, function* () {
             if (command.arguments.length != 1) {

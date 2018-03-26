@@ -4,6 +4,9 @@ import {
 import { ErrorCodes } from "./config/errorCodes";
 import { Command } from "../core/command";
 import logger from '../core/logger';
+import Leaderboard from "./models/Leaderboard";
+import Column from "./models/Column";
+import { ColumnTypes } from "./config/columnTypes";
 
 export class LeaderboardController {
 
@@ -26,16 +29,25 @@ export class LeaderboardController {
         const leaderboardName = command.arguments[0];
 
         let existingLeaderboards = await this.dao.getLeaderboard(leaderboardName);
-        if (existingLeaderboards.length > 0) {
+        if (existingLeaderboards.length == 0) {
             logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
             return ErrorCodes.LDBD_NOT_FOUND;
         }
 
         let leaderboard = existingLeaderboards[0];
         let columns = await this.dao.getLeaderboardColumns(leaderboard.id);
-        console.log(columns);
 
-        return true;
+        let leaderboardObj = new Leaderboard();
+        leaderboardObj.name = leaderboard.name;
+
+        for (let column of columns) {
+            let col = new Column();
+            col.name = column.name;
+            col.type = ColumnTypes[col.type];
+            leaderboardObj.columns.push(col);
+        }
+
+        return leaderboardObj;
     }
 
     insertLeaderboard = async (command: Command) => {

@@ -106,7 +106,34 @@ class LeaderboardHandler {
         });
         this.handleShowLeaderboard = (command, message) => __awaiter(this, void 0, void 0, function* () {
             let result = yield this.controller.getLeaderboard(command);
+            let response;
+            switch (result) {
+                case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+                    response = 'No names were provided to get the leaderboard';
+                    break;
+                }
+                case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+                    response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+                    break;
+                }
+                default: {
+                    response = this.formatLeaderboard(result);
+                    break;
+                }
+            }
+            message.channel.send(response);
         });
+        this.formatLeaderboard = (leaderboard) => {
+            let str = '';
+            str += leaderboard.name;
+            str += '\n\n';
+            for (let col of leaderboard.columns) {
+                let column = col;
+                str += col.name;
+                str += '\n';
+            }
+            return str;
+        };
         this.handleUpdateCommand = (command, message) => __awaiter(this, void 0, void 0, function* () {
             let result = yield this.controller.updateLeaderboard(command);
             let response;

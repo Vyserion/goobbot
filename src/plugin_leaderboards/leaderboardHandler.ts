@@ -2,6 +2,8 @@ import { Command } from "../core/command";
 import { LeaderboardController } from "./controller";
 import { ErrorCodes } from './config/errorCodes';
 import { Message } from 'discord.js';
+import Leaderboard from "./models/Leaderboard";
+import Column from "./models/Column";
 
 export class LeaderboardHandler {
 
@@ -116,6 +118,39 @@ export class LeaderboardHandler {
 
     handleShowLeaderboard = async (command: Command, message: Message) => {
         let result = await this.controller.getLeaderboard(command);
+
+        let response;
+        switch(result) {
+            case ErrorCodes.LDBD_BAD_PARAM: {
+                response = 'No names were provided to get the leaderboard';
+                break;
+            }
+            case ErrorCodes.LDBD_NOT_FOUND: {
+                response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+                break;
+            }
+            default: {
+                response = this.formatLeaderboard(result);
+                break;
+            }
+        }
+
+        message.channel.send(response);
+    }
+
+    formatLeaderboard = (leaderboard: Leaderboard) => {
+        let str = '';
+
+        str += leaderboard.name;
+        str += '\n\n';
+
+        for (let col of leaderboard.columns) {
+            let column: Column = col;
+            str += col.name;
+            str += '\n';
+        }
+
+        return str;
     }
 
     handleUpdateCommand = async (command: Command, message: Message) => {

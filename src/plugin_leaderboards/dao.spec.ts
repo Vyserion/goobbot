@@ -35,7 +35,7 @@ describe('LeaderboardDAO ::', () => {
 
         it('should query for a leaderboard with the correct parameters.', async () => {
             const expectedName: string = 'leaderboardname';
-            const expectedQuery: string = ` SELECT * FROM leaderboards WHERE name = ($1)`;
+            const expectedQuery: string = ` SELECT * FROM leaderboards WHERE name = $1`;
 
             const dao: LeaderboardDAO = new LeaderboardDAO();
             const result = await dao.getLeaderboard(expectedName);
