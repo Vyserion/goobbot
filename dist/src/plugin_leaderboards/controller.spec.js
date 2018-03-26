@@ -15,6 +15,7 @@ const dao_1 = require("./dao");
 const controller_1 = require("./controller");
 const errorCodes_1 = require("./config/errorCodes");
 const command_1 = require("../core/command");
+const columnTypes_1 = require("./config/columnTypes");
 describe('LeaderboardController ::', () => {
     describe('getLeaderboards()', () => {
         it('should return the list of leaderboards from the DAO.', () => __awaiter(this, void 0, void 0, function* () {
@@ -24,6 +25,54 @@ describe('LeaderboardController ::', () => {
             controller.dao = ts_mockito_1.instance(dao);
             const result = yield controller.getLeaderboards();
             chai_1.expect(result.length).to.equal(1);
+        }));
+    });
+    describe('getLeaderboard()', () => {
+        it('should check for less than one argument.', () => __awaiter(this, void 0, void 0, function* () {
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([]);
+            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+        }));
+        it('should return an error when no leaderboard is found with that id.', () => __awaiter(this, void 0, void 0, function* () {
+            const leaderboardName = 'leaderboardName';
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
+            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
+            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
+            controller.dao = ts_mockito_1.instance(dao);
+            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
+        }));
+        it('should return the correct leaderboard when it is found, with columns', () => __awaiter(this, void 0, void 0, function* () {
+            const leaderboardName = 'leaderboardName';
+            const controller = new controller_1.LeaderboardController();
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
+            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
+            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+                {
+                    id: 1,
+                    name: leaderboardName
+                }
+            ]);
+            const columnName = 'col';
+            const columnType = columnTypes_1.ColumnTypes.DATA;
+            ts_mockito_1.when(dao.getLeaderboardColumns(1)).thenResolve([
+                {
+                    name: columnName,
+                    type: columnType
+                }
+            ]);
+            controller.dao = ts_mockito_1.instance(dao);
+            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            const resultLeaderboard = result;
+            chai_1.expect(resultLeaderboard.name).to.equal(leaderboardName);
+            chai_1.expect(resultLeaderboard.columns.length).to.equal(1);
+            chai_1.expect(resultLeaderboard.columns[0].name).to.equal(columnName);
+            chai_1.expect(resultLeaderboard.columns[0].type).to.equal(columnType);
         }));
     });
     describe('insertLeaderboard()', () => {

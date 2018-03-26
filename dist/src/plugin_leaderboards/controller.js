@@ -13,7 +13,6 @@ const errorCodes_1 = require("./config/errorCodes");
 const logger_1 = require("../core/logger");
 const Leaderboard_1 = require("./models/Leaderboard");
 const Column_1 = require("./models/Column");
-const columnTypes_1 = require("./config/columnTypes");
 class LeaderboardController {
     constructor() {
         this.getLeaderboards = () => __awaiter(this, void 0, void 0, function* () {
@@ -35,9 +34,7 @@ class LeaderboardController {
             let leaderboardObj = new Leaderboard_1.default();
             leaderboardObj.name = leaderboard.name;
             for (let column of columns) {
-                let col = new Column_1.default();
-                col.name = column.name;
-                col.type = columnTypes_1.ColumnTypes[col.type];
+                let col = new Column_1.default(column.name, column.type);
                 leaderboardObj.columns.push(col);
             }
             return leaderboardObj;
@@ -58,7 +55,6 @@ class LeaderboardController {
             return true;
         });
         this.insertLeaderboardColumn = (command) => __awaiter(this, void 0, void 0, function* () {
-            console.log(command.arguments);
             if (command.arguments.length < 2 || command.arguments.length > 3) {
                 logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
                 return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;

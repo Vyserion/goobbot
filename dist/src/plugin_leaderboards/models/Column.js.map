@@ -1,1 +1,1 @@
-{"version":3,"file":"Column.js","sourceRoot":"","sources":["../../../../src/plugin_leaderboards/models/Column.ts"],"names":[],"mappings":";;AAEA;CAKC;AALD,yBAKC"}
+{"version":3,"file":"Column.js","sourceRoot":"","sources":["../../../../src/plugin_leaderboards/models/Column.ts"],"names":[],"mappings":";;AAEA;IAKI,YAAY,IAAY,EAAE,IAAiB;QACvC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACrB,CAAC;CACJ;AATD,yBASC"}

@@ -5,6 +5,9 @@ import { LeaderboardDAO } from "./dao";
 import { LeaderboardController } from './controller';
 import { ErrorCodes } from "./config/errorCodes";
 import { Command } from "../core/command";
+import { ColumnTypes } from "./config/columnTypes";
+import Column from "./models/Column";
+import Leaderboard from "./models/Leaderboard";
 
 describe('LeaderboardController ::', () => {
 
@@ -18,6 +21,70 @@ describe('LeaderboardController ::', () => {
 
             const result = await controller.getLeaderboards();
             expect(result.length).to.equal(1);
+        });
+
+    });
+
+    describe('getLeaderboard()', () => {
+
+        it('should check for less than one argument.', async () => {
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([]);
+
+            const result = await controller.getLeaderboard(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should return an error when no leaderboard is found with that id.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName]);
+
+            const dao: LeaderboardDAO = mock(LeaderboardDAO);
+            when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
+            controller.dao = instance(dao);
+
+            const result = await controller.getLeaderboard(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+        });
+
+        it('should return the correct leaderboard when it is found, with columns', async () => {
+            const leaderboardName: string = 'leaderboardName';
+
+            const controller: LeaderboardController = new LeaderboardController();
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName]);
+
+            const dao: LeaderboardDAO = mock(LeaderboardDAO);
+            when(dao.getLeaderboard(leaderboardName)).thenResolve([
+                {
+                    id: 1, 
+                    name: leaderboardName 
+                }
+            ]);
+            const columnName = 'col';
+            const columnType = ColumnTypes.DATA;
+            when(dao.getLeaderboardColumns(1)).thenResolve([
+                {
+                    name: columnName,
+                    type: columnType
+                }
+            ]);
+            controller.dao = instance(dao);
+
+            const result = await controller.getLeaderboard(instance(command));
+            
+            const resultLeaderboard: Leaderboard = <Leaderboard> result;
+            expect(resultLeaderboard.name).to.equal(leaderboardName);
+            expect(resultLeaderboard.columns.length).to.equal(1);
+            expect(resultLeaderboard.columns[0].name).to.equal(columnName);
+            expect(resultLeaderboard.columns[0].type).to.equal(columnType);
         });
 
     });
