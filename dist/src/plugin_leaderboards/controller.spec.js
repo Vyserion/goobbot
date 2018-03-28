@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("mocha");
 const chai_1 = require("chai");
@@ -16,43 +8,37 @@ const controller_1 = require("./controller");
 const errorCodes_1 = require("./config/errorCodes");
 const command_1 = require("../core/command");
 const columnTypes_1 = require("./config/columnTypes");
+const sinon_1 = require("sinon");
 describe('LeaderboardController ::', () => {
     describe('getLeaderboards()', () => {
-        it('should return the list of leaderboards from the DAO.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboards()).thenResolve(['leaderboard']);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.getLeaderboards();
+        it('should return the list of leaderboards from the DAO.', async () => {
+            sinon_1.stub(dao_1.LeaderboardDAO, "getLeaderboards").returns(['leaderboard']);
+            const result = await controller_1.LeaderboardController.getLeaderboards();
             chai_1.expect(result.length).to.equal(1);
-        }));
+            dao_1.LeaderboardDAO.getLeaderboards.restore();
+        });
     });
     describe('getLeaderboard()', () => {
-        it('should check for less than one argument.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        it('should check for less than one argument.', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([]);
-            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.getLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should return an error when no leaderboard is found with that id.', () => __awaiter(this, void 0, void 0, function* () {
+        });
+        it('should return an error when no leaderboard is found with that id.', async () => {
             const leaderboardName = 'leaderboardName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, "getLeaderboard").returns([]);
+            const result = await controller_1.LeaderboardController.getLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-        }));
-        it('should return the correct leaderboard when it is found, with columns', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return the correct leaderboard when it is found, with columns', async () => {
             const leaderboardName = 'leaderboardName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
                 {
                     id: 1,
                     name: leaderboardName
@@ -60,207 +46,188 @@ describe('LeaderboardController ::', () => {
             ]);
             const columnName = 'col';
             const columnType = columnTypes_1.ColumnTypes.DATA;
-            ts_mockito_1.when(dao.getLeaderboardColumns(1)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboardColumns').returns([
                 {
                     name: columnName,
                     type: columnType
                 }
             ]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.getLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.getLeaderboard(ts_mockito_1.instance(command));
             const resultLeaderboard = result;
             chai_1.expect(resultLeaderboard.name).to.equal(leaderboardName);
             chai_1.expect(resultLeaderboard.columns.length).to.equal(1);
             chai_1.expect(resultLeaderboard.columns[0].name).to.equal(columnName);
             chai_1.expect(resultLeaderboard.columns[0].type).to.equal(columnType);
-        }));
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.getLeaderboardColumns.restore();
+        });
     });
     describe('insertLeaderboard()', () => {
-        it('should check for less than one argument.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        it('should check for less than one argument.', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([]);
-            const result = yield controller.insertLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should check for more than one argument.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        });
+        it('should check for more than one argument.', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn(['one', 'two']);
-            const result = yield controller.insertLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should return an error when a leaderboard with the same name is detected.', () => __awaiter(this, void 0, void 0, function* () {
+        });
+        it('should return an error when a leaderboard with the same name is detected.', async () => {
             const leaderboardName = 'leaderboardname';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([leaderboardName]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.insertLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            const result = await controller_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_DUP_NAME);
-        }));
-        it('should return true when the leaderboard is inserted correctly.', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return true when the leaderboard is inserted correctly.', async () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const controller = new controller_1.LeaderboardController();
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
-            ts_mockito_1.when(dao.insertLeaderboard(leaderboardName)).thenResolve();
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.insertLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            sinon_1.stub(dao_1.LeaderboardDAO, 'insertLeaderboard').returns([]);
+            const result = await controller_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-        }));
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.insertLeaderboard.restore();
+        });
     });
     describe('insertLeaderboardColumn()', () => {
-        it('should check for less than 2 arguments.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        it('should check for less than 2 arguments.', async () => {
             const zeroCommand = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(zeroCommand.arguments).thenReturn([]);
-            const zeroResult = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(zeroCommand));
+            const zeroResult = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(zeroCommand));
             chai_1.expect(zeroResult).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
             const oneCommand = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(oneCommand.arguments).thenReturn(['1']);
-            const oneResult = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(oneCommand));
+            const oneResult = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(oneCommand));
             chai_1.expect(oneResult).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should check for more than 3 arguments.', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        });
+        it('should check for more than 3 arguments.', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn(['1', '2', '3', '4']);
-            const result = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should return an error when no leaderboard is found with that id.', () => __awaiter(this, void 0, void 0, function* () {
+        });
+        it('should return an error when no leaderboard is found with that id.', async () => {
             const leaderboardName = 'leaderboardName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            const result = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-        }));
-        it('should return an error when a column is found with the same name.', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return an error when a column is found with the same name.', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
             const columnName = 'columnName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, columnName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            ts_mockito_1.when(dao.getLeaderboardColumn(leaderboardId, columnName)).thenResolve([columnName]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            const result = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_DUP_NAME);
-        }));
-        it('should return true when the leaderboard column is inserted correctly.', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.getLeaderboardColumn.restore();
+        });
+        it('should return true when the leaderboard column is inserted correctly.', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
             const columnName = 'columnName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, columnName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            ts_mockito_1.when(dao.getLeaderboardColumn(leaderboardId, columnName)).thenResolve([]);
-            ts_mockito_1.when(dao.insertLeaderboardColumn(leaderboardId, columnName, 'DATA')).thenResolve();
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.insertLeaderboardColumn(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+            sinon_1.stub(dao_1.LeaderboardDAO, 'insertLeaderboardColumn');
+            const result = await controller_1.LeaderboardController.insertLeaderboardColumn(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-        }));
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.getLeaderboardColumn.restore();
+            dao_1.LeaderboardDAO.insertLeaderboardColumn.restore();
+        });
     });
     describe('updateLeaderboard()', () => {
-        it('should check for less than 2 arguments', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        it('should check for less than 2 arguments', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([]);
-            const result = yield controller.updateLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should check for more than 2 arguments', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        });
+        it('should check for more than 2 arguments', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn(['', '', '']);
-            const result = yield controller.updateLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should return an error when no leaderboard is found with that name', () => __awaiter(this, void 0, void 0, function* () {
+        });
+        it('should return an error when no leaderboard is found with that name', async () => {
             const leaderboardName = 'leaderboardName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.updateLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            const result = await controller_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-        }));
-        it('should return true when the leaderboard column is updated', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return true when the leaderboard column is updated', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            ts_mockito_1.when(dao.updateLeaderboard(leaderboardId, '')).thenResolve();
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.updateLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'updateLeaderboard');
+            const result = await controller_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-        }));
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.updateLeaderboard.restore();
+        });
     });
     describe('deleteLeaderboard()', () => {
-        it('should check for less than 1 arguments', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        it('should check for less than 1 arguments', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([]);
-            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should check for more than 1 argument', () => __awaiter(this, void 0, void 0, function* () {
-            const controller = new controller_1.LeaderboardController();
+        });
+        it('should check for more than 1 argument', async () => {
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn(['', '']);
-            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            const result = await controller_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
-        }));
-        it('should return an error when no leaderboard is found with that name', () => __awaiter(this, void 0, void 0, function* () {
+        });
+        it('should return an error when no leaderboard is found with that name', async () => {
             const leaderboardName = 'leaderboardName';
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([]);
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            const result = await controller_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-        }));
-        it('should return true when the leaderboard column is updated', () => __awaiter(this, void 0, void 0, function* () {
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return true when the leaderboard column is updated', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
-            const controller = new controller_1.LeaderboardController();
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            const dao = ts_mockito_1.mock(dao_1.LeaderboardDAO);
-            ts_mockito_1.when(dao.getLeaderboard(leaderboardName)).thenResolve([
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            ts_mockito_1.when(dao.deleteLeaderboard(leaderboardId)).thenResolve();
-            controller.dao = ts_mockito_1.instance(dao);
-            const result = yield controller.deleteLeaderboard(ts_mockito_1.instance(command));
+            sinon_1.stub(dao_1.LeaderboardDAO, 'deleteLeaderboard');
+            const result = await controller_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-        }));
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.deleteLeaderboard.restore();
+        });
     });
 });
 //# sourceMappingURL=controller.spec.js.map

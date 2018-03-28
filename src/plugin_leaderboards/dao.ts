@@ -1,9 +1,9 @@
 import { DataManager } from '../core/dataManager';
 import logger from '../core/logger';
 
-export class LeaderboardDAO {
+export namespace LeaderboardDAO {
 
-    getLeaderboards = async () => {
+    export async function getLeaderboards() {
         let query = ` SELECT * FROM leaderboards`;
 
         try {
@@ -16,7 +16,7 @@ export class LeaderboardDAO {
         }
     }
 
-    getLeaderboard = async (name: string) => {
+    export async function getLeaderboard(name: string) {
         let query = ` SELECT * FROM leaderboards WHERE name = $1`;
         let params = [name];
 
@@ -30,7 +30,7 @@ export class LeaderboardDAO {
         }
     }
 
-    getLeaderboardColumns = async (leaderboardId: number) => {
+    export async function getLeaderboardColumns(leaderboardId: number) {
         let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
         let params = [leaderboardId];
 
@@ -44,7 +44,7 @@ export class LeaderboardDAO {
         }
     }
 
-    getLeaderboardColumn = async (leaderboardId: number, columnName: string) => {
+    export async function getLeaderboardColumn(leaderboardId: number, columnName: string) {
         let query = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
         let params = [leaderboardId, columnName];
 
@@ -58,7 +58,7 @@ export class LeaderboardDAO {
         }
     }
 
-    insertLeaderboard = async (name: string) => {
+    export async function insertLeaderboard(name: string) {
         let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
         let params = [name];
         
@@ -72,7 +72,7 @@ export class LeaderboardDAO {
         }
     }
 
-    insertLeaderboardColumn = async (leaderboardId: number, name: string, type: string) => {
+    export async function insertLeaderboardColumn(leaderboardId: number, name: string, type: string) {
         let query = ' INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)';
         let params = [leaderboardId, name, type];
 
@@ -86,7 +86,7 @@ export class LeaderboardDAO {
         }
     }
 
-    updateLeaderboard = async (id: number, name: string) => {
+    export async function updateLeaderboard(id: number, name: string) {
         let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
         let params = [name, id];
     
@@ -100,7 +100,7 @@ export class LeaderboardDAO {
         }
     }
 
-    deleteLeaderboard = async (id: number) => {
+    export async function deleteLeaderboard(id: number) {
         let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
         let params = [id];
     

@@ -20,8 +20,7 @@ describe('LeaderboardDAO ::', () => {
         it('should query for leaderboards.', async () => {
             const expectedQuery: string = ` SELECT * FROM leaderboards`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.getLeaderboards();
+            const result = await LeaderboardDAO.getLeaderboards();
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -37,8 +36,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedName: string = 'leaderboardname';
             const expectedQuery: string = ` SELECT * FROM leaderboards WHERE name = $1`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.getLeaderboard(expectedName);
+            const result = await LeaderboardDAO.getLeaderboard(expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -58,8 +56,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedId: number = 1;
             const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.getLeaderboardColumns(expectedId);
+            const result = await LeaderboardDAO.getLeaderboardColumns(expectedId);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -80,8 +77,7 @@ describe('LeaderboardDAO ::', () => {
             const columnName: string = 'name';
             const expectedQuery: string = ` SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.getLeaderboardColumn(expectedId, columnName);
+            const result = await LeaderboardDAO.getLeaderboardColumn(expectedId, columnName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -103,8 +99,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedName: string = 'leaderboardname';
             const expectedQuery: string = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.insertLeaderboard(expectedName);
+            const result = await LeaderboardDAO.insertLeaderboard(expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -126,8 +121,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedColumnType: string = 'col';
             const expectedQuery: string = ' INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)';
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.insertLeaderboardColumn(leaderboardId, expectedColumnName, expectedColumnType);
+            const result = await LeaderboardDAO.insertLeaderboardColumn(leaderboardId, expectedColumnName, expectedColumnType);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -152,8 +146,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedName: string = 'leaderboardname';
             const expectedQuery: string = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.updateLeaderboard(expectedId, expectedName);
+            const result = await LeaderboardDAO.updateLeaderboard(expectedId, expectedName);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
@@ -176,8 +169,7 @@ describe('LeaderboardDAO ::', () => {
             const expectedId: number = 123;
             const expectedQuery: string = ` DELETE FROM leaderboards WHERE id = ($1)`;
 
-            const dao: LeaderboardDAO = new LeaderboardDAO();
-            const result = await dao.deleteLeaderboard(expectedId);
+            const result = await LeaderboardDAO.deleteLeaderboard(expectedId);
             expect((DataManager.query as any).called).to.be.true;
 
             const call: any = (DataManager.query as any).getCall(0);
