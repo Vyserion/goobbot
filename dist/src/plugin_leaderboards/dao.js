@@ -101,6 +101,34 @@ var LeaderboardDAO;
         }
     }
     LeaderboardDAO.updateLeaderboard = updateLeaderboard;
+    async function updateLeaderboardColumnName(leaderboardId, id, name) {
+        let query = ` UPDATE leaderboard_columns SET name = ($3) WHERE leaderboard_id = ($1) AND id = ($2)`;
+        let params = [leaderboardId, id, name];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when updating leaderboard column');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    LeaderboardDAO.updateLeaderboardColumnName = updateLeaderboardColumnName;
+    async function updateLeaderboardColumnType(leaderboardId, id, type) {
+        let query = ` UPDATE leaderboard_columns SET type = ($3) WHERE leaderboard_id = ($1) AND id = ($2)`;
+        let params = [leaderboardId, id, type];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when updating leaderboard column');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    LeaderboardDAO.updateLeaderboardColumnType = updateLeaderboardColumnType;
     async function deleteLeaderboard(id) {
         let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
         let params = [id];

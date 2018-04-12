@@ -163,6 +163,62 @@ describe('LeaderboardDAO ::', () => {
 
     });
 
+    describe('updateLeaderboardColumnName()', () => {
+
+        it(`should update a leaderboard column's type with the correct parameters.`, async () => {
+            const expectedLeaderboardId: number = 123;
+            const expectedId: number = 456;
+            const expectedNewName: string = 'New Name';
+            const expectedQuery: string = ` UPDATE leaderboard_columns SET name = ($3) WHERE leaderboard_id = ($1) AND id = ($2)`;
+
+            const result = await LeaderboardDAO.updateLeaderboardColumnName(expectedLeaderboardId, expectedId, expectedNewName);
+            expect((DataManager.query as any).called).to.be.true;
+
+            const call: any = (DataManager.query as any).getCall(0);
+            const queryArgument: string = call.args[0];
+            expect(queryArgument).to.equal(expectedQuery);
+
+            const queryArguments: any[] = call.args[1];
+            const leaderboardId: number = queryArguments[0];
+            expect(leaderboardId).to.equal(expectedLeaderboardId);
+
+            const columnId: number = queryArguments[1];
+            expect(columnId).to.equal(expectedId);
+
+            const name: string = queryArguments[2];
+            expect(name).to.equal(expectedNewName);
+        });
+
+    });
+
+    describe('updateLeaderboardColumnType()', () => {
+
+        it(`should update a leaderboard column's type with the correct parameters`, async () => {
+            const expectedLeaderboardId: number = 123;
+            const expectedId: number = 456;
+            const expectedType: string = 'Type';
+            const expectedQuery: string = ' UPDATE leaderboard_columns SET type = ($3) WHERE leaderboard_id = ($1) AND id = ($2)';
+
+            const result = await LeaderboardDAO.updateLeaderboardColumnType(expectedLeaderboardId, expectedId, expectedType);
+            expect((DataManager.query as any).called).to.be.true;
+
+            const call: any = (DataManager.query as any).getCall(0);
+            const queryArgument: string = call.args[0];
+            expect(queryArgument).to.equal(expectedQuery);
+
+            const queryArguments: any[] = call.args[1];
+            const leaderboardId: number = queryArguments[0];
+            expect(leaderboardId).to.equal(expectedLeaderboardId);
+
+            const columnId: number = queryArguments[1];
+            expect(columnId).to.equal(expectedId);
+
+            const type: string = queryArguments[2];
+            expect(type).to.equal(expectedType);
+        });
+
+    });
+
     describe('deleteLeaderboard()', () => {
 
         it('should delete a leaderboard with the correct parameters.', async () => {
