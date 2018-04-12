@@ -1,0 +1,19 @@
+addLeaderboard;
+from;
+"./addLeaderboard";
+addColumn;
+from;
+"./addColumn";
+deleteLeaderboard;
+from;
+"./deleteLeaderboard";
+getLeaderboards;
+from;
+"./getLeaderboards";
+getLeaderboard;
+from;
+"./getLeaderboard";
+updateLeaderboard;
+from;
+"./updateLeaderboard";
+//# sourceMappingURL=index.js.map
