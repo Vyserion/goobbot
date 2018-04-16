@@ -1,5 +1,6 @@
 import { LeaderboardDAO } from "./dao";
 import { ErrorCodes } from "./config/errorCodes";
+import { UpdateActions } from "./config/updateActions";
 import { Command } from "../core/command";
 import logger from '../core/logger';
 import Leaderboard from "./models/Leaderboard";
@@ -110,6 +111,52 @@ export namespace LeaderboardController {
         const id = existingLeaderboards[0].id;
         await LeaderboardDAO.updateLeaderboard(id, newName);
         logger.info('Updated leaderboard ' + name + ' to ' + newName);
+        return true;
+    }
+
+    export async function updateLeaderboardColumn(command: Command) {
+        if (command.arguments.length != 4) {
+            logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return ErrorCodes.LDBD_BAD_PARAM;
+        }
+        
+        const name = command.arguments[0];
+
+        const existingLeaderboards = await LeaderboardDAO.getLeaderboard(name);
+        if (existingLeaderboards.length == 0) {
+            logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return ErrorCodes.LDBD_NOT_FOUND;
+        }
+
+        const leaderboardId = existingLeaderboards[0].id;
+        const columnName = command.arguments[1];
+        const value = command.arguments[3];
+        
+        const existingColumns = await LeaderboardDAO.getLeaderboardColumn(leaderboardId, columnName);
+        if (existingColumns.length == 0) {
+            logger.warn('LDBD_COL_NOT_FOUND: No leaderboard column found for query');
+            return ErrorCodes.LDBD_COL_NOT_FOUND;
+        }
+
+        const columnId = existingColumns[0].id;
+
+        let action = command.arguments[2];
+        action = action.toUpperCase();
+        
+        const validatedAction = UpdateActions[action];
+        if (!validatedAction) {
+            return ErrorCodes.LDBD_INVALID_PARAM;
+        }
+
+        if (validatedAction === UpdateActions.TYPE) {
+            // TODO: we need to some checking on the type value here - same as create.
+            await LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, value)
+            logger.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + value);
+        } else if (validatedAction === UpdateActions.NAME) {
+            await LeaderboardDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
+            logger.info('Update leaderboard column ' + existingColumns[0].name + `'s type to ` + value);
+        }
+
         return true;
     }
 

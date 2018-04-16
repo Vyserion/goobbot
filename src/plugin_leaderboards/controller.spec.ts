@@ -270,6 +270,117 @@ describe('LeaderboardController ::', () => {
 
     });
 
+    describe('updateLeaderboardColumn()', () => {
+
+        it('should check for less than 4 arguments', async () => {
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([]);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should check for more than 4 arguments', async () => {
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn(['', '', '', '', '']);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should return an error when no leaderboard is found with that name', async () => {
+            const leaderboardName: string = 'leaderboardName';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, '', '', '']);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([]);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+        });
+
+        it('should return an error when no leaderboard column is found with that name', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, '', '']);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
+        it('should return an error when the action is invalid', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+            const action: string = 'invalidAction';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, action, '']);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_INVALID_PARAM);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
+        it('should return true when the Type is updated', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+            const action: string = 'TYPE';
+            const value: string = 'some text';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(LeaderboardDAO, 'updateLeaderboardColumnType').returns(true);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.be.true;
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (LeaderboardDAO.updateLeaderboardColumnType as any).restore();
+        });
+
+        it('should return true when the Name is updated', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+            const action: string = 'NAME';
+            const value: string = 'some text';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(LeaderboardDAO, 'updateLeaderboardColumnName').returns(true);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.be.true;
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (LeaderboardDAO.updateLeaderboardColumnName as any).restore();
+        });
+
+    });
+
     describe('deleteLeaderboard()', () => {
 
         it('should check for less than 1 arguments', async () => {
