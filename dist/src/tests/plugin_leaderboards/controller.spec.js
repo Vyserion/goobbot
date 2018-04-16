@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("mocha");
 const chai_1 = require("chai");
 const ts_mockito_1 = require("ts-mockito");
-const dao_1 = require("./dao");
-const controller_1 = require("./controller");
-const errorCodes_1 = require("./config/errorCodes");
-const command_1 = require("../core/command");
-const columnTypes_1 = require("./config/columnTypes");
+const dao_1 = require("../../plugin_leaderboards/dao");
+const controller_1 = require("../../plugin_leaderboards/controller");
+const errorCodes_1 = require("../../plugin_leaderboards/config/errorCodes");
+const command_1 = require("../../core/command");
+const columnTypes_1 = require("../../plugin_leaderboards/config/columnTypes");
 const sinon_1 = require("sinon");
 describe('LeaderboardController ::', () => {
     describe('getLeaderboards()', () => {

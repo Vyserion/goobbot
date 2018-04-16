@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { Command } from "./command";
+import { Command } from "../../core/command";
 import { Message } from 'discord.js';
 import { mock, instance, when } from 'ts-mockito';
 

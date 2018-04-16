@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("mocha");
 const chai_1 = require("chai");
 const sinon_1 = require("sinon");
-const dataManager_1 = require("../core/dataManager");
-const dao_1 = require("./dao");
+const dataManager_1 = require("../../core/dataManager");
+const dao_1 = require("../../plugin_leaderboards/dao");
 describe('LeaderboardDAO ::', () => {
     beforeEach(() => {
         sinon_1.stub(dataManager_1.DataManager, "query").returns(true);

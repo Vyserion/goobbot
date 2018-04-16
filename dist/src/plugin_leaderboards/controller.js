@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const dao_1 = require("./dao");
 const errorCodes_1 = require("./config/errorCodes");
+const updateActions_1 = require("./config/updateActions");
 const logger_1 = require("../core/logger");
 const Leaderboard_1 = require("./models/Leaderboard");
 const Column_1 = require("./models/Column");
@@ -95,6 +96,44 @@ var LeaderboardController;
         return true;
     }
     LeaderboardController.updateLeaderboard = updateLeaderboard;
+    async function updateLeaderboardColumn(command) {
+        if (command.arguments.length != 4) {
+            logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        }
+        const name = command.arguments[0];
+        const existingLeaderboards = await dao_1.LeaderboardDAO.getLeaderboard(name);
+        if (existingLeaderboards.length == 0) {
+            logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        }
+        const leaderboardId = existingLeaderboards[0].id;
+        const columnName = command.arguments[1];
+        const value = command.arguments[3];
+        const existingColumns = await dao_1.LeaderboardDAO.getLeaderboardColumn(leaderboardId, columnName);
+        if (existingColumns.length == 0) {
+            logger_1.default.warn('LDBD_COL_NOT_FOUND: No leaderboard column found for query');
+            return errorCodes_1.ErrorCodes.LDBD_COL_NOT_FOUND;
+        }
+        const columnId = existingColumns[0].id;
+        let action = command.arguments[2];
+        action = action.toUpperCase();
+        const validatedAction = updateActions_1.UpdateActions[action];
+        if (!validatedAction) {
+            return errorCodes_1.ErrorCodes.LDBD_INVALID_PARAM;
+        }
+        if (validatedAction === updateActions_1.UpdateActions.TYPE) {
+            // TODO: we need to some checking on the type value here - same as create.
+            await dao_1.LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, value);
+            logger_1.default.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + value);
+        }
+        else if (validatedAction === updateActions_1.UpdateActions.NAME) {
+            await dao_1.LeaderboardDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
+            logger_1.default.info('Update leaderboard column ' + existingColumns[0].name + `'s type to ` + value);
+        }
+        return true;
+    }
+    LeaderboardController.updateLeaderboardColumn = updateLeaderboardColumn;
     async function deleteLeaderboard(command) {
         if (command.arguments.length != 1) {
             logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');

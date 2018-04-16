@@ -6,6 +6,7 @@ const deleteLeaderboard_1 = require("./actions/deleteLeaderboard");
 const getLeaderboards_1 = require("./actions/getLeaderboards");
 const getLeaderboard_1 = require("./actions/getLeaderboard");
 const updateLeaderboard_1 = require("./actions/updateLeaderboard");
+const updateLeaderboardColumn_1 = require("./actions/updateLeaderboardColumn");
 class LeaderboardHandler {
     constructor() {
         this.name = 'leaderboards';
@@ -24,6 +25,10 @@ class LeaderboardHandler {
                 // Update commands
                 case 'update': {
                     updateLeaderboard_1.default(command, message);
+                    break;
+                }
+                case 'updatecol': {
+                    updateLeaderboardColumn_1.default(command, message);
                     break;
                 }
                 // Delete commands
