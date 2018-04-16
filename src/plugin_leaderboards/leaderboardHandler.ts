@@ -7,6 +7,7 @@ import deleteLeaderboard from "./actions/deleteLeaderboard";
 import getLeaderboards from "./actions/getLeaderboards";
 import getLeaderboard from "./actions/getLeaderboard";
 import updateLeaderboard from "./actions/updateLeaderboard";
+import updateLeaderboardColumn from "./actions/updateLeaderboardColumn";
 
 export class LeaderboardHandler {
 
@@ -29,6 +30,10 @@ export class LeaderboardHandler {
             // Update commands
             case 'update': {
                 updateLeaderboard(command, message);
+                break;
+            }
+            case 'updatecol': {
+                updateLeaderboardColumn(command, message);
                 break;
             }
 
