@@ -1,5 +1,5 @@
 import 'mocha';
-import logger from '../core/logger';
+import logger from '../../core/logger';
 
 beforeEach(() => {
     // Suppress all logging during testing.

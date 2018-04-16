@@ -2,8 +2,8 @@ import 'mocha';
 import { expect } from 'chai';
 import { mock, instance, when } from 'ts-mockito';
 import { stub } from 'sinon';
-import { DataManager } from '../core/dataManager';
-import { LeaderboardDAO } from './dao';
+import { DataManager } from '../../core/dataManager';
+import { LeaderboardDAO } from '../../plugin_leaderboards/dao';
 
 describe('LeaderboardDAO ::', () => {
 

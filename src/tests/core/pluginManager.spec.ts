@@ -1,10 +1,10 @@
 import 'mocha';
 import { expect } from 'chai';
 import { mock, instance, when, verify } from 'ts-mockito';
-import PluginManager from './pluginManager';
-import { Command } from "./command";
+import PluginManager from '../../core/pluginManager';
+import { Command } from "../../core/command";
 import { Message } from 'discord.js';
-import { LeaderboardHandler } from '../plugin_leaderboards/leaderboardHandler';
+import { LeaderboardHandler } from '../../plugin_leaderboards/leaderboardHandler';
 
 describe('PluginManager ::', () => {
 
