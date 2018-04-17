@@ -4,6 +4,7 @@ import { Message } from 'discord.js';
 import addLeaderboard from "./actions/addLeaderboard";
 import addColumn from "./actions/addColumn";
 import deleteLeaderboard from "./actions/deleteLeaderboard";
+import deleteColumn from "./actions/deleteColumn";
 import getLeaderboards from "./actions/getLeaderboards";
 import getLeaderboard from "./actions/getLeaderboard";
 import updateLeaderboard from "./actions/updateLeaderboard";
@@ -40,6 +41,10 @@ export class LeaderboardHandler {
             // Delete commands
             case 'delete': {
                 deleteLeaderboard(command, message);
+                break;
+            }
+            case 'deletecol': {
+                deleteColumn(command, message);
                 break;
             }
 
