@@ -143,5 +143,19 @@ var LeaderboardDAO;
         }
     }
     LeaderboardDAO.deleteLeaderboard = deleteLeaderboard;
+    async function deleteLeaderboardColumn(leaderboardId, id) {
+        let query = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1) AND id = ($2)`;
+        let params = [leaderboardId, id];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when deleting leaderboard column');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    LeaderboardDAO.deleteLeaderboardColumn = deleteLeaderboardColumn;
 })(LeaderboardDAO = exports.LeaderboardDAO || (exports.LeaderboardDAO = {}));
 //# sourceMappingURL=dao.js.map

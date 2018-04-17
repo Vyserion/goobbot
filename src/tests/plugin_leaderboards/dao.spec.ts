@@ -239,4 +239,28 @@ describe('LeaderboardDAO ::', () => {
 
     });
 
+    describe('deleteLeaderboardColumn()', () => {
+
+        it('should delete a leaderboard column with the correct parameters.', async () => {
+            const expectedLeaderboardId: number = 123;
+            const expectedId: number = 456;
+            const expectedQuery: string = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1) AND id = ($2)`;
+
+            const result = await LeaderboardDAO.deleteLeaderboardColumn(expectedLeaderboardId, expectedId);
+            expect((DataManager.query as any).called).to.be.true;
+
+            const call: any = (DataManager.query as any).getCall(0);
+            let query: string = call.args[0];
+            expect(query).to.equal(expectedQuery);
+
+            const queryArguments: any[] = call.args[1];
+            const leaderboardId: number = queryArguments[0];
+            expect(leaderboardId).to.equal(expectedLeaderboardId);
+            
+            const columnId: number = queryArguments[1];
+            expect(columnId).to.equal(expectedId);
+        });
+
+    });
+
 });
