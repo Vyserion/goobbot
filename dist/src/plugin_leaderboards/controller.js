@@ -151,5 +151,29 @@ var LeaderboardController;
         return true;
     }
     LeaderboardController.deleteLeaderboard = deleteLeaderboard;
+    async function deleteLeaderboardColumn(command) {
+        if (command.arguments.length != 2) {
+            logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        }
+        const leaderboardName = command.arguments[0];
+        let existingLeaderboards = await dao_1.LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length === 0) {
+            logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        }
+        const leaderboardId = existingLeaderboards[0].id;
+        const columnName = command.arguments[1];
+        const existingColumns = await dao_1.LeaderboardDAO.getLeaderboardColumn(leaderboardId, columnName);
+        if (existingColumns.length == 0) {
+            logger_1.default.warn('LDBD_COL_NOT_FOUND: No leaderboard column found for query');
+            return errorCodes_1.ErrorCodes.LDBD_COL_NOT_FOUND;
+        }
+        const columnId = existingColumns[0].id;
+        await dao_1.LeaderboardDAO.deleteLeaderboardColumn(leaderboardId, columnId);
+        logger_1.default.info('Deleted leaderboard column ' + columnName);
+        return true;
+    }
+    LeaderboardController.deleteLeaderboardColumn = deleteLeaderboardColumn;
 })(LeaderboardController = exports.LeaderboardController || (exports.LeaderboardController = {}));
 //# sourceMappingURL=controller.js.map

@@ -179,4 +179,35 @@ export namespace LeaderboardController {
         logger.info('Deleted leaderboard ' + name);
         return true;
     }
+
+    export async function deleteLeaderboardColumn(command: Command) {
+        if (command.arguments.length != 2) {
+            logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return ErrorCodes.LDBD_BAD_PARAM;
+        }
+
+        const leaderboardName = command.arguments[0];
+
+        let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length === 0) {
+            logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return ErrorCodes.LDBD_NOT_FOUND;
+        }
+
+        const leaderboardId = existingLeaderboards[0].id;
+
+        const columnName = command.arguments[1];
+        
+        const existingColumns = await LeaderboardDAO.getLeaderboardColumn(leaderboardId, columnName);
+        if (existingColumns.length == 0) {
+            logger.warn('LDBD_COL_NOT_FOUND: No leaderboard column found for query');
+            return ErrorCodes.LDBD_COL_NOT_FOUND;
+        }
+
+        const columnId = existingColumns[0].id;
+
+        await LeaderboardDAO.deleteLeaderboardColumn(leaderboardId, columnId);
+        logger.info('Deleted leaderboard column ' + columnName);
+        return true;
+    }
 }

@@ -434,4 +434,72 @@ describe('LeaderboardController ::', () => {
         
     });
 
+    describe('deleteLeaderboardColumn()', () => {
+
+        it('should check for less than 2 arguments.', async () => {
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([]);
+
+            const result = await LeaderboardController.deleteLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should check for more than 2 arguments.', async () => {
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn(['', '', '']);
+
+            const result = await LeaderboardController.deleteLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should return an error when no leaderboard is found with that name.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, '']);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([]);
+
+            const result = await LeaderboardController.deleteLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+        });
+
+        it('should return an error when no leaderboard column is found with that name.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+
+            const result = await LeaderboardController.deleteLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
+        it('should return true when the leaderboard column is deleted.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+
+            const result = await LeaderboardController.deleteLeaderboardColumn(instance(command));
+            expect(result).to.be.true;
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
+    });
+
 });
