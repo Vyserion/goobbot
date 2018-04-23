@@ -175,6 +175,8 @@ export namespace LeaderboardController {
         }
     
         const id = existingLeaderboards[0].id;
+
+        await LeaderboardDAO.deleteLeaderboardColumns(id);
         await LeaderboardDAO.deleteLeaderboard(id);
         logger.info('Deleted leaderboard ' + name);
         return true;

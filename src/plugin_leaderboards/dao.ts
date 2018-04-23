@@ -142,6 +142,20 @@ export namespace LeaderboardDAO {
         }
     }
 
+    export async function deleteLeaderboardColumns(leaderboardId: number) {
+        let query = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1)`;
+        let params = [leaderboardId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when deleting leaderboard columns');
+            logger.error(e);
+            return;
+        }
+    }
+
     export async function deleteLeaderboardColumn(leaderboardId: number, id: number) {
         let query = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1) AND id = ($2)`;
         let params = [leaderboardId, id];
