@@ -424,12 +424,14 @@ describe('LeaderboardController ::', () => {
                 { id: leaderboardId }
             ]);
             stub(LeaderboardDAO, 'deleteLeaderboard');
+            stub(LeaderboardDAO, 'deleteLeaderboardColumns');
 
             const result = await LeaderboardController.deleteLeaderboard(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
             (LeaderboardDAO.deleteLeaderboard as any).restore();
+            (LeaderboardDAO.deleteLeaderboardColumns as any).restore();
         });
         
     });
