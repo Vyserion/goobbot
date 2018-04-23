@@ -146,6 +146,7 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
         const id = existingLeaderboards[0].id;
+        await dao_1.LeaderboardDAO.deleteLeaderboardColumns(id);
         await dao_1.LeaderboardDAO.deleteLeaderboard(id);
         logger_1.default.info('Deleted leaderboard ' + name);
         return true;

@@ -303,10 +303,12 @@ describe('LeaderboardController ::', () => {
                 { id: leaderboardId }
             ]);
             sinon_1.stub(dao_1.LeaderboardDAO, 'deleteLeaderboard');
+            sinon_1.stub(dao_1.LeaderboardDAO, 'deleteLeaderboardColumns');
             const result = await controller_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
             dao_1.LeaderboardDAO.getLeaderboard.restore();
             dao_1.LeaderboardDAO.deleteLeaderboard.restore();
+            dao_1.LeaderboardDAO.deleteLeaderboardColumns.restore();
         });
     });
     describe('deleteLeaderboardColumn()', () => {

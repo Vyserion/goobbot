@@ -143,6 +143,20 @@ var LeaderboardDAO;
         }
     }
     LeaderboardDAO.deleteLeaderboard = deleteLeaderboard;
+    async function deleteLeaderboardColumns(leaderboardId) {
+        let query = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1)`;
+        let params = [leaderboardId];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when deleting leaderboard columns');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    LeaderboardDAO.deleteLeaderboardColumns = deleteLeaderboardColumns;
     async function deleteLeaderboardColumn(leaderboardId, id) {
         let query = ` DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1) AND id = ($2)`;
         let params = [leaderboardId, id];
