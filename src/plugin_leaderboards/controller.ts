@@ -5,6 +5,7 @@ import { Command } from "../core/command";
 import logger from '../core/logger';
 import Leaderboard from "./models/Leaderboard";
 import Column from "./models/Column";
+import { ColumnTypes } from "./config/columnTypes";
 
 export namespace LeaderboardController {
 
@@ -82,10 +83,16 @@ export namespace LeaderboardController {
             return ErrorCodes.LDBD_DUP_NAME;
         }
 
-        let columnType = 'DATA';
+        let columnType: string = ColumnTypes.DATA;
         if (command.arguments.length == 3) {
-            columnType = command.arguments[2];
-            // TODO - We need to some column type matching here.
+            const columnTypeStr = command.arguments[2].toUpperCase();
+            const validColumnTypeStr = columnTypeStr as keyof typeof ColumnTypes;
+            const validColumnType = ColumnTypes[validColumnTypeStr];
+            
+            if (!validColumnType) {
+                return ErrorCodes.LDBD_BAD_TYPE;
+            }
+            columnType = validColumnTypeStr;
         }
 
         await LeaderboardDAO.insertLeaderboardColumn(id, columnName, columnType);

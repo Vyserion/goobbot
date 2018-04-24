@@ -6,6 +6,7 @@ const updateActions_1 = require("./config/updateActions");
 const logger_1 = require("../core/logger");
 const Leaderboard_1 = require("./models/Leaderboard");
 const Column_1 = require("./models/Column");
+const columnTypes_1 = require("./config/columnTypes");
 var LeaderboardController;
 (function (LeaderboardController) {
     async function getLeaderboards() {
@@ -68,10 +69,15 @@ var LeaderboardController;
             logger_1.default.warn('LDBD_DUP_NAME: A leaderboard column with that name already exists for this leaderboard');
             return errorCodes_1.ErrorCodes.LDBD_DUP_NAME;
         }
-        let columnType = 'DATA';
+        let columnType = columnTypes_1.ColumnTypes.DATA;
         if (command.arguments.length == 3) {
-            columnType = command.arguments[2];
-            // TODO - We need to some column type matching here.
+            const columnTypeStr = command.arguments[2].toUpperCase();
+            const validColumnTypeStr = columnTypeStr;
+            const validColumnType = columnTypes_1.ColumnTypes[validColumnTypeStr];
+            if (!validColumnType) {
+                return errorCodes_1.ErrorCodes.LDBD_BAD_TYPE;
+            }
+            columnType = validColumnTypeStr;
         }
         await dao_1.LeaderboardDAO.insertLeaderboardColumn(id, columnName, columnType);
         logger_1.default.info('Created new leaderboard column ' + id + ':' + columnName + ':' + columnType);

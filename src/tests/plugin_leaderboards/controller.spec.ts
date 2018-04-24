@@ -193,6 +193,27 @@ describe('LeaderboardController ::', () => {
             (LeaderboardDAO.getLeaderboardColumn as any).restore();
         });
 
+        it(`should return an error when the provided type isn't known`, async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const leaderboardId: number = 1;
+            const columnName: string = 'columnName';
+            const columnType: string = 'not a column type';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([ leaderboardName, columnName, columnType ]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+
+            const result = await LeaderboardController.insertLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
         it('should return true when the leaderboard column is inserted correctly.', async () => {
             const leaderboardName: string = 'leaderboardName';
             const leaderboardId: number = 1;
@@ -200,6 +221,29 @@ describe('LeaderboardController ::', () => {
 
             const command: Command = mock(Command);
             when(command.arguments).thenReturn([leaderboardName, columnName]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+            stub(LeaderboardDAO, 'insertLeaderboardColumn');
+
+            const result = await LeaderboardController.insertLeaderboardColumn(instance(command));
+            expect(result).to.be.true;
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (LeaderboardDAO.insertLeaderboardColumn as any).restore();
+        });
+
+        it('should return true when the leaderboard column is inserted correctly with a known type.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const leaderboardId: number = 1;
+            const columnName: string = 'columnName';
+            const columnType: string = 'data';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, columnType]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }

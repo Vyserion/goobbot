@@ -3,5 +3,6 @@ export enum ErrorCodes {
     LDBD_DUP_NAME,
     LDBD_NOT_FOUND,
     LDBD_COL_NOT_FOUND,
-    LDBD_INVALID_PARAM
+    LDBD_INVALID_PARAM,
+    LDBD_BAD_TYPE
 };
