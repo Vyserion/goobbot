@@ -28,6 +28,10 @@ const updateLeaderboardColumn = async (command: Command, message: Message) => {
             response = 'The action ' + command.arguments[2] + ' cannot be performed on this column';
             break;
         }
+        case ErrorCodes.LDBD_BAD_TYPE: {
+            response = 'The column type ' + command.arguments[3] + ' is not allowed.';
+            break;
+        }
         default: {
             response = 'Succesfully updated the leaderboard column ' + command.arguments[2];
             break;

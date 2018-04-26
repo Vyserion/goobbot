@@ -86,13 +86,12 @@ export namespace LeaderboardController {
         let columnType: string = ColumnTypes.DATA;
         if (command.arguments.length == 3) {
             const columnTypeStr = command.arguments[2].toUpperCase();
-            const validColumnTypeStr = columnTypeStr as keyof typeof ColumnTypes;
-            const validColumnType = ColumnTypes[validColumnTypeStr];
+            const validColumnType = ColumnTypes[columnTypeStr];
             
             if (!validColumnType) {
                 return ErrorCodes.LDBD_BAD_TYPE;
             }
-            columnType = validColumnTypeStr;
+            columnType = columnTypeStr;
         }
 
         await LeaderboardDAO.insertLeaderboardColumn(id, columnName, columnType);
@@ -156,9 +155,15 @@ export namespace LeaderboardController {
         }
 
         if (validatedAction === UpdateActions.TYPE) {
-            // TODO: we need to some checking on the type value here - same as create.
-            await LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, value)
-            logger.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + value);
+            const columnTypeStr = command.arguments[3].toUpperCase();
+            const validColumnType = ColumnTypes[columnTypeStr]
+
+            if (!validColumnType) {
+                return ErrorCodes.LDBD_BAD_TYPE;
+            }
+
+            await LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr)
+            logger.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + columnTypeStr);
         } else if (validatedAction === UpdateActions.NAME) {
             await LeaderboardDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
             logger.info('Update leaderboard column ' + existingColumns[0].name + `'s type to ` + value);

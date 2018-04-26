@@ -72,12 +72,11 @@ var LeaderboardController;
         let columnType = columnTypes_1.ColumnTypes.DATA;
         if (command.arguments.length == 3) {
             const columnTypeStr = command.arguments[2].toUpperCase();
-            const validColumnTypeStr = columnTypeStr;
-            const validColumnType = columnTypes_1.ColumnTypes[validColumnTypeStr];
+            const validColumnType = columnTypes_1.ColumnTypes[columnTypeStr];
             if (!validColumnType) {
                 return errorCodes_1.ErrorCodes.LDBD_BAD_TYPE;
             }
-            columnType = validColumnTypeStr;
+            columnType = columnTypeStr;
         }
         await dao_1.LeaderboardDAO.insertLeaderboardColumn(id, columnName, columnType);
         logger_1.default.info('Created new leaderboard column ' + id + ':' + columnName + ':' + columnType);
@@ -129,9 +128,13 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_INVALID_PARAM;
         }
         if (validatedAction === updateActions_1.UpdateActions.TYPE) {
-            // TODO: we need to some checking on the type value here - same as create.
-            await dao_1.LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, value);
-            logger_1.default.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + value);
+            const columnTypeStr = command.arguments[3].toUpperCase();
+            const validColumnType = columnTypes_1.ColumnTypes[columnTypeStr];
+            if (!validColumnType) {
+                return errorCodes_1.ErrorCodes.LDBD_BAD_TYPE;
+            }
+            await dao_1.LeaderboardDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
+            logger_1.default.info('Updated leaderboard column ' + existingColumns[0].name + ' to ' + columnTypeStr);
         }
         else if (validatedAction === updateActions_1.UpdateActions.NAME) {
             await dao_1.LeaderboardDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);

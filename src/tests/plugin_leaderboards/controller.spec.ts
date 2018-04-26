@@ -381,11 +381,30 @@ describe('LeaderboardController ::', () => {
             (LeaderboardDAO.getLeaderboardColumn as any).restore();
         });
 
+        it('should return an error when the column type is unknown.', async () => {
+            const leaderboardName: string = 'leaderboardName';
+            const columnName: string = 'columnName';
+            const action: string = 'TYPE';
+            const value: string = 'NOTATYPE';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+
+            const result = await LeaderboardController.updateLeaderboardColumn(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+        });
+
         it('should return true when the Type is updated', async () => {
             const leaderboardName: string = 'leaderboardName';
             const columnName: string = 'columnName';
             const action: string = 'TYPE';
-            const value: string = 'some text';
+            const value: string = 'DATA';
 
             const command: Command = mock(Command);
             when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);

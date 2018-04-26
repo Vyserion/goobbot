@@ -273,11 +273,25 @@ describe('LeaderboardController ::', () => {
             dao_1.LeaderboardDAO.getLeaderboard.restore();
             dao_1.LeaderboardDAO.getLeaderboardColumn.restore();
         });
+        it('should return an error when the column type is unknown.', async () => {
+            const leaderboardName = 'leaderboardName';
+            const columnName = 'columnName';
+            const action = 'TYPE';
+            const value = 'NOTATYPE';
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            const result = await controller_1.LeaderboardController.updateLeaderboardColumn(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_TYPE);
+            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            dao_1.LeaderboardDAO.getLeaderboardColumn.restore();
+        });
         it('should return true when the Type is updated', async () => {
             const leaderboardName = 'leaderboardName';
             const columnName = 'columnName';
             const action = 'TYPE';
-            const value = 'some text';
+            const value = 'DATA';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
             sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
