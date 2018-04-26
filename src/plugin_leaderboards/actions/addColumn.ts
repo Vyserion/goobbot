@@ -24,6 +24,10 @@ const addColumn = async (command: Command, message: Message) => {
             response = 'A column with the name ' + command.arguments[1] + ' for leaderboard ' + command.arguments[0] + ' already exists';
             break;
         }
+        case ErrorCodes.LDBD_BAD_TYPE: {
+            response = 'The column type ' + command.arguments[2] + ' is not allowed.';
+            break;
+        }
         default: {
             response = 'Successfully created leaderboard column ' + command.arguments[1];
             break;
