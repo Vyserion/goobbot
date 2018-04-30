@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const errorCodes_1 = require("../config/errorCodes");
 const format_1 = require("../util/format");
-const controller_1 = require("../controller");
+const LeaderboardController_1 = require("../controllers/LeaderboardController");
 const getLeaderboard = async (command, message) => {
-    let result = await controller_1.LeaderboardController.getLeaderboard(command);
+    let result = await LeaderboardController_1.LeaderboardController.getLeaderboard(command);
     let response;
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {

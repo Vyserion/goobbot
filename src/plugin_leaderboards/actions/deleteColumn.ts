@@ -1,10 +1,10 @@
 import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
-import { LeaderboardController } from "../controller";
+import { ColumnController } from "../controllers/ColumnController";
 
 const deleteColumn = async (command: Command, message: Message) => {
-    let result = await LeaderboardController.deleteLeaderboardColumn(command);
+    let result = await ColumnController.deleteLeaderboardColumn(command);
 
     let response;
     switch (result) {

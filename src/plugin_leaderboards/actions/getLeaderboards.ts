@@ -1,7 +1,7 @@
 import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
-import { LeaderboardController } from "../controller";
+import { LeaderboardController } from "../controllers/LeaderboardController";
 
 const getLeaderboards = async (message: Message) => {
     let results = await LeaderboardController.getLeaderboards();

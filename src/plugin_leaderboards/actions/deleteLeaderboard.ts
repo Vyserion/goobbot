@@ -1,7 +1,7 @@
 import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
-import { LeaderboardController } from "../controller";
+import { LeaderboardController } from "../controllers/LeaderboardController";
 
 const deleteLeaderboard = async (command: Command, message: Message) => {
     let result = await LeaderboardController.deleteLeaderboard(command);
