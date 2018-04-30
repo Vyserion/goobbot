@@ -1,7 +1,8 @@
 import 'mocha';
 import { expect } from 'chai';
 import { mock, instance, when, anything } from 'ts-mockito';
-import { LeaderboardDAO } from "../../../plugin_leaderboards/dao";
+import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
+import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
 import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
 import { Command } from "../../../core/command";
@@ -64,7 +65,7 @@ describe('LeaderboardController ::', () => {
 
             const columnName = 'col';
             const columnType = ColumnTypes.DATA;
-            stub(LeaderboardDAO, 'getLeaderboardColumns').returns([
+            stub(ColumnDAO, 'getLeaderboardColumns').returns([
                 {
                     name: columnName,
                     type: columnType
@@ -80,7 +81,7 @@ describe('LeaderboardController ::', () => {
             expect(resultLeaderboard.columns[0].type).to.equal(columnType);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumns as any).restore();
+            (ColumnDAO.getLeaderboardColumns as any).restore();
         });
 
     });
@@ -231,14 +232,14 @@ describe('LeaderboardController ::', () => {
                 { id: leaderboardId }
             ]);
             stub(LeaderboardDAO, 'deleteLeaderboard');
-            stub(LeaderboardDAO, 'deleteLeaderboardColumns');
+            stub(ColumnDAO, 'deleteLeaderboardColumns');
 
             const result = await LeaderboardController.deleteLeaderboard(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
             (LeaderboardDAO.deleteLeaderboard as any).restore();
-            (LeaderboardDAO.deleteLeaderboardColumns as any).restore();
+            (ColumnDAO.deleteLeaderboardColumns as any).restore();
         });
         
     });

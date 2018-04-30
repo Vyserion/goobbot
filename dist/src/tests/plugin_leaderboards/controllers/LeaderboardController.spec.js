@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("mocha");
 const chai_1 = require("chai");
 const ts_mockito_1 = require("ts-mockito");
-const dao_1 = require("../../../plugin_leaderboards/dao");
+const LeaderboardDAO_1 = require("../../../plugin_leaderboards/dao/LeaderboardDAO");
+const ColumnDAO_1 = require("../../../plugin_leaderboards/dao/ColumnDAO");
 const LeaderboardController_1 = require("../../../plugin_leaderboards/controllers/LeaderboardController");
 const errorCodes_1 = require("../../../plugin_leaderboards/config/errorCodes");
 const command_1 = require("../../../core/command");
@@ -12,10 +13,10 @@ const sinon_1 = require("sinon");
 describe('LeaderboardController ::', () => {
     describe('getLeaderboards()', () => {
         it('should return the list of leaderboards from the DAO.', async () => {
-            sinon_1.stub(dao_1.LeaderboardDAO, "getLeaderboards").returns(['leaderboard']);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, "getLeaderboards").returns(['leaderboard']);
             const result = await LeaderboardController_1.LeaderboardController.getLeaderboards();
             chai_1.expect(result.length).to.equal(1);
-            dao_1.LeaderboardDAO.getLeaderboards.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboards.restore();
         });
     });
     describe('getLeaderboard()', () => {
@@ -29,16 +30,16 @@ describe('LeaderboardController ::', () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, "getLeaderboard").returns([]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, "getLeaderboard").returns([]);
             const result = await LeaderboardController_1.LeaderboardController.getLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
         });
         it('should return the correct leaderboard when it is found, with columns', async () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([
                 {
                     id: 1,
                     name: leaderboardName
@@ -46,7 +47,7 @@ describe('LeaderboardController ::', () => {
             ]);
             const columnName = 'col';
             const columnType = columnTypes_1.ColumnTypes.DATA;
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboardColumns').returns([
+            sinon_1.stub(ColumnDAO_1.ColumnDAO, 'getLeaderboardColumns').returns([
                 {
                     name: columnName,
                     type: columnType
@@ -58,8 +59,8 @@ describe('LeaderboardController ::', () => {
             chai_1.expect(resultLeaderboard.columns.length).to.equal(1);
             chai_1.expect(resultLeaderboard.columns[0].name).to.equal(columnName);
             chai_1.expect(resultLeaderboard.columns[0].type).to.equal(columnType);
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
-            dao_1.LeaderboardDAO.getLeaderboardColumns.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            ColumnDAO_1.ColumnDAO.getLeaderboardColumns.restore();
         });
     });
     describe('insertLeaderboard()', () => {
@@ -79,21 +80,21 @@ describe('LeaderboardController ::', () => {
             const leaderboardName = 'leaderboardname';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
             const result = await LeaderboardController_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_DUP_NAME);
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
         });
         it('should return true when the leaderboard is inserted correctly.', async () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'insertLeaderboard').returns([]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'insertLeaderboard').returns([]);
             const result = await LeaderboardController_1.LeaderboardController.insertLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
-            dao_1.LeaderboardDAO.insertLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.insertLeaderboard.restore();
         });
     });
     describe('updateLeaderboard()', () => {
@@ -113,24 +114,24 @@ describe('LeaderboardController ::', () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([]);
             const result = await LeaderboardController_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
         });
         it('should return true when the leaderboard column is updated', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'updateLeaderboard');
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'updateLeaderboard');
             const result = await LeaderboardController_1.LeaderboardController.updateLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
-            dao_1.LeaderboardDAO.updateLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.updateLeaderboard.restore();
         });
     });
     describe('deleteLeaderboard()', () => {
@@ -150,26 +151,26 @@ describe('LeaderboardController ::', () => {
             const leaderboardName = 'leaderboardName';
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([]);
             const result = await LeaderboardController_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
         });
         it('should return true when the leaderboard column is updated', async () => {
             const leaderboardName = 'leaderboardName';
             const leaderboardId = 1;
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'getLeaderboard').returns([
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            sinon_1.stub(dao_1.LeaderboardDAO, 'deleteLeaderboard');
-            sinon_1.stub(dao_1.LeaderboardDAO, 'deleteLeaderboardColumns');
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'deleteLeaderboard');
+            sinon_1.stub(ColumnDAO_1.ColumnDAO, 'deleteLeaderboardColumns');
             const result = await LeaderboardController_1.LeaderboardController.deleteLeaderboard(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
-            dao_1.LeaderboardDAO.getLeaderboard.restore();
-            dao_1.LeaderboardDAO.deleteLeaderboard.restore();
-            dao_1.LeaderboardDAO.deleteLeaderboardColumns.restore();
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            LeaderboardDAO_1.LeaderboardDAO.deleteLeaderboard.restore();
+            ColumnDAO_1.ColumnDAO.deleteLeaderboardColumns.restore();
         });
     });
 });

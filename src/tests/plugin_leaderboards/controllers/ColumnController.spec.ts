@@ -1,7 +1,8 @@
 import 'mocha';
 import { expect } from 'chai';
 import { mock, instance, when, anything } from 'ts-mockito';
-import { LeaderboardDAO } from "../../../plugin_leaderboards/dao";
+import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
+import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { ColumnController } from "../../../plugin_leaderboards/controllers/ColumnController";
 import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
 import { Command } from "../../../core/command";
@@ -61,13 +62,13 @@ describe('ColumnController ::', () => {
             stub(LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
 
             const result = await ColumnController.insertLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_DUP_NAME);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it(`should return an error when the provided type isn't known`, async () => {
@@ -82,13 +83,13 @@ describe('ColumnController ::', () => {
             stub(LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([]);
 
             const result = await ColumnController.insertLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it('should return true when the leaderboard column is inserted correctly.', async () => {
@@ -102,15 +103,15 @@ describe('ColumnController ::', () => {
             stub(LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
-            stub(LeaderboardDAO, 'insertLeaderboardColumn');
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([]);
+            stub(ColumnDAO, 'insertLeaderboardColumn');
 
             const result = await ColumnController.insertLeaderboardColumn(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
-            (LeaderboardDAO.insertLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.insertLeaderboardColumn as any).restore();
         });
 
         it('should return true when the leaderboard column is inserted correctly with a known type.', async () => {
@@ -125,15 +126,15 @@ describe('ColumnController ::', () => {
             stub(LeaderboardDAO, 'getLeaderboard').returns([
                 { id: leaderboardId }
             ]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
-            stub(LeaderboardDAO, 'insertLeaderboardColumn');
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([]);
+            stub(ColumnDAO, 'insertLeaderboardColumn');
 
             const result = await ColumnController.insertLeaderboardColumn(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
-            (LeaderboardDAO.insertLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.insertLeaderboardColumn as any).restore();
         });
 
     });
@@ -178,13 +179,13 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName, '', '']);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([]);
 
             const result = await ColumnController.updateLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it('should return an error when the action is invalid', async () => {
@@ -196,13 +197,13 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName, action, '']);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
 
             const result = await ColumnController.updateLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_INVALID_PARAM);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it('should return an error when the column type is unknown.', async () => {
@@ -215,13 +216,13 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
 
             const result = await ColumnController.updateLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it('should return true when the Type is updated', async () => {
@@ -234,15 +235,15 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
-            stub(LeaderboardDAO, 'updateLeaderboardColumnType').returns(true);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'updateLeaderboardColumnType').returns(true);
 
             const result = await ColumnController.updateLeaderboardColumn(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
-            (LeaderboardDAO.updateLeaderboardColumnType as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.updateLeaderboardColumnType as any).restore();
         });
 
         it('should return true when the Name is updated', async () => {
@@ -255,15 +256,15 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName, action, value]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
-            stub(LeaderboardDAO, 'updateLeaderboardColumnName').returns(true);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'updateLeaderboardColumnName').returns(true);
 
             const result = await ColumnController.updateLeaderboardColumn(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
-            (LeaderboardDAO.updateLeaderboardColumnName as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.updateLeaderboardColumnName as any).restore();
         });
 
     });
@@ -308,13 +309,13 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([]);
 
             const result = await ColumnController.deleteLeaderboardColumn(instance(command));
             expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
         it('should return true when the leaderboard column is deleted.', async () => {
@@ -325,13 +326,13 @@ describe('ColumnController ::', () => {
             when(command.arguments).thenReturn([leaderboardName, columnName]);
 
             stub(LeaderboardDAO, 'getLeaderboard').returns([leaderboardName]);
-            stub(LeaderboardDAO, 'getLeaderboardColumn').returns([columnName]);
+            stub(ColumnDAO, 'getLeaderboardColumn').returns([columnName]);
 
             const result = await ColumnController.deleteLeaderboardColumn(instance(command));
             expect(result).to.be.true;
 
             (LeaderboardDAO.getLeaderboard as any).restore();
-            (LeaderboardDAO.getLeaderboardColumn as any).restore();
+            (ColumnDAO.getLeaderboardColumn as any).restore();
         });
 
     });
