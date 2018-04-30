@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const controller_1 = require("../controller");
+const LeaderboardController_1 = require("../controllers/LeaderboardController");
 const getLeaderboards = async (message) => {
-    let results = await controller_1.LeaderboardController.getLeaderboards();
+    let results = await LeaderboardController_1.LeaderboardController.getLeaderboards();
     let response = '';
     if (results.length === 0) {
         response = 'There are currently no leaderboards';

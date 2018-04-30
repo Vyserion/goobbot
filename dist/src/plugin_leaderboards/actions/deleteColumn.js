@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const errorCodes_1 = require("../config/errorCodes");
-const controller_1 = require("../controller");
+const ColumnController_1 = require("../controllers/ColumnController");
 const deleteColumn = async (command, message) => {
-    let result = await controller_1.LeaderboardController.deleteLeaderboardColumn(command);
+    let result = await ColumnController_1.ColumnController.deleteLeaderboardColumn(command);
     let response;
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
