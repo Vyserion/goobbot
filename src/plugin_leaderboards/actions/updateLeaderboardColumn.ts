@@ -1,10 +1,10 @@
 import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
-import { LeaderboardController } from "../controller";
+import { ColumnController } from "../controllers/ColumnController";
 import { Message } from "discord.js";
 
 const updateLeaderboardColumn = async (command: Command, message: Message) => {
-    let result = await LeaderboardController.updateLeaderboardColumn(command);
+    let result = await ColumnController.updateLeaderboardColumn(command);
 
     let response;
     switch(result) {

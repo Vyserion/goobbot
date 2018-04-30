@@ -1,6 +1,6 @@
 import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
-import { LeaderboardController } from "../controller";
+import { LeaderboardController } from "../controllers/LeaderboardController";
 import { Message } from "discord.js";
 
 const updateLeaderboard = async (command: Command, message: Message) => {
