@@ -1,4 +1,5 @@
-import { LeaderboardDAO } from "../dao";
+import { LeaderboardDAO } from "../dao/LeaderboardDAO";
+import { ColumnDAO } from "../dao/ColumnDAO";
 import Leaderboard from "../models/Leaderboard";
 import logger from '../../core/logger';
 import { Command } from "../../core/command";
@@ -26,7 +27,7 @@ export namespace LeaderboardController {
         }
 
         let leaderboard = existingLeaderboards[0];
-        let columns = await LeaderboardDAO.getLeaderboardColumns(leaderboard.id);
+        let columns = await ColumnDAO.getLeaderboardColumns(leaderboard.id);
 
         let leaderboardObj = new Leaderboard();
         leaderboardObj.name = leaderboard.name;
@@ -95,7 +96,7 @@ export namespace LeaderboardController {
     
         const id = existingLeaderboards[0].id;
 
-        await LeaderboardDAO.deleteLeaderboardColumns(id);
+        await ColumnDAO.deleteLeaderboardColumns(id);
         await LeaderboardDAO.deleteLeaderboard(id);
         logger.info('Deleted leaderboard ' + name);
         return true;
