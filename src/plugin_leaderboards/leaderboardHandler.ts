@@ -1,5 +1,6 @@
 import { Command } from "../core/command";
 import { Message } from 'discord.js';
+import { Commands } from "./config/Commands";
 
 import addLeaderboard from "./actions/addLeaderboard";
 import addColumn from "./actions/addColumn";
@@ -15,41 +16,42 @@ export class LeaderboardHandler {
     name: string = 'leaderboards';
 
     handleCommand = (command: Command, message: Message): void => {
-        const action: string = command.action ? command.action : '';
+        let action: string = command.action ? command.action : '';
+        action = action.toLowerCase();
 
         switch (action) {
             // Create commands
-            case 'add': {
+            case Commands.CREATE_LEADERBOARD: {
                 addLeaderboard(command, message);
                 break;
             }
-            case 'addcol': {
+            case Commands.CREATE_COLUMN: {
                 addColumn(command, message);
                 break;
             }
 
             // Update commands
-            case 'update': {
+            case Commands.UPDATE_LEADERBOARD: {
                 updateLeaderboard(command, message);
                 break;
             }
-            case 'updatecol': {
+            case Commands.UPDATE_COLUMN: {
                 updateLeaderboardColumn(command, message);
                 break;
             }
 
             // Delete commands
-            case 'delete': {
+            case Commands.DELETE_LEADERBOARD: {
                 deleteLeaderboard(command, message);
                 break;
             }
-            case 'deletecol': {
+            case Commands.DELETE_COLUMN: {
                 deleteColumn(command, message);
                 break;
             }
 
             // Get commands
-            case 'show': {
+            case Commands.GET_LEADERBOARD: {
                 getLeaderboard(command, message);
                 break;
             }

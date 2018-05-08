@@ -1,272 +1,145 @@
-# Leaderboards
+# Leaderboards Plugin
 
-This plugin is designed to handle the storage and management of leaderboards within VyBot.
+This plugin is designed to handle the storage and management of leaderboards within Vybot.
 
-
-
+---------------------------------------------------------------------------------------
 
 ## Leaderboard Management
 
-In order to store data inside leaderboards, the plugin requires that there is a way for administrators to be able to create, update, and delete the specifics of a leaderboard.
+In order to store data inside leaderboards, commands are required to be able to create, update, and delete the leaderboards.
 
 
-### Creating a new Leaderboard
+### Creating a New Leaderboard
+
 > As a guild administrator, I want to be able to create new leaderboards.
 
-#### API Endpoint
-**URL**: /leaderboards  
-**Method**: PUT  
-
-For all leaderboards across your guild, the leaderboard name must be unique.
-
-**Example body, without columns**:  
-```json
-{
-    name: "Leaderboard Name"
-}
-```  
-
-**Example body, with columns**:  
-```json
-{
-    name: "Leaderboard Name",
-    columns: [
-        {
-            name: "Column One"
-        },
-        {
-            name: "Column Two"
-        },
-        {
-            name: "Column Three",
-            type: "TOTAL"
-        }
-    ]
-}
-```  
-
-**Succesful Result**: 200 OK
-```json
-{
-    id: 1
-    name: "Leaderboard Name",
-    columns: [
-        ...
-    ]
-}
-```  
-
-**Failed Result - Missing Value**: 400 Bad Request
-```json
-{
-    error: "Required parameter 'name' was not found"
-}
-```  
-
-**Failed Result - Duplicate Name**: 400 Bad Request
-```json
-{
-    error: "Leaderboard 'Leaderboard Name' already exists"
-}
-```  
+This command will create an empty leaderboard with a given name. When creating a new leaderbaord, the leaderboard name must be unique. 
 
 #### Discord Command
-**Model**: [prefix]leaderboards new [name]  
-**Example**: !leaderboards new "Leaderboard Name"
+
+**Model**:  
+```[prefix]leaderboards new [name]```  
+
+**Example**:  
+```!leaderboards new "My Leaderboard"```
 
 
-### Updating a Leaderboard
-> As a guild administrator, I want to be able to update a leaderboards' name or columns.
+### Updating a Leaderboards' Name
 
-#### API Endpoint
-**URL**: /leaderboards/{id}  
-**Method**: POST  
+> As a guild administrator, I want to be able to change a leaderboards' name.
 
-This request will only update the parts of the leaderboard which are provided in the request. The API will handle the replacement of any missing values. Note that this operation is destructive, so replacing the columns will replace all data in the leaderboard. Column Names must also be unique.
-
-**Example body, only name**:  
-_/leaderboards/1_
-```json
-{
-    name: "New Leaderboard Name"
-}
-```
-
-**Example body, only columns**:  
-_/leaderboards/1_
-```json
-{
-    columns: [
-        {
-            name: "Column One"
-        },
-        {
-            name: "New Column Two",
-            type: "TOTAL"
-        }
-    ]
-}
-```
-
-**Successful Result**: 200 OK
-```json
-{
-    results: [
-        {
-            id: 1
-            name: "New Leaderboard Name",
-            columns: [
-                ...
-            ]
-        }
-    ],
-    total: 1
-}
-```  
-
-**Failed Result**: 400 Bad Request
-```json
-{
-    error: "Leaderboard 'Leaderboard Name' already exists"
-}
-```  
-
-#### Discord Commands  
-##### Updating the Leaderboards' Name
-**Model**: [prefix]leaderboards updatename [name]  
-**Example**: !leaderboards updatename "New Leaderboard Name"  
-
-##### Updating the Leaderboards' Columns
-**Model**: [prefix]leaderboards updatecols [name] [colsList]  
-**Example**: !leaderboards updatecols "Leaderboard Name" col1,col2,col3[TOTAL],col4[EXCLUDE]  
-
-
-### Adding a new Column
-> As a guild administrator, I want to be able to add a new column, without losing data.  
-
-#### API Endpoint
-**URL Endpoint**: /leaderboards/{id}/addCol  
-**Method**: POST  
-
-This method will append a single column to the end of the leaderboard.  
-
-**Example Body**:  
-```json
-{
-    
-    name: "New Column",
-    type: "EXCLUDE"
-}
-```
-
-**Successful Result**: 200 OK
-```json
-{
-    id: 1
-    name: "New Leaderboard Name",
-    columns: [
-        ...
-    ]
-}
-```
-
-**Failed Result**: 400 Bad Request
-```json
-{
-    error: "Column 'col name' already exists"
-}
-```
+This command will update a leaderboard from it's old name to a new one. When updating a leaderboard, the leaderboard name must be unique.
 
 #### Discord Command
-**Model**: [prefix]leaderboards updatecols [name] [type]  
-**Example**: !leaderboards addcol "New Col" exclude
 
-### Wiping a Leaderboard
-> As a guild administrator, I want to be able to wipe a leaderboard without deleting it's structure.  
+**Model**:  
+```[prefix]leaderboards update [old name] [new name]```
 
-#### API Endpoint
-**URL Endpoint**: /leaderboards/{id}/wipe  
-**Method**: POST  
-
-This method will wipe any data in the leaderboard, but will keep the structure intact. There is no body required for this command.  
-
-**Successful Result**: 200 OK  
-**Failed Result**: 400 Bad Request
-```json
-{
-    error: "There is no leaderboard with that id"
-}
-```
-
-#### Discord Command
-**Model**: [prefix]leaderboards wipe [name]  
-**Example**: !leaderboards wipe "Leaderboard Name"  
+**Example**:  
+```!leaderboards update "My Leaderboard" "My Updated Leaderboard"```
 
 
 ### Deleting a Leaderboard
-> As a guild administrator, I want to be able to delete a leaderboard.  
 
-#### API Endpoint
-**URL Endpoint**: /leaderboards/{id}  
-**Method**: DELETE  
+> As a guild administrator, I want to be able to delete a leaderboard.
 
-This will fully delete the leaderboard.
-
-**Successful Result**: 200 OK  
-**Failed Result**: 400 Bad Request  
-```json
-{
-    error: "There is no leaderboard with that id"
-}
-```
+This command will delete a leaderboard and any content it may contain.
 
 #### Discord Command
-**Model**: [prefix]leaderboards delete [name]  
-**Example**: !leaderboards delete "Leaderboard Name"
+
+**Model**:  
+```[prefix]leaderboards delete [name]```
+
+**Example**:  
+```!leaderboards delete "My Leaderboard"```
+
+---------------------------------------------------------------------------------------
+
+## Leaderboard Column Management
+
+Once a leaderboard has been created, commands are required to be able to create, update, and delete columns within the leaderboard.
 
 
-### Deleting a Leaderboard Column
-> As a guild administrator, I want to be able to delete a leaderboard's column.  
+### Creating a New Column
 
-#### API Endpoint
-**URL Endpoint**: /leaderboards/{id}/deleteCol  
-**Method**: POST
+> As a guild administrator, I want to be able to add a new column.
 
-This will delete the specified leaderboard column, and all data associated with that column.
-
-**Example Body**:  
-```json
-{
-    columnName: "Column Name"
-}
-```
-
-**Successful Result**: 200 OK  
-**Failed Result**: 400 Bad Request
-```json
-{
-    error: "There is no leaderboard with that id"
-}
-```
+This command will create a new column for the given leaderboard. The column name must be unique for the leaderboard.
 
 #### Discord Command
-**Model**: [prefix]leaderboards deletecol [leaderboardName] [colName]
-**Example**: !leaderboards deletecol "Leaderboard Name" "Col Name"
+
+**Model**:  
+```[prefix]leaderboards newcol [leaderboard name] [column name] {column type}```
+
+**Example, with default type**:  
+```!leaderboards newcol "My Leaderboard" "A Column"```
+
+**Example, with a given type**:  
+```!leaderboards newcol "My Leaderboard" "A Column" data```
+
+**Allowed Column Types**:
+* Data
 
 
-## Leaderboard Data Management
-### Adding data to a Leaderboard
-> As a guild moderator, I want to be able to insert new rows into a leaderboard.  
--- TODO
+### Updating a Column
 
-### Updating data in a Leaderboard
-> As a guild moderator, I want to be able to update rows in a leaderboard.  
--- TODO
+> As a guild administrator, I want to be able to update a column's name or type.
 
-### Incrementing data in a Leaderboard
-> As a guild moderator, I want to be able to increment numeric data in a leaderboard.  
--- TODO
+This command will update a column in various ways. Both the name and the type of column can be updated.
 
-### Delete data from a leaderboard
-> As a guild moderator, I want to be able to delete data from a leaderboard.  
--- TODO
+#### Discord Command
+
+**Model**:
+```[prefix]leaderboards updatecol [leaderboard name] [column name] [update type] [value]```
+
+**Example, updating the name**:
+```!leaderboards updatecol "My Leaderboard" "A Column" name "New Column Name"```
+
+**Example, updating the type**:
+```!leaderboards updatecol "My Leaderboard" "A Column" type data```
+
+**Allowed Column Types**:
+* Data
+
+
+### Deleting a Column
+
+> As a guild administrator, I want to be able to delete a new column.
+
+This command will delete a column from a given leaderboard, and any data it may contain.
+
+#### Discord Command
+
+**Model**:
+```[prefix]leaderboards deletecol [leaderboard name] [column name]```
+
+**Example**:
+```!leaderboards deletecol "My Leaderboard" "A Column"```
+
+---------------------------------------------------------------------------------------
+
+## Leaderboard Interaction
+
+### Listing Leaderboards
+
+> As a guild user, I want to be able to list all leaderboards.
+
+This command will list all leaderboards for the guild.
+
+**Model**:
+```[prefix]leaderboards```
+
+**Example**:
+```!leaderboards```
+
+### Printing a Leaderboard
+
+> As a guild user, I want to be able to get a leaderboard.
+
+This command will print out a leaderboard.
+
+**Model**:
+```[prefix]leaderboards show [leaderboard name]```
+
+**Example**:
+```!leaderboards show "My Leaderboard"```
