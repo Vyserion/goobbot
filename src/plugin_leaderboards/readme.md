@@ -76,3 +76,70 @@ This command will create a new column for the given leaderboard. The column name
 
 **Example, with a given type**:  
 ```!leaderboards newcol "My Leaderboard" "A Column" data```
+
+**Allowed Column Types**:
+* Data
+
+
+### Updating a Column
+
+> As a guild administrator, I want to be able to update a column's name or type.
+
+This command will update a column in various ways. Both the name and the type of column can be updated.
+
+#### Discord Command
+
+**Model**:
+```[prefix]leaderboards updatecol [leaderboard name] [column name] [update type] [value]```
+
+**Example, updating the name**:
+```!leaderboards updatecol "My Leaderboard" "A Column" name "New Column Name"```
+
+**Example, updating the type**:
+```!leaderboards updatecol "My Leaderboard" "A Column" type data```
+
+**Allowed Column Types**:
+* Data
+
+
+### Deleting a Column
+
+> As a guild administrator, I want to be able to delete a new column.
+
+This command will delete a column from a given leaderboard, and any data it may contain.
+
+#### Discord Command
+
+**Model**:
+```[prefix]leaderboards deletecol [leaderboard name] [column name]```
+
+**Example**:
+```!leaderboards deletecol "My Leaderboard" "A Column"```
+
+---------------------------------------------------------------------------------------
+
+## Leaderboard Interaction
+
+### Listing Leaderboards
+
+> As a guild user, I want to be able to list all leaderboards.
+
+This command will list all leaderboards for the guild.
+
+**Model**:
+```[prefix]leaderboards```
+
+**Example**:
+```!leaderboards```
+
+### Printing a Leaderboard
+
+> As a guild user, I want to be able to get a leaderboard.
+
+This command will print out a leaderboard.
+
+**Model**:
+```[prefix]leaderboards show [leaderboard name]```
+
+**Example**:
+```!leaderboards show "My Leaderboard"```

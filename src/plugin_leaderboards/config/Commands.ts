@@ -3,5 +3,9 @@ export enum Commands {
     UPDATE_LEADERBOARD = 'update',
     DELETE_LEADERBOARD = 'delete',
 
-    CREATE_COLUMN = 'newcol'
+    CREATE_COLUMN = 'newcol',
+    UPDATE_COLUMN = 'updatecol',
+    DELETE_COLUMN = 'deletecol',
+
+    GET_LEADERBOARD = 'show'
 }

@@ -35,7 +35,7 @@ export class LeaderboardHandler {
                 updateLeaderboard(command, message);
                 break;
             }
-            case 'updatecol': {
+            case Commands.UPDATE_COLUMN: {
                 updateLeaderboardColumn(command, message);
                 break;
             }
@@ -45,13 +45,13 @@ export class LeaderboardHandler {
                 deleteLeaderboard(command, message);
                 break;
             }
-            case 'deletecol': {
+            case Commands.DELETE_COLUMN: {
                 deleteColumn(command, message);
                 break;
             }
 
             // Get commands
-            case 'show': {
+            case Commands.GET_LEADERBOARD: {
                 getLeaderboard(command, message);
                 break;
             }
