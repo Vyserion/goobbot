@@ -1,4 +1,4 @@
-export enum Commands {
+export enum commands {
     CREATE_LEADERBOARD = 'new',
     UPDATE_LEADERBOARD = 'update',
     DELETE_LEADERBOARD = 'delete',
@@ -7,5 +7,6 @@ export enum Commands {
     UPDATE_COLUMN = 'updatecol',
     DELETE_COLUMN = 'deletecol',
 
-    GET_LEADERBOARD = 'show'
+    GET_LEADERBOARD = 'show',
+    HELP = 'help'
 }
