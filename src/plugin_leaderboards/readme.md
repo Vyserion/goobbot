@@ -18,7 +18,7 @@ This command will create an empty leaderboard with a given name. When creating a
 #### Discord Command
 
 **Model**:  
-```[prefix]leaderboards new [name]```  
+```[prefix]leaderboards new [leaderboard name]```  
 
 **Example**:  
 ```!leaderboards new "My Leaderboard"```
@@ -48,7 +48,7 @@ This command will delete a leaderboard and any content it may contain.
 #### Discord Command
 
 **Model**:  
-```[prefix]leaderboards delete [name]```
+```[prefix]leaderboards delete [leaderboard name]```
 
 **Example**:  
 ```!leaderboards delete "My Leaderboard"```

@@ -1,15 +1,34 @@
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import helpMessages from "../config/helpMessages";
+import { commands } from "../config/commands";
 
 const showHelp = async (command: Command, message: Message) => {
     if (command.arguments.length === 0) {
         message.channel.send(helpMessages.showCommands);
-        return;
     } else {
-        let requestedCommand = command.arguments[0];
-        message.channel.send(helpMessages.showCommands);
-        return;
+        let requestedCommand = command.arguments[0].toLowerCase();
+
+        let response = '';
+
+        if (requestedCommand === commands.GET_LEADERBOARD)
+            response = helpMessages.getLeaderboard;
+        else if (requestedCommand === commands.CREATE_LEADERBOARD)
+            response = helpMessages.createLeaderboard;
+        else if (requestedCommand === commands.UPDATE_LEADERBOARD)
+            response = helpMessages.updateLeaderboard;
+        else if (requestedCommand === commands.DELETE_LEADERBOARD)
+            response = helpMessages.deleteLeaderboard;
+        else if (requestedCommand === commands.CREATE_COLUMN)
+            response = helpMessages.createColumn;
+        else if (requestedCommand === commands.UPDATE_COLUMN)
+            response = helpMessages.updateColumn;
+        else if (requestedCommand === commands.DELETE_COLUMN)
+            response = helpMessages.deleteColumn;
+        else
+            response = helpMessages.getLeaderboards;
+
+        message.channel.send(response);
     }
 }
 
