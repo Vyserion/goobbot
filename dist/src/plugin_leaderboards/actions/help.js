@@ -23,6 +23,8 @@ const showHelp = async (command, message) => {
             response = helpMessages_1.default.updateColumn;
         else if (requestedCommand === commands_1.commands.DELETE_COLUMN)
             response = helpMessages_1.default.deleteColumn;
+        else if (requestedCommand === commands_1.commands.CREATE_ROW)
+            response = helpMessages_1.default.createRow;
         else
             response = helpMessages_1.default.getLeaderboards;
         message.channel.send(response);

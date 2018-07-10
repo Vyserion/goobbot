@@ -8,6 +8,7 @@ var commands;
     commands["CREATE_COLUMN"] = "newcol";
     commands["UPDATE_COLUMN"] = "updatecol";
     commands["DELETE_COLUMN"] = "deletecol";
+    commands["CREATE_ROW"] = "newrow";
     commands["GET_LEADERBOARD"] = "show";
     commands["HELP"] = "help";
 })(commands = exports.commands || (exports.commands = {}));

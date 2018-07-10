@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const commands_1 = require("./config/commands");
 const addLeaderboard_1 = require("./actions/addLeaderboard");
 const addColumn_1 = require("./actions/addColumn");
+const addRow_1 = require("./actions/addRow");
 const deleteLeaderboard_1 = require("./actions/deleteLeaderboard");
 const deleteColumn_1 = require("./actions/deleteColumn");
 const getLeaderboards_1 = require("./actions/getLeaderboards");
@@ -23,6 +24,10 @@ class LeaderboardHandler {
                 }
                 case commands_1.commands.CREATE_COLUMN: {
                     addColumn_1.default(command, message);
+                    break;
+                }
+                case commands_1.commands.CREATE_ROW: {
+                    addRow_1.default(command, message);
                     break;
                 }
                 case commands_1.commands.UPDATE_LEADERBOARD: {

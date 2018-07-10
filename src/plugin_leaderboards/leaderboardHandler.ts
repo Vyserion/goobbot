@@ -4,6 +4,7 @@ import { commands } from "./config/commands";
 
 import addLeaderboard from "./actions/addLeaderboard";
 import addColumn from "./actions/addColumn";
+import addRow from "./actions/addRow";
 import deleteLeaderboard from "./actions/deleteLeaderboard";
 import deleteColumn from "./actions/deleteColumn";
 import getLeaderboards from "./actions/getLeaderboards";
@@ -27,6 +28,10 @@ export class LeaderboardHandler {
             }
             case commands.CREATE_COLUMN: {
                 addColumn(command, message);
+                break;
+            }
+            case commands.CREATE_ROW: {
+                addRow(command, message);
                 break;
             }
 

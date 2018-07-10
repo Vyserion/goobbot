@@ -94,6 +94,15 @@ const deleteColumn = "This command will delete a column from a given leaderboard
     + "Example: \n"
     + process.env.PREFIX + 'leaderboards deletecol "My Leaderboard" "A Column"';
 
+const createRow = `This command will create a new row for the given leaderboard.
+
+Model:
+leaderboards newrow [leaderboard name] [column name]
+
+Example:
+leaderboards newrow "My Leaderboard" "A Row"
+`;
+
 const helpMessages = {
     showCommands,
     getLeaderboards,
@@ -103,7 +112,8 @@ const helpMessages = {
     deleteLeaderboard,
     createColumn,
     updateColumn,
-    deleteColumn
+    deleteColumn,
+    createRow
 }
 
 export default helpMessages;
