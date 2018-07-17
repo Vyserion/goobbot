@@ -4,5 +4,6 @@ export enum ErrorCodes {
     LDBD_NOT_FOUND,
     LDBD_COL_NOT_FOUND,
     LDBD_INVALID_PARAM,
-    LDBD_BAD_TYPE
+    LDBD_BAD_TYPE,
+    LDBD_ROW_NOT_FOUND
 };

@@ -89,10 +89,10 @@ const deleteColumn = "This command will delete a column from a given leaderboard
 const createRow = `This command will create a new row for the given leaderboard.
 
 Model:
-leaderboards newrow [leaderboard name] [column name]
+${process.env.PREFIX}leaderboards newrow [leaderboard name] [column name]
 
 Example:
-leaderboards newrow "My Leaderboard" "A Row"
+${process.env.PREFIX}leaderboards newrow "My Leaderboard" "A Row"
 `;
 const helpMessages = {
     showCommands,

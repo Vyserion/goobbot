@@ -16,7 +16,7 @@ export namespace RowController {
         const leaderboardName = command.arguments[0];
 
         let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
-        if (existingLeaderboards.length == 0) {
+        if (existingLeaderboards.length === 0) {
             logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
             return ErrorCodes.LDBD_NOT_FOUND;
         }
@@ -32,6 +32,37 @@ export namespace RowController {
 
         await RowDAO.insertLeaderboardRow(id, rowName);
         logger.info('Created new leaderboard row ' + id + ':' + rowName);
+        return true;
+    }
+
+    export async function updateLeaderboardRow(command: Command) {
+        if (command.arguments.length != 3) {
+            logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return ErrorCodes.LDBD_BAD_PARAM;
+        }
+
+        const leaderboardName = command.arguments[0];
+
+        let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length === 0) {
+            logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return ErrorCodes.LDBD_NOT_FOUND;
+        }
+
+        const id = existingLeaderboards[0].id;
+        const rowName = command.arguments[1];
+
+        let existingRows = await RowDAO.getLeaderboardRow(id, rowName);
+        if (existingRows.length > 0) {
+            logger.warn('LDBD_ROW_NOT_FOUND: A leaderboard row with that name could not be found');
+            return ErrorCodes.LDBD_ROW_NOT_FOUND;
+        }
+
+        const rowId = existingRows[0].id;
+        const newRowName = command.arguments[2];
+
+        await RowDAO.updateLeaderboardRow(rowId, newRowName);
+        logger.info(`Updated leaderboard row ${existingRows[0].name} to ${newRowName}`);
         return true;
     }
 

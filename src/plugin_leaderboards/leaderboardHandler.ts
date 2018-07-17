@@ -11,6 +11,7 @@ import getLeaderboards from "./actions/getLeaderboards";
 import getLeaderboard from "./actions/getLeaderboard";
 import updateLeaderboard from "./actions/updateLeaderboard";
 import updateLeaderboardColumn from "./actions/updateLeaderboardColumn";
+import updateLeaderboardRow from "./actions/updateRow";
 import showHelp from "./actions/help";
 
 export class LeaderboardHandler {
@@ -41,6 +42,10 @@ export class LeaderboardHandler {
             }
             case commands.UPDATE_COLUMN: {
                 updateLeaderboardColumn(command, message);
+                break;
+            }
+            case commands.UPDATE_ROW: {
+                updateLeaderboardRow(command, message);
                 break;
             }
 
