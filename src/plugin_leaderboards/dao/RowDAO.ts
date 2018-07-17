@@ -31,4 +31,18 @@ export namespace RowDAO {
         }
     }
 
+    export async function updateLeaderboardRow(leaderboardRowId: number, newRowName: string) {
+        let query = ` UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`;
+        let params = [leaderboardRowId, newRowName];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when updating leaderboard row');
+            logger.error(e);
+            return;
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ const getLeaderboards_1 = require("./actions/getLeaderboards");
 const getLeaderboard_1 = require("./actions/getLeaderboard");
 const updateLeaderboard_1 = require("./actions/updateLeaderboard");
 const updateLeaderboardColumn_1 = require("./actions/updateLeaderboardColumn");
+const updateRow_1 = require("./actions/updateRow");
 const help_1 = require("./actions/help");
 class LeaderboardHandler {
     constructor() {
@@ -36,6 +37,10 @@ class LeaderboardHandler {
                 }
                 case commands_1.commands.UPDATE_COLUMN: {
                     updateLeaderboardColumn_1.default(command, message);
+                    break;
+                }
+                case commands_1.commands.UPDATE_ROW: {
+                    updateRow_1.default(command, message);
                     break;
                 }
                 case commands_1.commands.DELETE_LEADERBOARD: {

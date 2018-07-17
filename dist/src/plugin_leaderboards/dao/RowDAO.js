@@ -32,5 +32,19 @@ var RowDAO;
         }
     }
     RowDAO.insertLeaderboardRow = insertLeaderboardRow;
+    async function updateLeaderboardRow(leaderboardRowId, newRowName) {
+        let query = ` UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`;
+        let params = [leaderboardRowId, newRowName];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when updating leaderboard row');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    RowDAO.updateLeaderboardRow = updateLeaderboardRow;
 })(RowDAO = exports.RowDAO || (exports.RowDAO = {}));
 //# sourceMappingURL=RowDAO.js.map

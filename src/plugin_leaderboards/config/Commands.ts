@@ -8,6 +8,7 @@ export enum commands {
     DELETE_COLUMN = 'deletecol',
 
     CREATE_ROW = 'newrow',
+    UPDATE_ROW = 'updaterow',
 
     GET_LEADERBOARD = 'show',
     HELP = 'help'

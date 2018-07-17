@@ -46,5 +46,22 @@ describe('RowDAO ::', () => {
             chai_1.expect(name).to.equal(expectedRowName);
         });
     });
+    describe('updateLeaderboardRow()', () => {
+        it('should update a leaderboard row with the correct parameters.', async () => {
+            const expectedLeaderboardId = 1;
+            const expectedNewName = 'New Name';
+            const expectedQuery = ` UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`;
+            const result = await RowDAO_1.RowDAO.updateLeaderboardRow(expectedLeaderboardId, expectedNewName);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const queryArgument = call.args[0];
+            chai_1.expect(queryArgument).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const leaderboardId = queryArguments[0];
+            chai_1.expect(leaderboardId).to.equal(expectedLeaderboardId);
+            const name = queryArguments[1];
+            chai_1.expect(name).to.equal(expectedNewName);
+        });
+    });
 });
 //# sourceMappingURL=RowDAO.spec.js.map
