@@ -43,7 +43,7 @@ var RowController;
         const id = existingLeaderboards[0].id;
         const rowName = command.arguments[1];
         let existingRows = await RowDAO_1.RowDAO.getLeaderboardRow(id, rowName);
-        if (existingRows.length > 0) {
+        if (existingRows.length === 0) {
             logger_1.default.warn('LDBD_ROW_NOT_FOUND: A leaderboard row with that name could not be found');
             return errorCodes_1.ErrorCodes.LDBD_ROW_NOT_FOUND;
         }

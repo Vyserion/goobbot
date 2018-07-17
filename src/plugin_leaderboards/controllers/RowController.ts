@@ -53,7 +53,7 @@ export namespace RowController {
         const rowName = command.arguments[1];
 
         let existingRows = await RowDAO.getLeaderboardRow(id, rowName);
-        if (existingRows.length > 0) {
+        if (existingRows.length === 0) {
             logger.warn('LDBD_ROW_NOT_FOUND: A leaderboard row with that name could not be found');
             return ErrorCodes.LDBD_ROW_NOT_FOUND;
         }
