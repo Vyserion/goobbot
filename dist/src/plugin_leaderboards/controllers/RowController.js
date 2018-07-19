@@ -54,5 +54,29 @@ var RowController;
         return true;
     }
     RowController.updateLeaderboardRow = updateLeaderboardRow;
+    async function deleteLeaderboardRow(command) {
+        if (command.arguments.length != 2) {
+            logger_1.default.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        }
+        const leaderboardName = command.arguments[0];
+        let existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length === 0) {
+            logger_1.default.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        }
+        const leaderboardId = existingLeaderboards[0].id;
+        const rowName = command.arguments[1];
+        const existingRows = await RowDAO_1.RowDAO.getLeaderboardRow(leaderboardId, rowName);
+        if (existingRows.length === 0) {
+            logger_1.default.warn('LDBD_ROW_NOT_FOUND: No leaderboard row found for query');
+            return errorCodes_1.ErrorCodes.LDBD_ROW_NOT_FOUND;
+        }
+        const rowId = existingRows[0].id;
+        await RowDAO_1.RowDAO.deleteLeaderboardRow(rowId);
+        logger_1.default.info(`Deleted leaderboard row ${rowName}`);
+        return true;
+    }
+    RowController.deleteLeaderboardRow = deleteLeaderboardRow;
 })(RowController = exports.RowController || (exports.RowController = {}));
 //# sourceMappingURL=RowController.js.map

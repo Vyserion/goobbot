@@ -66,4 +66,34 @@ export namespace RowController {
         return true;
     }
 
+    export async function deleteLeaderboardRow(command: Command) {
+        if (command.arguments.length != 2) {
+            logger.warn('LDBD_BAD_PARAM: Incorrect number of parameters provided');
+            return ErrorCodes.LDBD_BAD_PARAM;
+        }
+
+        const leaderboardName = command.arguments[0];
+
+        let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboards.length === 0) {
+            logger.warn('LDBD_NOT_FOUND: No leaderboard found for query');
+            return ErrorCodes.LDBD_NOT_FOUND;
+        }
+
+        const leaderboardId = existingLeaderboards[0].id;
+        const rowName = command.arguments[1];
+
+        const existingRows = await RowDAO.getLeaderboardRow(leaderboardId, rowName);
+        if (existingRows.length === 0) {
+            logger.warn('LDBD_ROW_NOT_FOUND: No leaderboard row found for query');
+            return ErrorCodes.LDBD_ROW_NOT_FOUND;
+        }
+
+        const rowId = existingRows[0].id;
+
+        await RowDAO.deleteLeaderboardRow(rowId);
+        logger.info(`Deleted leaderboard row ${rowName}`);
+        return true;
+    }
+
 }

@@ -129,5 +129,65 @@ describe('RowController ::', () => {
             RowDAO_1.RowDAO.getLeaderboardRow.restore();
         });
     });
+    describe('deleteLeaderboardRow()', async () => {
+        it('should check for less than 2 arguments.', async () => {
+            const zeroCommand = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(zeroCommand.arguments).thenReturn([]);
+            const zeroResult = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(zeroCommand));
+            chai_1.expect(zeroResult).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+            const oneCommand = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(oneCommand.arguments).thenReturn(['']);
+            const oneResult = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(oneCommand));
+            chai_1.expect(oneResult).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+        });
+        it('should check for more than 2 arguments.', async () => {
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn(['', '', '']);
+            const result = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_BAD_PARAM);
+        });
+        it('should return an error when no leaderboard is found with that name.', async () => {
+            const leaderboardName = 'leaderboard name';
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, '']);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([]);
+            const result = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_NOT_FOUND);
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+        });
+        it('should return an error when no leaderboard row is found with that name', async () => {
+            const leaderboardName = 'leaderboard name';
+            const leaderboardId = 1;
+            const rowName = 'row name';
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, rowName]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            sinon_1.stub(RowDAO_1.RowDAO, 'getLeaderboardRow').returns([]);
+            const result = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.equal(errorCodes_1.ErrorCodes.LDBD_ROW_NOT_FOUND);
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            RowDAO_1.RowDAO.getLeaderboardRow.restore();
+        });
+        it('should return true when the leaderboard row is deleted.', async () => {
+            const leaderboardName = 'leaderboard name';
+            const leaderboardId = 1;
+            const rowName = 'row name';
+            const rowId = 2;
+            const command = ts_mockito_1.mock(command_1.Command);
+            ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, rowName]);
+            sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            sinon_1.stub(RowDAO_1.RowDAO, 'getLeaderboardRow').returns([
+                { id: rowId }
+            ]);
+            const result = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(command));
+            chai_1.expect(result).to.be.true;
+            LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
+            RowDAO_1.RowDAO.getLeaderboardRow.restore();
+        });
+    });
 });
 //# sourceMappingURL=RowController.spec.js.map
