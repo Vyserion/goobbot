@@ -63,6 +63,20 @@ describe('RowDAO ::', () => {
             chai_1.expect(name).to.equal(expectedNewName);
         });
     });
+    describe('deleteLeaderboardRows()', () => {
+        it('should delete leaderboard rows with the correct parameters.', async () => {
+            const expectedId = 123;
+            const expectedQuery = ` DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
+            const result = await RowDAO_1.RowDAO.deleteLeaderboardRows(expectedId);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const queryArgument = call.args[0];
+            chai_1.expect(queryArgument).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const leaderboardId = queryArguments[0];
+            chai_1.expect(leaderboardId).to.equal(expectedId);
+        });
+    });
     describe('deleteLeaderboardRow()', () => {
         it('should delete a leaderboard row with the correct parameters.', async () => {
             const expectedLeaderboardRowId = 1;

@@ -5,6 +5,7 @@ import logger from '../../core/logger';
 import { Command } from "../../core/command";
 import { ErrorCodes } from "../config/errorCodes";
 import Column from "../models/Column";
+import { RowDAO } from "../dao/RowDAO";
 
 export namespace LeaderboardController {
 
@@ -96,8 +97,10 @@ export namespace LeaderboardController {
     
         const id = existingLeaderboards[0].id;
 
+        await RowDAO.deleteLeaderboardRows(id);
         await ColumnDAO.deleteLeaderboardColumns(id);
         await LeaderboardDAO.deleteLeaderboard(id);
+        
         logger.info('Deleted leaderboard ' + name);
         return true;
     }

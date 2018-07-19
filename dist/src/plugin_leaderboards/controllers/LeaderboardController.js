@@ -6,6 +6,7 @@ const Leaderboard_1 = require("../models/Leaderboard");
 const logger_1 = require("../../core/logger");
 const errorCodes_1 = require("../config/errorCodes");
 const Column_1 = require("../models/Column");
+const RowDAO_1 = require("../dao/RowDAO");
 var LeaderboardController;
 (function (LeaderboardController) {
     async function getLeaderboards() {
@@ -80,6 +81,7 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
         const id = existingLeaderboards[0].id;
+        await RowDAO_1.RowDAO.deleteLeaderboardRows(id);
         await ColumnDAO_1.ColumnDAO.deleteLeaderboardColumns(id);
         await LeaderboardDAO_1.LeaderboardDAO.deleteLeaderboard(id);
         logger_1.default.info('Deleted leaderboard ' + name);

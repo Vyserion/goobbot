@@ -45,6 +45,20 @@ export namespace RowDAO {
         }
     }
 
+    export async function deleteLeaderboardRows(leaderboardId: number) {
+        const query = ` DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
+        const params = [leaderboardId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when updating leaderboard row');
+            logger.error(e);
+            return;
+        }
+    }
+
     export async function deleteLeaderboardRow(leaderboardRowId: number) {
         const query = ` DELETE FROM leaderboard_rows WHERE id = ($1)`;
         const params = [leaderboardRowId];
