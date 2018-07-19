@@ -6,6 +6,7 @@ const addColumn_1 = require("./actions/addColumn");
 const addRow_1 = require("./actions/addRow");
 const deleteLeaderboard_1 = require("./actions/deleteLeaderboard");
 const deleteColumn_1 = require("./actions/deleteColumn");
+const deleteRow_1 = require("./actions/deleteRow");
 const getLeaderboards_1 = require("./actions/getLeaderboards");
 const getLeaderboard_1 = require("./actions/getLeaderboard");
 const updateLeaderboard_1 = require("./actions/updateLeaderboard");
@@ -49,6 +50,10 @@ class LeaderboardHandler {
                 }
                 case commands_1.commands.DELETE_COLUMN: {
                     deleteColumn_1.default(command, message);
+                    break;
+                }
+                case commands_1.commands.DELETE_ROW: {
+                    deleteRow_1.default(command, message);
                     break;
                 }
                 case commands_1.commands.GET_LEADERBOARD: {

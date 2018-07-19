@@ -10,6 +10,7 @@ var commands;
     commands["DELETE_COLUMN"] = "deletecol";
     commands["CREATE_ROW"] = "newrow";
     commands["UPDATE_ROW"] = "updaterow";
+    commands["DELETE_ROW"] = "deleterow";
     commands["GET_LEADERBOARD"] = "show";
     commands["HELP"] = "help";
 })(commands = exports.commands || (exports.commands = {}));

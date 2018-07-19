@@ -179,4 +179,87 @@ describe('RowController ::', () => {
 
     });
 
+    describe('deleteLeaderboardRow()', async () => {
+
+        it('should check for less than 2 arguments.', async () => {
+            const zeroCommand: Command = mock(Command);
+            when(zeroCommand.arguments).thenReturn([]);
+
+            const zeroResult = await RowController.deleteLeaderboardRow(instance(zeroCommand));
+            expect(zeroResult).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+
+            const oneCommand: Command = mock(Command);
+            when(oneCommand.arguments).thenReturn(['']);
+
+            const oneResult = await RowController.deleteLeaderboardRow(instance(oneCommand));
+            expect(oneResult).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should check for more than 2 arguments.', async () => {
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn(['', '', '']);
+
+            const result = await RowController.deleteLeaderboardRow(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+        });
+
+        it('should return an error when no leaderboard is found with that name.', async () => {
+            const leaderboardName: string = 'leaderboard name';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, '']);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([]);
+
+            const result = await RowController.deleteLeaderboardRow(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+        });
+
+        it('should return an error when no leaderboard row is found with that name', async () => {
+            const leaderboardName: string = 'leaderboard name';
+            const leaderboardId: number = 1;
+            const rowName: string = 'row name';
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, rowName]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            stub(RowDAO, 'getLeaderboardRow').returns([]);
+
+            const result = await RowController.deleteLeaderboardRow(instance(command));
+            expect(result).to.equal(ErrorCodes.LDBD_ROW_NOT_FOUND);
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (RowDAO.getLeaderboardRow as any).restore();
+        });
+
+        it('should return true when the leaderboard row is deleted.', async () => {
+            const leaderboardName: string = 'leaderboard name';
+            const leaderboardId: number = 1;
+            const rowName: string = 'row name';
+            const rowId: number = 2;
+
+            const command: Command = mock(Command);
+            when(command.arguments).thenReturn([leaderboardName, rowName]);
+
+            stub(LeaderboardDAO, 'getLeaderboard').returns([
+                { id: leaderboardId }
+            ]);
+            stub(RowDAO, 'getLeaderboardRow').returns([
+                { id: rowId }
+            ]);
+
+            const result = await RowController.deleteLeaderboardRow(instance(command));
+            expect(result).to.be.true;
+
+            (LeaderboardDAO.getLeaderboard as any).restore();
+            (RowDAO.getLeaderboardRow as any).restore();
+        });
+
+    });
+
 });

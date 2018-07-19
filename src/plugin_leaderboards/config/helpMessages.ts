@@ -97,11 +97,29 @@ const deleteColumn = "This command will delete a column from a given leaderboard
 const createRow = `This command will create a new row for the given leaderboard.
 
 Model:
-${process.env.PREFIX}leaderboards newrow [leaderboard name] [column name]
+${process.env.PREFIX}leaderboards newrow [leaderboard name] [row name]
 
 Example:
 ${process.env.PREFIX}leaderboards newrow "My Leaderboard" "A Row"
 `;
+
+const updateRow = `This command will update a row with the given name.
+
+Model:
+${process.env.PREFIX}leaderboards updaterow [leaderboard name] [row name] [new row name]
+
+Example:
+${process.env.PREFIX}leaderbaord updaterow "My Leaderboard" "A Row" "New Row"
+`
+
+const deleteRow = `This command will delete a row from the given leaderboard, and any data it may contain.
+
+Model:
+${process.env.PREFIX}leaderboards deleterow [leaderboard name] [row name]
+
+Example:
+${process.env.PREFIX}leaderboards deleterow "My Leaderboard" "A Row"
+`
 
 const helpMessages = {
     showCommands,
@@ -113,7 +131,9 @@ const helpMessages = {
     createColumn,
     updateColumn,
     deleteColumn,
-    createRow
+    createRow,
+    updateRow,
+    deleteRow
 }
 
 export default helpMessages;

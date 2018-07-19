@@ -7,6 +7,7 @@ import addColumn from "./actions/addColumn";
 import addRow from "./actions/addRow";
 import deleteLeaderboard from "./actions/deleteLeaderboard";
 import deleteColumn from "./actions/deleteColumn";
+import deleteRow from "./actions/deleteRow";
 import getLeaderboards from "./actions/getLeaderboards";
 import getLeaderboard from "./actions/getLeaderboard";
 import updateLeaderboard from "./actions/updateLeaderboard";
@@ -55,6 +56,10 @@ export class LeaderboardHandler {
             }
             case commands.DELETE_COLUMN: {
                 deleteColumn(command, message);
+                break;
+            }
+            case commands.DELETE_ROW: {
+                deleteRow(command, message);
                 break;
             }
 
