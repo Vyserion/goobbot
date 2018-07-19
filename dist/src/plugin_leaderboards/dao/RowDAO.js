@@ -46,6 +46,20 @@ var RowDAO;
         }
     }
     RowDAO.updateLeaderboardRow = updateLeaderboardRow;
+    async function deleteLeaderboardRows(leaderboardId) {
+        const query = ` DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
+        const params = [leaderboardId];
+        try {
+            let results = await dataManager_1.DataManager.query(query, params);
+            return results;
+        }
+        catch (e) {
+            logger_1.default.error('Unexpected error when updating leaderboard row');
+            logger_1.default.error(e);
+            return;
+        }
+    }
+    RowDAO.deleteLeaderboardRows = deleteLeaderboardRows;
     async function deleteLeaderboardRow(leaderboardRowId) {
         const query = ` DELETE FROM leaderboard_rows WHERE id = ($1)`;
         const params = [leaderboardRowId];
