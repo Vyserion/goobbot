@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { stub } from 'sinon';
 import { DataManager } from '../../../core/dataManager';
 import { RowDAO } from "../../../plugin_leaderboards/dao/RowDAO";
+import { isString } from 'util';
 
 describe('RowDAO ::', () => {
     
@@ -12,6 +13,26 @@ describe('RowDAO ::', () => {
 
     afterEach(() => {
         (DataManager.query as any).restore();
+    });
+
+    describe('getLeaderboardRows()', () => {
+
+        it('should query for leaderboard rows with the correct parameters.', async () => {
+            const expectedLeaderboardId: number = 1;
+            const expectedQuery: string = ` SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
+
+            const result = await RowDAO.getLeaderboardRows(expectedLeaderboardId);
+            expect((DataManager.query as any).called).to.be.true;
+
+            const call: any = (DataManager.query as any).getCall(0);
+            const query: string = call.args[0];
+            expect(query).to.equal(expectedQuery);
+
+            const queryArguments: any[] = call.args[1];
+            const leaderboardId: number = queryArguments[0];
+            expect(leaderboardId).to.equal(expectedLeaderboardId);
+        });
+
     });
 
     describe('getLeaderboardRow()', () => {

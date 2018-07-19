@@ -11,6 +11,9 @@ const showCommands = "User Commands: \n"
     + "- Add Column: " + commands.CREATE_COLUMN + "\n"
     + "- Update Column: " + commands.UPDATE_COLUMN + "\n"
     + "- Delete Column: " + commands.DELETE_COLUMN + "\n"
+    + "- Add Row: " + commands.CREATE_ROW + "\n"
+    + "- Update Row: " + commands.UPDATE_ROW + "\n"
+    + "- Delete Row: " + commands.DELETE_ROW + "\n"
     + "\n"
     + "For more information, use the command: '!leaderboards help [command]'";
 
