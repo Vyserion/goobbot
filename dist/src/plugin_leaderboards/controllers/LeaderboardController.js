@@ -7,6 +7,7 @@ const logger_1 = require("../../core/logger");
 const errorCodes_1 = require("../config/errorCodes");
 const Column_1 = require("../models/Column");
 const RowDAO_1 = require("../dao/RowDAO");
+const Row_1 = require("../models/Row");
 var LeaderboardController;
 (function (LeaderboardController) {
     async function getLeaderboards() {
@@ -26,11 +27,16 @@ var LeaderboardController;
         }
         let leaderboard = existingLeaderboards[0];
         let columns = await ColumnDAO_1.ColumnDAO.getLeaderboardColumns(leaderboard.id);
+        let rows = await RowDAO_1.RowDAO.getLeaderboardRows(leaderboard.id);
         let leaderboardObj = new Leaderboard_1.default();
         leaderboardObj.name = leaderboard.name;
         for (let column of columns) {
             let col = new Column_1.default(column.name, column.type);
             leaderboardObj.columns.push(col);
+        }
+        for (let row of rows) {
+            let r = new Row_1.default(row.name);
+            leaderboardObj.rows.push(r);
         }
         return leaderboardObj;
     }

@@ -12,6 +12,20 @@ describe('RowDAO ::', () => {
     afterEach(() => {
         dataManager_1.DataManager.query.restore();
     });
+    describe('getLeaderboardRows()', () => {
+        it('should query for leaderboard rows with the correct parameters.', async () => {
+            const expectedLeaderboardId = 1;
+            const expectedQuery = ` SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
+            const result = await RowDAO_1.RowDAO.getLeaderboardRows(expectedLeaderboardId);
+            chai_1.expect(dataManager_1.DataManager.query.called).to.be.true;
+            const call = dataManager_1.DataManager.query.getCall(0);
+            const query = call.args[0];
+            chai_1.expect(query).to.equal(expectedQuery);
+            const queryArguments = call.args[1];
+            const leaderboardId = queryArguments[0];
+            chai_1.expect(leaderboardId).to.equal(expectedLeaderboardId);
+        });
+    });
     describe('getLeaderboardRow()', () => {
         it('should query for a leaderboard row with the correct parameters.', async () => {
             const leaderboardId = 1;

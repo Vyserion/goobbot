@@ -6,6 +6,7 @@ import { Command } from "../../core/command";
 import { ErrorCodes } from "../config/errorCodes";
 import Column from "../models/Column";
 import { RowDAO } from "../dao/RowDAO";
+import Row from "../models/Row";
 
 export namespace LeaderboardController {
 
@@ -29,6 +30,7 @@ export namespace LeaderboardController {
 
         let leaderboard = existingLeaderboards[0];
         let columns = await ColumnDAO.getLeaderboardColumns(leaderboard.id);
+        let rows = await RowDAO.getLeaderboardRows(leaderboard.id);
 
         let leaderboardObj = new Leaderboard();
         leaderboardObj.name = leaderboard.name;
@@ -36,6 +38,11 @@ export namespace LeaderboardController {
         for (let column of columns) {
             let col = new Column(column.name, column.type);
             leaderboardObj.columns.push(col);
+        }
+
+        for (let row of rows) {
+            let r = new Row(row.name);
+            leaderboardObj.rows.push(r);
         }
 
         return leaderboardObj;
