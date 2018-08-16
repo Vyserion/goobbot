@@ -11,6 +11,8 @@ export enum commands {
     UPDATE_ROW = 'updaterow',
     DELETE_ROW = 'deleterow',
 
+    UPSERT_VALUE = 'update',
+
     GET_LEADERBOARD = 'show',
     HELP = 'help'
 }
