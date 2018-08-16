@@ -13,6 +13,7 @@ import getLeaderboard from "./actions/getLeaderboard";
 import updateLeaderboard from "./actions/updateLeaderboard";
 import updateLeaderboardColumn from "./actions/updateLeaderboardColumn";
 import updateLeaderboardRow from "./actions/updateRow";
+import upsertValue from './actions/upsertValue';
 import showHelp from "./actions/help";
 
 export class LeaderboardHandler {
@@ -65,6 +66,11 @@ export class LeaderboardHandler {
 
             case commands.GET_LEADERBOARD: {
                 getLeaderboard(command, message);
+                break;
+            }
+
+            case commands.UPSERT_VALUE: {
+                upsertValue(command, message);
                 break;
             }
 
