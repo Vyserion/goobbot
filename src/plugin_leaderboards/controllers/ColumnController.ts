@@ -1,11 +1,13 @@
 import { LeaderboardDAO } from "../dao/LeaderboardDAO";
 import { ColumnDAO } from "../dao/ColumnDAO";
+import { ValueDAO } from "../dao/ValueDAO";
 import logger from '../../core/logger';
 import { Command } from "../../core/command";
 import { ErrorCodes } from "../config/errorCodes";
 import { UpdateActions } from "../config/updateActions";
 import Column from "../models/Column";
 import { ColumnTypes } from "../config/columnTypes";
+
 
 export namespace ColumnController {
 
@@ -126,6 +128,7 @@ export namespace ColumnController {
 
         const columnId = existingColumns[0].id;
 
+        await ValueDAO.deleteValuesByColumn(columnId);
         await ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnId);
         logger.info('Deleted leaderboard column ' + columnName);
         return true;
