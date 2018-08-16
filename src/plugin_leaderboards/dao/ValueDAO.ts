@@ -16,4 +16,48 @@ export namespace ValueDAO {
             return;
         }
     }
+
+    export async function deleteValuesByRow(leaderboardRowId: number) {
+        const query = 'DELETE FROM leaderboard_values WHERE leaderboard_row_id = (?)';
+        const params = [leaderboardRowId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when deleting values by leaderboard row');
+            logger.error(e);
+            return;
+        }
+    }
+
+    export async function deleteValuesByColumn(leaderboardColumnId: number) {
+        const query = 'DELETE FROM leaderboard_values WHERE leaderboard_col_id = (?)';
+        const params = [leaderboardColumnId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when deleting values by leaderboard row');
+            logger.error(e);
+            return;
+        }
+    }
+
+    export async function deleteValueByLeaderboard(leaderboardId: number) {
+        const query = `DELETE FROM leaderboard_values
+        WHERE leaderboard_col_id IN (SELECT id FROM leaderboard_columns WHERE leaderboard_id = ?)
+        AND leaderboard_row_id IN (SELECT id FROM leaderboard_rows WHERE leaderboard_id = ?)`;
+        const params = [leaderboardId, leaderboardId];
+
+        try {
+            let results: any[] = await DataManager.query(query, params);
+            return results;
+        } catch (e) {
+            logger.error('Unexpected error when deleting values by leaderboard row');
+            logger.error(e);
+            return;
+        }
+    }
 }

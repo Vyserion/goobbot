@@ -1,5 +1,6 @@
 import { LeaderboardDAO } from '../dao/LeaderboardDAO';
 import { RowDAO } from '../dao/RowDAO';
+import { ValueDAO } from '../dao/ValueDAO';
 import logger from '../../core/logger';
 import { Command } from '../../core/command';
 import { ErrorCodes } from '../config/errorCodes';
@@ -91,6 +92,7 @@ export namespace RowController {
 
         const rowId = existingRows[0].id;
 
+        await ValueDAO.deleteValuesByRow(rowId);
         await RowDAO.deleteLeaderboardRow(rowId);
         logger.info(`Deleted leaderboard row ${rowName}`);
         return true;

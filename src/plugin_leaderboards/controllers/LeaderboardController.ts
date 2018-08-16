@@ -7,6 +7,7 @@ import { ErrorCodes } from "../config/errorCodes";
 import Column from "../models/Column";
 import { RowDAO } from "../dao/RowDAO";
 import Row from "../models/Row";
+import { ValueDAO } from "../dao/ValueDAO";
 
 export namespace LeaderboardController {
 
@@ -103,7 +104,8 @@ export namespace LeaderboardController {
         }
     
         const id = existingLeaderboards[0].id;
-
+        
+        await ValueDAO.deleteValueByLeaderboard(id);
         await RowDAO.deleteLeaderboardRows(id);
         await ColumnDAO.deleteLeaderboardColumns(id);
         await LeaderboardDAO.deleteLeaderboard(id);
