@@ -7,7 +7,8 @@
     "build:watch": "tsc --watch",
     "start": "tsc && node ./dist/app.js",
     "test": "tsc && mocha ./dist/**/*.spec.js",
-    "test:watch": "tsc && mocha -w ./dist/**/*.spec.js"
+    "test:watch": "tsc && mocha -w ./dist/**/*.spec.js",
+    "tidy": "prettier --write **/*.ts app.ts && tsc"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "libsodium-wrappers": "^0.7.3",
     "npm": "^5.8.0",
     "pg": "^7.4.1",
+    "prettier": "^1.14.2",
     "sinon": "^4.4.2",
     "uws": "^9.14.0",
     "winston": "^3.0.0-rc1"
