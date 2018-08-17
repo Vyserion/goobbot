@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Command {
     constructor(message) {
         this.assignParts = (message) => {
-            let parts = message.split(' ');
+            let parts = message.split(" ");
             this.plugin = parts[0];
             this.arguments = [];
             if (parts.length >= 2) {
@@ -19,7 +19,7 @@ class Command {
         };
         this.parseArguments = (inputs) => {
             let parsedArguments = [];
-            let buffer = '';
+            let buffer = "";
             for (let input of inputs) {
                 if (input.startsWith("'")) {
                     let temp = input.substring(1, input.length);
@@ -27,12 +27,12 @@ class Command {
                 }
                 else if (input.endsWith("'")) {
                     let temp = input.substring(0, input.length - 1);
-                    buffer += ' ' + temp;
+                    buffer += " " + temp;
                     parsedArguments.push(buffer);
-                    buffer = '';
+                    buffer = "";
                 }
                 else if (buffer.length > 0) {
-                    buffer += ' ' + input;
+                    buffer += " " + input;
                 }
                 else {
                     parsedArguments.push(input);
@@ -44,8 +44,6 @@ class Command {
         this.assignParts(input);
         this.originalMessage = message;
     }
-    ;
 }
 exports.Command = Command;
-;
 //# sourceMappingURL=command.js.map

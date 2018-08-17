@@ -8,11 +8,11 @@ const getLeaderboard = async (command, message) => {
     let response;
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
-            response = 'No names were provided to get the leaderboard';
+            response = "No names were provided to get the leaderboard";
             break;
         }
         case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
-            response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+            response = "A leaderboard with the name " + command.arguments[0] + " was not found";
             break;
         }
         default: {

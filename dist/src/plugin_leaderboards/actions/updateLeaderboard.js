@@ -7,15 +7,15 @@ const updateLeaderboard = async (command, message) => {
     let response;
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
-            response = 'No names were provided for the leaderboard';
+            response = "No names were provided for the leaderboard";
             break;
         }
         case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
-            response = 'A leaderboard with the name ' + command.arguments[0] + ' was not found';
+            response = "A leaderboard with the name " + command.arguments[0] + " was not found";
             break;
         }
         default: {
-            response = 'Successfully updated leaderboard ' + command.arguments[0];
+            response = "Successfully updated leaderboard " + command.arguments[0];
             break;
         }
     }

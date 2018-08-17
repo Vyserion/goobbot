@@ -1,1 +1,1 @@
-{"version":3,"file":"columnTypes.js","sourceRoot":"","sources":["../../../../src/plugin_leaderboards/config/columnTypes.ts"],"names":[],"mappings":";;AAAA,IAAY,WAEX;AAFD,WAAY,WAAW;IACnB,4BAAa,CAAA;AACjB,CAAC,EAFW,WAAW,GAAX,mBAAW,KAAX,mBAAW,QAEtB;AAAA,CAAC"}
+{"version":3,"file":"columnTypes.js","sourceRoot":"","sources":["../../../../src/plugin_leaderboards/config/columnTypes.ts"],"names":[],"mappings":";;AAAA,IAAY,WAEX;AAFD,WAAY,WAAW;IACtB,4BAAa,CAAA;AACd,CAAC,EAFW,WAAW,GAAX,mBAAW,KAAX,mBAAW,QAEtB"}

@@ -1,4 +1,4 @@
 export enum UpdateActions {
-    NAME = 'NAME',
-    TYPE = 'TYPE'
-};
+	NAME = "NAME",
+	TYPE = "TYPE"
+}

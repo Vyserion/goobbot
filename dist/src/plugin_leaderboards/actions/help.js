@@ -8,7 +8,7 @@ const showHelp = async (command, message) => {
     }
     else {
         let requestedCommand = command.arguments[0].toLowerCase();
-        let response = '';
+        let response = "";
         if (requestedCommand === commands_1.commands.GET_LEADERBOARD)
             response = helpMessages_1.default.getLeaderboard;
         else if (requestedCommand === commands_1.commands.CREATE_LEADERBOARD)
