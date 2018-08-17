@@ -11,7 +11,7 @@ var LeaderboardDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard');
+            logger_1.default.error("Unexpected error when inserting leaderboard");
             logger_1.default.error(e);
             return;
         }
@@ -25,7 +25,7 @@ var LeaderboardDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when getting leaderboard');
+            logger_1.default.error("Unexpected error when getting leaderboard");
             logger_1.default.error(e);
             return;
         }
@@ -39,7 +39,7 @@ var LeaderboardDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard');
+            logger_1.default.error("Unexpected error when inserting leaderboard");
             logger_1.default.error(e);
             return;
         }
@@ -53,7 +53,7 @@ var LeaderboardDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard');
+            logger_1.default.error("Unexpected error when updating leaderboard");
             logger_1.default.error(e);
             return;
         }
@@ -67,7 +67,7 @@ var LeaderboardDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when deleting leaderboard');
+            logger_1.default.error("Unexpected error when deleting leaderboard");
             logger_1.default.error(e);
             return;
         }

@@ -12,7 +12,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard row');
+            logger_1.default.error("Unexpected error when inserting leaderboard row");
             logger_1.default.error(e);
             return;
         }
@@ -26,7 +26,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard row');
+            logger_1.default.error("Unexpected error when inserting leaderboard row");
             logger_1.default.error(e);
             return;
         }
@@ -41,7 +41,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard row');
+            logger_1.default.error("Unexpected error when inserting leaderboard row");
             logger_1.default.error(e);
             return;
         }
@@ -55,7 +55,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard row');
+            logger_1.default.error("Unexpected error when updating leaderboard row");
             logger_1.default.error(e);
             return;
         }
@@ -69,7 +69,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard row');
+            logger_1.default.error("Unexpected error when updating leaderboard row");
             logger_1.default.error(e);
             return;
         }
@@ -83,7 +83,7 @@ var RowDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard row');
+            logger_1.default.error("Unexpected error when updating leaderboard row");
             logger_1.default.error(e);
             return;
         }

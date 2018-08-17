@@ -8,10 +8,10 @@ const deleteRow = async (command, message) => {
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
             if (command.arguments.length < 2) {
-                response = 'Not enough parameters provided = please check you have a leaderboard name and a row name';
+                response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
             }
             else {
-                response = 'Too many arguments were provided';
+                response = "Too many arguments were provided";
             }
             break;
         }

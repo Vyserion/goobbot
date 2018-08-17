@@ -10,5 +10,4 @@ var ErrorCodes;
     ErrorCodes[ErrorCodes["LDBD_BAD_TYPE"] = 5] = "LDBD_BAD_TYPE";
     ErrorCodes[ErrorCodes["LDBD_ROW_NOT_FOUND"] = 6] = "LDBD_ROW_NOT_FOUND";
 })(ErrorCodes = exports.ErrorCodes || (exports.ErrorCodes = {}));
-;
 //# sourceMappingURL=errorCodes.js.map

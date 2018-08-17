@@ -12,7 +12,7 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when getting leaderboard');
+            logger_1.default.error("Unexpected error when getting leaderboard");
             logger_1.default.error(e);
             return;
         }
@@ -26,21 +26,21 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when getting leaderboard');
+            logger_1.default.error("Unexpected error when getting leaderboard");
             logger_1.default.error(e);
             return;
         }
     }
     ColumnDAO.getLeaderboardColumn = getLeaderboardColumn;
     async function insertLeaderboardColumn(leaderboardId, name, type) {
-        let query = ' INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)';
+        let query = " INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)";
         let params = [leaderboardId, name, type];
         try {
             let results = await dataManager_1.DataManager.query(query, params);
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when inserting leaderboard column');
+            logger_1.default.error("Unexpected error when inserting leaderboard column");
             logger_1.default.error(e);
             return;
         }
@@ -54,7 +54,7 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard column');
+            logger_1.default.error("Unexpected error when updating leaderboard column");
             logger_1.default.error(e);
             return;
         }
@@ -68,7 +68,7 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when updating leaderboard column');
+            logger_1.default.error("Unexpected error when updating leaderboard column");
             logger_1.default.error(e);
             return;
         }
@@ -82,7 +82,7 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when deleting leaderboard columns');
+            logger_1.default.error("Unexpected error when deleting leaderboard columns");
             logger_1.default.error(e);
             return;
         }
@@ -96,7 +96,7 @@ var ColumnDAO;
             return results;
         }
         catch (e) {
-            logger_1.default.error('Unexpected error when deleting leaderboard column');
+            logger_1.default.error("Unexpected error when deleting leaderboard column");
             logger_1.default.error(e);
             return;
         }

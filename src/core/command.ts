@@ -1,58 +1,57 @@
-import { Message } from 'discord.js';
+import { Message } from "discord.js";
 
 export class Command {
-    
-    plugin: string;
-    action: string;
-    arguments: string[];
-    originalMessage: Message;
+	plugin: string;
+	action: string;
+	arguments: string[];
+	originalMessage: Message;
 
-    constructor(message: Message) {
-        let input = this.stripPrefix(message.content);
-        this.assignParts(input);
-        this.originalMessage = message;
-    };
+	constructor(message: Message) {
+		let input = this.stripPrefix(message.content);
+		this.assignParts(input);
+		this.originalMessage = message;
+	}
 
-    assignParts = (message: string): void => {
-        let parts: string[] = message.split(' ');
-        
-        this.plugin = parts[0];
-        this.arguments = [];
+	assignParts = (message: string): void => {
+		let parts: string[] = message.split(" ");
 
-        if (parts.length >= 2) {
-            this.action = parts[1];
-        }
+		this.plugin = parts[0];
+		this.arguments = [];
 
-        if (parts.length >= 3) {
-            const remainingParts: string[] = parts.splice(2, parts.length);
-            this.arguments = this.parseArguments(remainingParts);
-        }
-    }
+		if (parts.length >= 2) {
+			this.action = parts[1];
+		}
 
-    stripPrefix = (message: string): string => {
-        return message.substr(process.env.PREFIX.length);
-    };
+		if (parts.length >= 3) {
+			const remainingParts: string[] = parts.splice(2, parts.length);
+			this.arguments = this.parseArguments(remainingParts);
+		}
+	};
 
-    parseArguments = (inputs: string[]): string[] => {
-        let parsedArguments: string[] = [];
+	stripPrefix = (message: string): string => {
+		return message.substr(process.env.PREFIX.length);
+	};
 
-        let buffer: string = '';
-        for (let input of inputs) {
-            if (input.startsWith("'")) {
-                let temp: string = input.substring(1, input.length);
-                buffer = temp;
-            } else if (input.endsWith("'")) {
-                let temp: string = input.substring(0, input.length - 1);
-                buffer += ' ' + temp;
-                parsedArguments.push(buffer);
-                buffer = '';
-            } else if (buffer.length > 0) {
-                buffer += ' ' + input;
-            } else {
-                parsedArguments.push(input);
-            }
-        }
+	parseArguments = (inputs: string[]): string[] => {
+		let parsedArguments: string[] = [];
 
-        return parsedArguments;
-    };
-};
+		let buffer: string = "";
+		for (let input of inputs) {
+			if (input.startsWith("'")) {
+				let temp: string = input.substring(1, input.length);
+				buffer = temp;
+			} else if (input.endsWith("'")) {
+				let temp: string = input.substring(0, input.length - 1);
+				buffer += " " + temp;
+				parsedArguments.push(buffer);
+				buffer = "";
+			} else if (buffer.length > 0) {
+				buffer += " " + input;
+			} else {
+				parsedArguments.push(input);
+			}
+		}
+
+		return parsedArguments;
+	};
+}

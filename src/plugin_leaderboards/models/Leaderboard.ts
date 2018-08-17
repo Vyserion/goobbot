@@ -1,14 +1,13 @@
-import Column from './Column';
-import Row from './Row';
+import Column from "./Column";
+import Row from "./Row";
 
 export default class Leaderboard {
+	name: string;
+	columns: Column[];
+	rows: Row[];
 
-    name: string;
-    columns: Column[];
-    rows: Row[];
-
-    constructor() {
-        this.columns = [];
-        this.rows = [];
-    }
+	constructor() {
+		this.columns = [];
+		this.rows = [];
+	}
 }

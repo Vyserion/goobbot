@@ -11,6 +11,7 @@ var commands;
     commands["CREATE_ROW"] = "newrow";
     commands["UPDATE_ROW"] = "updaterow";
     commands["DELETE_ROW"] = "deleterow";
+    commands["UPSERT_VALUE"] = "update";
     commands["GET_LEADERBOARD"] = "show";
     commands["HELP"] = "help";
 })(commands = exports.commands || (exports.commands = {}));

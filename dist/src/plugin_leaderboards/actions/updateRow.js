@@ -8,10 +8,11 @@ const updateLeaderboardRow = async (command, message) => {
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
             if (command.arguments.length < 3) {
-                response = 'Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name';
+                response =
+                    "Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name";
             }
             else {
-                response = 'Too many parameters were provided';
+                response = "Too many parameters were provided";
             }
             break;
         }

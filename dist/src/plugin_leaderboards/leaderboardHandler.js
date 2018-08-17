@@ -12,12 +12,13 @@ const getLeaderboard_1 = require("./actions/getLeaderboard");
 const updateLeaderboard_1 = require("./actions/updateLeaderboard");
 const updateLeaderboardColumn_1 = require("./actions/updateLeaderboardColumn");
 const updateRow_1 = require("./actions/updateRow");
+const upsertValue_1 = require("./actions/upsertValue");
 const help_1 = require("./actions/help");
 class LeaderboardHandler {
     constructor() {
-        this.name = 'leaderboards';
+        this.name = "leaderboards";
         this.handleCommand = (command, message) => {
-            let action = command.action ? command.action : '';
+            let action = command.action ? command.action : "";
             action = action.toLowerCase();
             switch (action) {
                 case commands_1.commands.CREATE_LEADERBOARD: {
@@ -58,6 +59,10 @@ class LeaderboardHandler {
                 }
                 case commands_1.commands.GET_LEADERBOARD: {
                     getLeaderboard_1.default(command, message);
+                    break;
+                }
+                case commands_1.commands.UPSERT_VALUE: {
+                    upsertValue_1.default(command, message);
                     break;
                 }
                 case commands_1.commands.HELP: {

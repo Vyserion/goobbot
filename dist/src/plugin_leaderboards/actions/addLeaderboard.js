@@ -7,15 +7,15 @@ const addLeaderboard = async (command, message) => {
     let response;
     switch (result) {
         case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
-            response = 'No name was provided for the leaderboard';
+            response = "No name was provided for the leaderboard";
             break;
         }
         case errorCodes_1.ErrorCodes.LDBD_DUP_NAME: {
-            response = 'A leaderboard with the name ' + command.arguments[0] + ' already exists';
+            response = "A leaderboard with the name " + command.arguments[0] + " already exists";
             break;
         }
         default: {
-            response = 'Successfully created leaderboard ' + command.arguments[0];
+            response = "Successfully created leaderboard " + command.arguments[0];
             break;
         }
     }
