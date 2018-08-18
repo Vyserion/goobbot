@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
-const bot_1 = require("./src/core/bot");
-const logger_1 = require("./src/core/logger");
+const bot_1 = require("./core/bot");
+const logger_1 = require("./core/logger");
 if (process.env.NODE_ENV !== "production") {
     dotenv_1.config();
 }
