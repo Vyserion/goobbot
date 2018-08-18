@@ -4,11 +4,12 @@
   "description": "This project contains all of the code required to run an instance of VyBot.",
   "main": "./dist/app.js",
   "scripts": {
+    "build": "tsc",
     "build:watch": "tsc --watch",
-    "start": "tsc && node ./dist/app.js",
-    "test": "tsc && mocha ./dist/**/*.spec.js",
-    "test:watch": "tsc && mocha -w ./dist/**/*.spec.js",
-    "tidy": "prettier --write **/*.ts app.ts && tsc"
+    "start": "node ./dist/app.js",
+    "test": "mocha ./dist/**/*.spec.js",
+    "test:watch": "mocha -w ./dist/**/*.spec.js",
+    "tidy": "prettier --write **/*.ts app.ts && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,13 @@
   },
   "homepage": "https://github.com/Vyserion/vybot#readme",
   "dependencies": {
+    "@types/dotenv": "^4.0.3",
     "@types/node": "^9.3.0",
     "@types/pg": "^7.4.2",
     "@types/sinon": "^4.3.0",
     "bufferutil": "^3.0.3",
     "discord.js": "^11.3.0",
+    "dotenv": "^6.0.0",
     "erlpack": "github:hammerandchisel/erlpack",
     "libsodium-wrappers": "^0.7.3",
     "npm": "^5.8.0",
