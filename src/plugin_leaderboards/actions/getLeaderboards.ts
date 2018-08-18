@@ -1,5 +1,3 @@
-import { ErrorCodes } from "../config/errorCodes";
-import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 

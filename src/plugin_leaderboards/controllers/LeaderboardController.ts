@@ -1,12 +1,10 @@
 import { LeaderboardDAO } from "../dao/LeaderboardDAO";
 import { ColumnDAO } from "../dao/ColumnDAO";
-import Leaderboard from "../models/Leaderboard";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ErrorCodes } from "../config/errorCodes";
-import Column from "../models/Column";
 import { RowDAO } from "../dao/RowDAO";
-import Row from "../models/Row";
+import { Leaderboard, Column, Row }  from "../models";
 import { ValueDAO } from "../dao/ValueDAO";
 
 export namespace LeaderboardController {
@@ -22,26 +20,35 @@ export namespace LeaderboardController {
 
 		const leaderboardName = command.arguments[0];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboards.length == 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		let leaderboard = existingLeaderboards[0];
+		let leaderboard = existingLeaderboard;
 		let columns = await ColumnDAO.getLeaderboardColumns(leaderboard.id);
 		let rows = await RowDAO.getLeaderboardRows(leaderboard.id);
 
-		let leaderboardObj = new Leaderboard();
-		leaderboardObj.name = leaderboard.name;
+		let leaderboardObj: Leaderboard = {
+			id: leaderboard.id,
+			name: leaderboard.name,
+			rows: [],
+			columns: []
+		};
 
 		for (let column of columns) {
-			let col = new Column(column.name, column.type);
+			let col: Column = {
+				name: column.name,
+				type: column.type
+			};
 			leaderboardObj.columns.push(col);
 		}
 
 		for (let row of rows) {
-			let r = new Row(row.name);
+			let r: Row = {
+				name: row.name
+			};
 			leaderboardObj.rows.push(r);
 		}
 
@@ -56,8 +63,8 @@ export namespace LeaderboardController {
 
 		const name = command.arguments[0];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(name);
-		if (existingLeaderboards.length > 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_DUP_NAME: A leaderboard with that name already exists");
 			return ErrorCodes.LDBD_DUP_NAME;
 		}
@@ -76,13 +83,13 @@ export namespace LeaderboardController {
 		const name = command.arguments[0];
 		const newName = command.arguments[1];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(name);
-		if (existingLeaderboards.length == 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		const id = existingLeaderboards[0].id;
+		const id = existingLeaderboard.id;
 		await LeaderboardDAO.updateLeaderboard(id, newName);
 		logger.info("Updated leaderboard " + name + " to " + newName);
 		return true;
@@ -96,13 +103,13 @@ export namespace LeaderboardController {
 
 		const name = command.arguments[0];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(name);
-		if (existingLeaderboards.length == 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		const id = existingLeaderboards[0].id;
+		const id = existingLeaderboard.id;
 
 		await ValueDAO.deleteValueByLeaderboard(id);
 		await RowDAO.deleteLeaderboardRows(id);

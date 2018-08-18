@@ -6,6 +6,7 @@ const command_1 = require("../../core/command");
 const discord_js_1 = require("discord.js");
 const ts_mockito_1 = require("ts-mockito");
 describe("Command ::", () => {
+    // @ts-ignore - Reads as unused variable.
     let env;
     beforeEach(() => {
         env = process.env;

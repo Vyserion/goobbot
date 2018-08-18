@@ -14,26 +14,26 @@ var ValueController;
             return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
         }
         const leaderboardName = command.arguments[0];
-        const existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
-        if (existingLeaderboards.length === 0) {
+        const existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboard) {
             logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
-        let leaderboard = existingLeaderboards[0];
+        let leaderboard = existingLeaderboard;
         const columnName = command.arguments[1];
-        let existingColumns = await ColumnDAO_1.ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
-        if (existingColumns.length === 0) {
+        let existingColumn = await ColumnDAO_1.ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
+        if (existingColumn) {
             logger_1.default.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
             return errorCodes_1.ErrorCodes.LDBD_COL_NOT_FOUND;
         }
-        let column = existingColumns[0];
+        let column = existingColumn;
         const rowName = command.arguments[2];
-        let existingRows = await RowDAO_1.RowDAO.getLeaderboardRow(leaderboard.id, rowName);
-        if (existingRows.length === 0) {
+        let existingRow = await RowDAO_1.RowDAO.getLeaderboardRow(leaderboard.id, rowName);
+        if (existingRow) {
             logger_1.default.warn("LDBD_ROW_NOT_FOUND: NO leaderboard row found for query");
             return errorCodes_1.ErrorCodes.LDBD_ROW_NOT_FOUND;
         }
-        let row = existingRows[0];
+        let row = existingRow;
         let value = command.arguments[3];
         await ValueDAO_1.ValueDAO.upsertValue(column.id, row.id, value);
         logger_1.default.info(`Upserted leaderboard value ${value} in column ${columnName} and row ${rowName}`);

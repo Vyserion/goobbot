@@ -1,1 +1,1 @@
-{"version":3,"file":"Leaderboard.js","sourceRoot":"","sources":["../../../src/plugin_leaderboards/models/Leaderboard.ts"],"names":[],"mappings":";;AAGA;IAKC;QACC,IAAI,CAAC,OAAO,GAAG,EAAE,CAAC;QAClB,IAAI,CAAC,IAAI,GAAG,EAAE,CAAC;IAChB,CAAC;CACD;AATD,8BASC"}
+{"version":3,"file":"Leaderboard.js","sourceRoot":"","sources":["../../../src/plugin_leaderboards/models/Leaderboard.ts"],"names":[],"mappings":""}

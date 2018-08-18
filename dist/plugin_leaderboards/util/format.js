@@ -4,9 +4,8 @@ exports.prettyPrintLeaderboard = (leaderboard) => {
     let str = "";
     str += leaderboard.name;
     str += "\n\n";
-    // TODO: Columns should go across
-    for (let col of leaderboard.columns) {
-        let column = col;
+    for (let leaderboardCol of leaderboard.columns) {
+        let col = leaderboardCol;
         str += col.name;
         str += "\n";
     }

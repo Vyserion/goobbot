@@ -1,7 +1,4 @@
-export default class Row {
+export interface Row {
+	id?: number;
 	name: string;
-
-	constructor(name: string) {
-		this.name = name;
-	}
 }

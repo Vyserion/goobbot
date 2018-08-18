@@ -5,6 +5,7 @@ import { Message } from "discord.js";
 import { mock, instance, when } from "ts-mockito";
 
 describe("Command ::", () => {
+	// @ts-ignore - Reads as unused variable.
 	let env;
 
 	beforeEach(() => {

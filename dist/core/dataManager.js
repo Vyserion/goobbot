@@ -12,14 +12,13 @@ var DataManager;
         password: process.env.POSTGRES_PASSWORD,
         port: port
     });
-    pool.on("error", (err, client) => {
+    pool.on("error", (err) => {
         logger_1.default.error("Unexpected error on idle client", err);
         process.exit(-1);
     });
     async function query(query, params) {
-        logger_1.default.debug("Running query:");
-        logger_1.default.debug(query);
-        let results = await doQuery(query, params);
+        logger_1.default.debug("Running query:", query);
+        const results = await doQuery(query, params);
         return results.rows;
     }
     DataManager.query = query;
@@ -38,6 +37,9 @@ var DataManager;
             logger_1.default.error("Error running query: " + query);
             logger_1.default.error("Error code: " + e.code);
             return {
+                command: query,
+                rowCount: 0,
+                oid: 0,
                 rows: []
             };
         }

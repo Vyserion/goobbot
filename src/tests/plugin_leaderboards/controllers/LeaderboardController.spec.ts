@@ -1,14 +1,13 @@
 import "mocha";
 import { expect } from "chai";
-import { mock, instance, when, anything } from "ts-mockito";
+import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
 import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
 import { Command } from "../../../core/command";
 import { ColumnTypes } from "../../../plugin_leaderboards/config/columnTypes";
-import Column from "../../../plugin_leaderboards/models/Column";
-import Leaderboard from "../../../plugin_leaderboards/models/Leaderboard";
+import { Leaderboard } from "../../../plugin_leaderboards/models";
 import { stub } from "sinon";
 
 describe("LeaderboardController ::", () => {

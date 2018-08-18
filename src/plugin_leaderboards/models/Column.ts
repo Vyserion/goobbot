@@ -1,11 +1,7 @@
 import { ColumnTypes } from "../config/columnTypes";
 
-export default class Column {
+export interface Column {
+	id?: number;
 	name: string;
 	type: ColumnTypes;
-
-	constructor(name: string, type: ColumnTypes) {
-		this.name = name;
-		this.type = type;
-	}
 }

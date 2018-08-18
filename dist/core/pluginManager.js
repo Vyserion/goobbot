@@ -6,7 +6,6 @@ const leaderboardHandler_1 = require("../plugin_leaderboards/leaderboardHandler"
 class PluginManager {
     constructor() {
         this.handlePluginMessage = (message) => {
-            let input = message.content;
             let command = new command_1.Command(message);
             if (!this.isPluginValid(command.plugin)) {
                 message.channel.send(messages_1.notAPluginMessage);

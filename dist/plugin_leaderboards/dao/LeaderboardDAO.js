@@ -1,76 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const dataManager_1 = require("../../core/dataManager");
-const logger_1 = require("../../core/logger");
 var LeaderboardDAO;
 (function (LeaderboardDAO) {
     async function getLeaderboards() {
-        let query = ` SELECT * FROM leaderboards`;
-        try {
-            let results = await dataManager_1.DataManager.query(query);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when inserting leaderboard");
-            logger_1.default.error(e);
-            return;
-        }
+        const query = `SELECT * FROM leaderboards`;
+        return await dataManager_1.DataManager.query(query);
     }
     LeaderboardDAO.getLeaderboards = getLeaderboards;
     async function getLeaderboard(name) {
-        let query = ` SELECT * FROM leaderboards WHERE name = $1`;
+        let query = `SELECT * FROM leaderboards WHERE name = $1`;
         let params = [name];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
+        const rowResult = await dataManager_1.DataManager.query(query, params);
+        if (rowResult.length > 0) {
+            return rowResult[0];
         }
-        catch (e) {
-            logger_1.default.error("Unexpected error when getting leaderboard");
-            logger_1.default.error(e);
-            return;
+        else {
+            return null;
         }
     }
     LeaderboardDAO.getLeaderboard = getLeaderboard;
     async function insertLeaderboard(name) {
-        let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
+        let query = `INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
         let params = [name];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when inserting leaderboard");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     LeaderboardDAO.insertLeaderboard = insertLeaderboard;
     async function updateLeaderboard(id, name) {
-        let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
+        let query = `UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
         let params = [name, id];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when updating leaderboard");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     LeaderboardDAO.updateLeaderboard = updateLeaderboard;
     async function deleteLeaderboard(id) {
-        let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
+        let query = `DELETE FROM leaderboards WHERE id = ($1)`;
         let params = [id];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when deleting leaderboard");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     LeaderboardDAO.deleteLeaderboard = deleteLeaderboard;
 })(LeaderboardDAO = exports.LeaderboardDAO || (exports.LeaderboardDAO = {}));

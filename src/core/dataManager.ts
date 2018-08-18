@@ -1,4 +1,4 @@
-import { Pool, Client, QueryResult } from "pg";
+import { Pool, QueryResult } from "pg";
 import logger from "./logger";
 
 export namespace DataManager {
@@ -12,20 +12,19 @@ export namespace DataManager {
 		port: port
 	});
 
-	pool.on("error", (err, client) => {
+	pool.on("error", (err) => {
 		logger.error("Unexpected error on idle client", err);
 		process.exit(-1);
 	});
 
-	export async function query(query: string, params?: any[]) {
-		logger.debug("Running query:");
-		logger.debug(query);
+	export async function query(query: string, params?: any[]): Promise<any[]> {
+		logger.debug("Running query:", query);
 
-		let results = await doQuery(query, params);
+		const results = await doQuery(query, params);
 		return results.rows;
 	}
 
-	async function doQuery(query: string, params?: any[]) {
+	async function doQuery(query: string, params?: any[]): Promise<QueryResult> {
 		let results: QueryResult;
 
 		try {
@@ -39,7 +38,11 @@ export namespace DataManager {
 		} catch (e) {
 			logger.error("Error running query: " + query);
 			logger.error("Error code: " + e.code);
+
 			return {
+				command: query,
+				rowCount: 0,
+				oid: 0,
 				rows: []
 			};
 		}

@@ -8,6 +8,7 @@ const command_1 = require("../../core/command");
 const discord_js_1 = require("discord.js");
 const leaderboardHandler_1 = require("../../plugin_leaderboards/leaderboardHandler");
 describe("PluginManager ::", () => {
+    // @ts-ignore - Reads as unused variable.
     let env;
     beforeEach(() => {
         env = process.env;

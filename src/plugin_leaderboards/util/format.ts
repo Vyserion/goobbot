@@ -1,6 +1,4 @@
-import Leaderboard from "../models/Leaderboard";
-import Column from "../models/Column";
-import Row from "../models/Row";
+import { Leaderboard, Column, Row } from "../models";
 
 export const prettyPrintLeaderboard = (leaderboard: Leaderboard) => {
 	let str = "";
@@ -8,10 +6,9 @@ export const prettyPrintLeaderboard = (leaderboard: Leaderboard) => {
 	str += leaderboard.name;
 	str += "\n\n";
 
-	// TODO: Columns should go across
 
-	for (let col of leaderboard.columns) {
-		let column: Column = col;
+	for (let leaderboardCol of leaderboard.columns) {
+		let col: Column = leaderboardCol;
 		str += col.name;
 		str += "\n";
 	}

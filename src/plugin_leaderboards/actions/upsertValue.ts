@@ -2,7 +2,6 @@ import { ErrorCodes } from "../config/errorCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { ValueController } from "../controllers/ValueController";
-import { ERANGE } from "constants";
 
 const upsertValue = async (command: Command, message: Message) => {
 	let result = await ValueController.upsertValue(command);

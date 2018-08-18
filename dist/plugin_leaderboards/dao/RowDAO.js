@@ -1,92 +1,52 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const dataManager_1 = require("../../core/dataManager");
-const logger_1 = require("../../core/logger");
 var RowDAO;
 (function (RowDAO) {
     async function getLeaderboardRows(leaderboardId) {
-        let query = ` SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
+        let query = `SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
         let params = [leaderboardId];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when inserting leaderboard row");
-            logger_1.default.error(e);
-            return;
-        }
+        return await dataManager_1.DataManager.query(query, params);
     }
     RowDAO.getLeaderboardRows = getLeaderboardRows;
     async function getLeaderboardRow(leaderboardId, rowName) {
-        let query = ` SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1 AND name = $2`;
+        let query = `SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1 AND name = $2`;
         let params = [leaderboardId, rowName];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
+        const rowResult = await dataManager_1.DataManager.query(query, params);
+        if (rowResult.length > 0) {
+            return rowResult[0];
         }
-        catch (e) {
-            logger_1.default.error("Unexpected error when inserting leaderboard row");
-            logger_1.default.error(e);
-            return;
+        else {
+            return null;
         }
     }
     RowDAO.getLeaderboardRow = getLeaderboardRow;
     async function insertLeaderboardRow(leaderboardId, rowName) {
-        let query = ` INSERT INTO leaderboard_rows VALUES (DEFAULT, $1, $2)`;
+        let query = `INSERT INTO leaderboard_rows VALUES (DEFAULT, $1, $2)`;
         let params = [leaderboardId, rowName];
-        logger_1.default.warn(params);
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when inserting leaderboard row");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     RowDAO.insertLeaderboardRow = insertLeaderboardRow;
     async function updateLeaderboardRow(leaderboardRowId, newRowName) {
-        let query = ` UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`;
+        let query = `UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`;
         let params = [leaderboardRowId, newRowName];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when updating leaderboard row");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     RowDAO.updateLeaderboardRow = updateLeaderboardRow;
     async function deleteLeaderboardRows(leaderboardId) {
-        const query = ` DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
+        const query = `DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
         const params = [leaderboardId];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when updating leaderboard row");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     RowDAO.deleteLeaderboardRows = deleteLeaderboardRows;
     async function deleteLeaderboardRow(leaderboardRowId) {
-        const query = ` DELETE FROM leaderboard_rows WHERE id = ($1)`;
+        const query = `DELETE FROM leaderboard_rows WHERE id = ($1)`;
         const params = [leaderboardRowId];
-        try {
-            let results = await dataManager_1.DataManager.query(query, params);
-            return results;
-        }
-        catch (e) {
-            logger_1.default.error("Unexpected error when updating leaderboard row");
-            logger_1.default.error(e);
-            return;
-        }
+        await dataManager_1.DataManager.query(query, params);
+        return;
     }
     RowDAO.deleteLeaderboardRow = deleteLeaderboardRow;
 })(RowDAO = exports.RowDAO || (exports.RowDAO = {}));

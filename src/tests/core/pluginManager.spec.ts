@@ -7,6 +7,7 @@ import { Message } from "discord.js";
 import { LeaderboardHandler } from "../../plugin_leaderboards/leaderboardHandler";
 
 describe("PluginManager ::", () => {
+	// @ts-ignore - Reads as unused variable.
 	let env;
 
 	beforeEach(() => {

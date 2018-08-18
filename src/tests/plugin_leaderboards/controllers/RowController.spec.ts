@@ -1,16 +1,12 @@
 import "mocha";
 import { expect } from "chai";
-import { mock, instance, when, anything } from "ts-mockito";
+import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
-import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { RowController } from "../../../plugin_leaderboards/controllers/RowController";
 import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
 import { Command } from "../../../core/command";
 import { stub } from "sinon";
-import Leaderboard from "../../../plugin_leaderboards/models/Leaderboard";
 import { RowDAO } from "../../../plugin_leaderboards/dao/RowDAO";
-import { AsyncResource } from "async_hooks";
-import getLeaderboard from "../../../plugin_leaderboards/actions/getLeaderboard";
 
 describe("RowController ::", () => {
 	describe("insertLeaderboardRow()", () => {

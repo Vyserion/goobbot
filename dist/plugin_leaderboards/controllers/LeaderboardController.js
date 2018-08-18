@@ -2,12 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const LeaderboardDAO_1 = require("../dao/LeaderboardDAO");
 const ColumnDAO_1 = require("../dao/ColumnDAO");
-const Leaderboard_1 = require("../models/Leaderboard");
 const logger_1 = require("../../core/logger");
 const errorCodes_1 = require("../config/errorCodes");
-const Column_1 = require("../models/Column");
 const RowDAO_1 = require("../dao/RowDAO");
-const Row_1 = require("../models/Row");
 const ValueDAO_1 = require("../dao/ValueDAO");
 var LeaderboardController;
 (function (LeaderboardController) {
@@ -21,22 +18,31 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
         }
         const leaderboardName = command.arguments[0];
-        let existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
-        if (existingLeaderboards.length == 0) {
+        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
+        if (existingLeaderboard) {
             logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
-        let leaderboard = existingLeaderboards[0];
+        let leaderboard = existingLeaderboard;
         let columns = await ColumnDAO_1.ColumnDAO.getLeaderboardColumns(leaderboard.id);
         let rows = await RowDAO_1.RowDAO.getLeaderboardRows(leaderboard.id);
-        let leaderboardObj = new Leaderboard_1.default();
-        leaderboardObj.name = leaderboard.name;
+        let leaderboardObj = {
+            id: leaderboard.id,
+            name: leaderboard.name,
+            rows: [],
+            columns: []
+        };
         for (let column of columns) {
-            let col = new Column_1.default(column.name, column.type);
+            let col = {
+                name: column.name,
+                type: column.type
+            };
             leaderboardObj.columns.push(col);
         }
         for (let row of rows) {
-            let r = new Row_1.default(row.name);
+            let r = {
+                name: row.name
+            };
             leaderboardObj.rows.push(r);
         }
         return leaderboardObj;
@@ -48,8 +54,8 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
         }
         const name = command.arguments[0];
-        let existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
-        if (existingLeaderboards.length > 0) {
+        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
+        if (existingLeaderboard) {
             logger_1.default.warn("LDBD_DUP_NAME: A leaderboard with that name already exists");
             return errorCodes_1.ErrorCodes.LDBD_DUP_NAME;
         }
@@ -65,12 +71,12 @@ var LeaderboardController;
         }
         const name = command.arguments[0];
         const newName = command.arguments[1];
-        let existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
-        if (existingLeaderboards.length == 0) {
+        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
+        if (existingLeaderboard) {
             logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
-        const id = existingLeaderboards[0].id;
+        const id = existingLeaderboard.id;
         await LeaderboardDAO_1.LeaderboardDAO.updateLeaderboard(id, newName);
         logger_1.default.info("Updated leaderboard " + name + " to " + newName);
         return true;
@@ -82,12 +88,12 @@ var LeaderboardController;
             return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
         }
         const name = command.arguments[0];
-        let existingLeaderboards = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
-        if (existingLeaderboards.length == 0) {
+        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
+        if (existingLeaderboard) {
             logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
             return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
         }
-        const id = existingLeaderboards[0].id;
+        const id = existingLeaderboard.id;
         await ValueDAO_1.ValueDAO.deleteValueByLeaderboard(id);
         await RowDAO_1.RowDAO.deleteLeaderboardRows(id);
         await ColumnDAO_1.ColumnDAO.deleteLeaderboardColumns(id);

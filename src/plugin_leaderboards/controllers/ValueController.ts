@@ -15,31 +15,31 @@ export namespace ValueController {
 
 		const leaderboardName = command.arguments[0];
 
-		const existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboards.length === 0) {
+		const existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		let leaderboard = existingLeaderboards[0];
+		let leaderboard = existingLeaderboard;
 		const columnName = command.arguments[1];
 
-		let existingColumns = await ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
-		if (existingColumns.length === 0) {
+		let existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
+		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
 			return ErrorCodes.LDBD_COL_NOT_FOUND;
 		}
 
-		let column = existingColumns[0];
+		let column = existingColumn;
 		const rowName = command.arguments[2];
 
-		let existingRows = await RowDAO.getLeaderboardRow(leaderboard.id, rowName);
-		if (existingRows.length === 0) {
+		let existingRow = await RowDAO.getLeaderboardRow(leaderboard.id, rowName);
+		if (existingRow) {
 			logger.warn("LDBD_ROW_NOT_FOUND: NO leaderboard row found for query");
 			return ErrorCodes.LDBD_ROW_NOT_FOUND;
 		}
 
-		let row = existingRows[0];
+		let row = existingRow;
 		let value = command.arguments[3];
 
 		await ValueDAO.upsertValue(column.id, row.id, value);

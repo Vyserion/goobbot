@@ -1,73 +1,46 @@
 import { DataManager } from "../../core/dataManager";
-import logger from "../../core/logger";
+import { Leaderboard } from "../models";
 
 export namespace LeaderboardDAO {
-	export async function getLeaderboards() {
-		let query = ` SELECT * FROM leaderboards`;
+	export async function getLeaderboards(): Promise<Leaderboard[]> {
+		const query = `SELECT * FROM leaderboards`;
 
-		try {
-			let results: any[] = await DataManager.query(query);
-			return results;
-		} catch (e) {
-			logger.error("Unexpected error when inserting leaderboard");
-			logger.error(e);
-			return;
-		}
+		return await DataManager.query(query) as Leaderboard[];
 	}
 
-	export async function getLeaderboard(name: string) {
-		let query = ` SELECT * FROM leaderboards WHERE name = $1`;
+	export async function getLeaderboard(name: string): Promise<Leaderboard> | null {
+		let query = `SELECT * FROM leaderboards WHERE name = $1`;
 		let params = [name];
 
-		try {
-			let results: any[] = await DataManager.query(query, params);
-			return results;
-		} catch (e) {
-			logger.error("Unexpected error when getting leaderboard");
-			logger.error(e);
-			return;
+		const rowResult: Leaderboard[] = await DataManager.query(query, params) as Leaderboard[];
+		if (rowResult.length > 0) {
+			return rowResult[0];
+		} else {
+			return null;
 		}
 	}
 
-	export async function insertLeaderboard(name: string) {
-		let query = ` INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
+	export async function insertLeaderboard(name: string): Promise<void> {
+		let query = `INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
 		let params = [name];
 
-		try {
-			let results: any[] = await DataManager.query(query, params);
-			return results;
-		} catch (e) {
-			logger.error("Unexpected error when inserting leaderboard");
-			logger.error(e);
-			return;
-		}
+		await DataManager.query(query, params);
+		return;
 	}
 
-	export async function updateLeaderboard(id: number, name: string) {
-		let query = ` UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
+	export async function updateLeaderboard(id: number, name: string): Promise<void> {
+		let query = `UPDATE leaderboards SET name = ($1) WHERE id = ($2)`;
 		let params = [name, id];
 
-		try {
-			let results: any[] = await DataManager.query(query, params);
-			return results;
-		} catch (e) {
-			logger.error("Unexpected error when updating leaderboard");
-			logger.error(e);
-			return;
-		}
+		await DataManager.query(query, params);
+		return;
 	}
 
-	export async function deleteLeaderboard(id: number) {
-		let query = ` DELETE FROM leaderboards WHERE id = ($1)`;
+	export async function deleteLeaderboard(id: number): Promise<void> {
+		let query = `DELETE FROM leaderboards WHERE id = ($1)`;
 		let params = [id];
 
-		try {
-			let results: any[] = await DataManager.query(query, params);
-			return results;
-		} catch (e) {
-			logger.error("Unexpected error when deleting leaderboard");
-			logger.error(e);
-			return;
-		}
+		await DataManager.query(query, params);
+		return;
 	}
 }

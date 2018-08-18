@@ -13,7 +13,6 @@ class PluginManager {
 	}
 
 	handlePluginMessage = (message: Message) => {
-		let input: string = message.content;
 		let command: Command = new Command(message);
 
 		if (!this.isPluginValid(command.plugin)) {

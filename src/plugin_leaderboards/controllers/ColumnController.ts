@@ -5,7 +5,6 @@ import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ErrorCodes } from "../config/errorCodes";
 import { UpdateActions } from "../config/updateActions";
-import Column from "../models/Column";
 import { ColumnTypes } from "../config/columnTypes";
 
 export namespace ColumnController {
@@ -17,17 +16,17 @@ export namespace ColumnController {
 
 		const leaderboardName = command.arguments[0];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboards.length == 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		const id = existingLeaderboards[0].id;
+		const id = existingLeaderboard.id;
 		const columnName = command.arguments[1];
 
-		let existingColumns = await ColumnDAO.getLeaderboardColumn(id, columnName);
-		if (existingColumns.length > 0) {
+		let existingColumn = await ColumnDAO.getLeaderboardColumn(id, columnName);
+		if (existingColumn) {
 			logger.warn("LDBD_DUP_NAME: A leaderboard column with that name already exists for this leaderboard");
 			return ErrorCodes.LDBD_DUP_NAME;
 		}
@@ -56,23 +55,23 @@ export namespace ColumnController {
 
 		const name = command.arguments[0];
 
-		const existingLeaderboards = await LeaderboardDAO.getLeaderboard(name);
-		if (existingLeaderboards.length == 0) {
+		const existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		const leaderboardId = existingLeaderboards[0].id;
+		const leaderboardId = existingLeaderboard.id;
 		const columnName = command.arguments[1];
 		const value = command.arguments[3];
 
-		const existingColumns = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
-		if (existingColumns.length == 0) {
+		const existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
+		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
 			return ErrorCodes.LDBD_COL_NOT_FOUND;
 		}
 
-		const columnId = existingColumns[0].id;
+		const columnId = existingColumn.id;
 
 		let action = command.arguments[2];
 		action = action.toUpperCase();
@@ -91,10 +90,10 @@ export namespace ColumnController {
 			}
 
 			await ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
-			logger.info("Updated leaderboard column " + existingColumns[0].name + " to " + columnTypeStr);
+			logger.info("Updated leaderboard column " + existingColumn.name + " to " + columnTypeStr);
 		} else if (validatedAction === UpdateActions.NAME) {
 			await ColumnDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
-			logger.info("Update leaderboard column " + existingColumns[0].name + `'s type to ` + value);
+			logger.info("Update leaderboard column " + existingColumn.name + `'s type to ` + value);
 		}
 
 		return true;
@@ -108,23 +107,23 @@ export namespace ColumnController {
 
 		const leaderboardName = command.arguments[0];
 
-		let existingLeaderboards = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboards.length === 0) {
+		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
+		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
 			return ErrorCodes.LDBD_NOT_FOUND;
 		}
 
-		const leaderboardId = existingLeaderboards[0].id;
+		const leaderboardId = existingLeaderboard.id;
 
 		const columnName = command.arguments[1];
 
-		const existingColumns = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
-		if (existingColumns.length == 0) {
+		const existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
+		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
 			return ErrorCodes.LDBD_COL_NOT_FOUND;
 		}
 
-		const columnId = existingColumns[0].id;
+		const columnId = existingColumn.id;
 
 		await ValueDAO.deleteValuesByColumn(columnId);
 		await ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnId);

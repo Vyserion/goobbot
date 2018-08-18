@@ -1,13 +1,9 @@
-import Column from "./Column";
-import Row from "./Row";
+import { Column } from "./Column";
+import { Row } from "./Row";
 
-export default class Leaderboard {
+export interface Leaderboard {
+	id?: number;
 	name: string;
 	columns: Column[];
 	rows: Row[];
-
-	constructor() {
-		this.columns = [];
-		this.rows = [];
-	}
 }
