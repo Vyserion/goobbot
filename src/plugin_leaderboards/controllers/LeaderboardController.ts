@@ -3,7 +3,7 @@ import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Leaderboard, Column, Row }  from "../models";
-import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId } from "../util/validators";
+import { commandHasCorrectArgumentsLength, getLeaderboardId } from "../util/validators";
 
 export namespace LeaderboardController {
 	export async function getLeaderboards() {
