@@ -1,48 +1,40 @@
 import { Command } from "../../core/command";
 import logger from "../../core/logger";
 import { ReturnCodes } from "../config/ReturnCodes";
-import { LeaderboardDAO } from "../dao/LeaderboardDAO";
-import { ColumnDAO } from "../dao/ColumnDAO";
-import { RowDAO } from "../dao/RowDAO";
-import { ValueDAO } from "../dao/ValueDAO";
+import { ValueDAO } from "../dao";
+import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId, getRowId } from "../util/validators";
 
 export namespace ValueController {
-	export async function upsertValue(command: Command) {
-		if (command.arguments.length != 4) {
-			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
+	export async function upsertValue(command: Command): Promise<ReturnCodes> {
+		if (commandHasCorrectArgumentsLength(command, 4)) {
+			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
 
 		const leaderboardName = command.arguments[0];
-
-		const existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboard) {
-			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
+		const leaderboardId = await getLeaderboardId(leaderboardName);
+		if (leaderboardId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
 			return ReturnCodes.LEADERBOARD_NOT_FOUND;
 		}
 
-		let leaderboard = existingLeaderboard;
 		const columnName = command.arguments[1];
-
-		let existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
-		if (existingColumn) {
-			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
+		const columnId = await getColumnId(leaderboardId, columnName);
+		if (columnId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`);
 			return ReturnCodes.COLUMN_NOT_FOUND;
 		}
 
-		let column = existingColumn;
 		const rowName = command.arguments[2];
-
-		let existingRow = await RowDAO.getLeaderboardRow(leaderboard.id, rowName);
-		if (existingRow) {
-			logger.warn("LDBD_ROW_NOT_FOUND: NO leaderboard row found for query");
+		const rowId = await getRowId(leaderboardId, rowName);
+		if (rowId > -1) {
+			logger.warn(`${ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
 			return ReturnCodes.ROW_NOT_FOUND;
 		}
-
-		let row = existingRow;
 		let value = command.arguments[3];
 
-		await ValueDAO.upsertValue(column.id, row.id, value);
+		await ValueDAO.upsertValue(columnId, rowId, value);
 		logger.info(`Upserted leaderboard value ${value} in column ${columnName} and row ${rowName}`);
+		return ReturnCodes.SUCCESS;
 	}
 }
