@@ -1,98 +1,84 @@
-import { LeaderboardDAO } from "../dao/LeaderboardDAO";
-import { RowDAO } from "../dao/RowDAO";
-import { ValueDAO } from "../dao/ValueDAO";
+import { RowDAO, ValueDAO } from "../dao";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
+import { commandHasCorrectArgumentsLength, getLeaderboardId, getRowId } from "../util/validators";
 
 export namespace RowController {
-	export async function insertLeaderboardRow(command: Command) {
-		if (command.arguments.length != 2) {
-			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
+	export async function insertLeaderboardRow(command: Command): Promise<ReturnCodes> {
+		if (commandHasCorrectArgumentsLength(command, 2)) {
+			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
 
 		const leaderboardName = command.arguments[0];
-
-		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboard) {
-			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
+		const leaderboardId = await getLeaderboardId(leaderboardName);
+		if (leaderboardId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
 			return ReturnCodes.LEADERBOARD_NOT_FOUND;
 		}
 
-		const id = existingLeaderboard.id;
 		const rowName = command.arguments[1];
-
-		let existingRow = await RowDAO.getLeaderboardRow(id, rowName);
-		if (existingRow) {
-			logger.warn("LDBD_DUP_NAME: A leaderboard row with that name already exists for this leaderboard");
+		const rowId = await getRowId(leaderboardId, rowName);
+		if (rowId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard row with that name already exists`);
 			return ReturnCodes.LEADERBOARD_DUPLICATE_NAME;
 		}
 
-		await RowDAO.insertLeaderboardRow(id, rowName);
-		logger.info("Created new leaderboard row " + id + ":" + rowName);
-		return true;
+		await RowDAO.insertLeaderboardRow(leaderboardId, rowName);
+		logger.info(`Created new leaderboard row ${leaderboardId}:${rowName}`);
+		return ReturnCodes.SUCCESS;
 	}
 
-	export async function updateLeaderboardRow(command: Command) {
-		if (command.arguments.length != 3) {
-			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
+	export async function updateLeaderboardRow(command: Command): Promise<ReturnCodes> {
+		if (commandHasCorrectArgumentsLength(command, 3)) {
+			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
 
 		const leaderboardName = command.arguments[0];
-
-		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboard) {
-			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
+		const leaderboardId = await getLeaderboardId(leaderboardName);
+		if (leaderboardId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
 			return ReturnCodes.LEADERBOARD_NOT_FOUND;
 		}
 
-		const id = existingLeaderboard.id;
 		const rowName = command.arguments[1];
-
-		let existingRow = await RowDAO.getLeaderboardRow(id, rowName);
-		if (existingRow) {
-			logger.warn("LDBD_ROW_NOT_FOUND: A leaderboard row with that name could not be found");
+		const rowId = await getRowId(leaderboardId, rowName);
+		if (rowId > -1) {
+			logger.warn(`${ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
 			return ReturnCodes.ROW_NOT_FOUND;
 		}
 
-		const rowId = existingRow.id;
 		const newRowName = command.arguments[2];
-
 		await RowDAO.updateLeaderboardRow(rowId, newRowName);
-		logger.info(`Updated leaderboard row ${existingRow.name} to ${newRowName}`);
-		return true;
+		logger.info(`Updated leaderboard row ${rowId} to ${newRowName}`);
+		return ReturnCodes.SUCCESS;
 	}
 
-	export async function deleteLeaderboardRow(command: Command) {
-		if (command.arguments.length != 2) {
-			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
+	export async function deleteLeaderboardRow(command: Command): Promise<ReturnCodes> {
+		if (commandHasCorrectArgumentsLength(command, 2)) {
+			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
 
 		const leaderboardName = command.arguments[0];
-
-		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
-		if (existingLeaderboard) {
-			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
+		const leaderboardId = await getLeaderboardId(leaderboardName);
+		if (leaderboardId === -1) {
+			logger.warn(`${ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
 			return ReturnCodes.LEADERBOARD_NOT_FOUND;
 		}
 
-		const leaderboardId = existingLeaderboard.id;
 		const rowName = command.arguments[1];
-
-		const existingRow = await RowDAO.getLeaderboardRow(leaderboardId, rowName);
-		if (existingRow) {
-			logger.warn("LDBD_ROW_NOT_FOUND: No leaderboard row found for query");
+		const rowId = await getRowId(leaderboardId, rowName);
+		if (rowId > -1) {
+			logger.warn(`${ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
 			return ReturnCodes.ROW_NOT_FOUND;
 		}
-
-		const rowId = existingRow.id;
 
 		await ValueDAO.deleteValuesByRow(rowId);
 		await RowDAO.deleteLeaderboardRow(rowId);
 		logger.info(`Deleted leaderboard row ${rowName}`);
-		return true;
+		return ReturnCodes.SUCCESS;
 	}
 }

@@ -1,5 +1,5 @@
 import { Command } from "../../core/command";
-import { LeaderboardDAO, ColumnDAO } from "../dao";
+import { LeaderboardDAO, ColumnDAO, RowDAO } from "../dao";
 
 export async function commandHasCorrectArgumentsLength(command: Command, min: number, max?: number): Promise<boolean> {
     if (max) {
@@ -22,6 +22,15 @@ export async function getColumnId(leaderboardId: number, columnName: string): Pr
     const column = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
     if (column) {
         return column.id;
+    } else {
+        return -1;
+    }
+}
+
+export async function getRowId(leaderboardId: number, rowName: string): Promise<number> {
+    const row = await RowDAO.getLeaderboardRow(leaderboardId, rowName);
+    if (row) {
+        return row.id;
     } else {
         return -1;
     }
