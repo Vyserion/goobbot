@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const errorCodes_1 = require("../config/errorCodes");
+const ReturnCodes_1 = require("../config/ReturnCodes");
 const ColumnController_1 = require("../controllers/ColumnController");
 const addColumn = async (command, message) => {
     let result = await ColumnController_1.ColumnController.insertLeaderboardColumn(command);
     let response;
     switch (result) {
-        case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+        case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 2) {
                 response = "No leaderboard or column name was provided";
             }
@@ -15,11 +15,11 @@ const addColumn = async (command, message) => {
             }
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND: {
             response = "A leaderboard with the name " + command.arguments[0] + " was not found";
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_DUP_NAME: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
             response =
                 "A column with the name " +
                     command.arguments[1] +
@@ -28,7 +28,7 @@ const addColumn = async (command, message) => {
                     " already exists";
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_BAD_TYPE: {
+        case ReturnCodes_1.ReturnCodes.BAD_PARAMETER_TYPE: {
             response = "The column type " + command.arguments[2] + " is not allowed.";
             break;
         }

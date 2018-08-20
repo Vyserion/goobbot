@@ -57,4 +57,4 @@ var ColumnDAO;
     }
     ColumnDAO.deleteLeaderboardColumn = deleteLeaderboardColumn;
 })(ColumnDAO = exports.ColumnDAO || (exports.ColumnDAO = {}));
-//# sourceMappingURL=ColumnDAO.js.map
+//# sourceMappingURL=ColumnDao.js.map

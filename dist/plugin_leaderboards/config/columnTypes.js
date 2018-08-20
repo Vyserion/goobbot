@@ -4,4 +4,4 @@ var ColumnTypes;
 (function (ColumnTypes) {
     ColumnTypes["DATA"] = "DATA";
 })(ColumnTypes = exports.ColumnTypes || (exports.ColumnTypes = {}));
-//# sourceMappingURL=columnTypes.js.map
+//# sourceMappingURL=ColumnTypes.js.map

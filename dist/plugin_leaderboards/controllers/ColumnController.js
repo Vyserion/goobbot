@@ -1,111 +1,107 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const LeaderboardDAO_1 = require("../dao/LeaderboardDAO");
-const ColumnDAO_1 = require("../dao/ColumnDAO");
-const ValueDAO_1 = require("../dao/ValueDAO");
+const dao_1 = require("../dao");
 const logger_1 = require("../../core/logger");
-const errorCodes_1 = require("../config/errorCodes");
-const updateActions_1 = require("../config/updateActions");
-const columnTypes_1 = require("../config/columnTypes");
+const ReturnCodes_1 = require("../config/ReturnCodes");
+const UpdateActions_1 = require("../config/UpdateActions");
+const ColumnTypes_1 = require("../config/ColumnTypes");
+const validators_1 = require("../util/validators");
 var ColumnController;
 (function (ColumnController) {
     async function insertLeaderboardColumn(command) {
-        if (command.arguments.length < 2 || command.arguments.length > 3) {
-            logger_1.default.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        if (validators_1.commandHasCorrectArgumentsLength(command, 2, 3)) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
+            return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
         const leaderboardName = command.arguments[0];
-        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
-        if (existingLeaderboard) {
-            logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        const leaderboardId = await validators_1.getLeaderboardId(leaderboardName);
+        if (leaderboardId === -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
+            return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
-        const id = existingLeaderboard.id;
         const columnName = command.arguments[1];
-        let existingColumn = await ColumnDAO_1.ColumnDAO.getLeaderboardColumn(id, columnName);
-        if (existingColumn) {
-            logger_1.default.warn("LDBD_DUP_NAME: A leaderboard column with that name already exists for this leaderboard");
-            return errorCodes_1.ErrorCodes.LDBD_DUP_NAME;
+        const columnId = await validators_1.getColumnId(leaderboardId, columnName);
+        if (columnId > -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name already exists`);
+            return ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME;
         }
-        let columnType = columnTypes_1.ColumnTypes.DATA;
+        let columnType = ColumnTypes_1.ColumnTypes.DATA;
         if (command.arguments.length == 3) {
             const columnTypeStr = command.arguments[2].toUpperCase();
-            const validColumnType = columnTypes_1.ColumnTypes[columnTypeStr];
+            const validColumnType = ColumnTypes_1.ColumnTypes[columnTypeStr];
             if (!validColumnType) {
-                return errorCodes_1.ErrorCodes.LDBD_BAD_TYPE;
+                logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.BAD_PARAMETER_TYPE} - The given column type is not valid`);
+                return ReturnCodes_1.ReturnCodes.BAD_PARAMETER_TYPE;
             }
             columnType = columnTypeStr;
         }
-        await ColumnDAO_1.ColumnDAO.insertLeaderboardColumn(id, columnName, columnType);
-        logger_1.default.info("Created new leaderboard column " + id + ":" + columnName + ":" + columnType);
-        return true;
+        await dao_1.ColumnDAO.insertLeaderboardColumn(leaderboardId, columnName, columnType);
+        logger_1.default.info(`Created new leaderboard column ${leaderboardName}:${columnName}:${columnType}`);
+        return ReturnCodes_1.ReturnCodes.SUCCESS;
     }
     ColumnController.insertLeaderboardColumn = insertLeaderboardColumn;
     async function updateLeaderboardColumn(command) {
-        if (command.arguments.length != 4) {
-            logger_1.default.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        if (validators_1.commandHasCorrectArgumentsLength(command, 4)) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
+            return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
-        const name = command.arguments[0];
-        const existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(name);
-        if (existingLeaderboard) {
-            logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        const leaderboardName = command.arguments[0];
+        const leaderboardId = await validators_1.getLeaderboardId(leaderboardName);
+        if (leaderboardId === -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
+            return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
-        const leaderboardId = existingLeaderboard.id;
         const columnName = command.arguments[1];
-        const value = command.arguments[3];
-        const existingColumn = await ColumnDAO_1.ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
-        if (existingColumn) {
-            logger_1.default.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
-            return errorCodes_1.ErrorCodes.LDBD_COL_NOT_FOUND;
+        const columnId = await validators_1.getColumnId(leaderboardId, columnName);
+        if (columnId === -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`);
+            return ReturnCodes_1.ReturnCodes.COLUMN_NOT_FOUND;
         }
-        const columnId = existingColumn.id;
-        let action = command.arguments[2];
-        action = action.toUpperCase();
-        const validatedAction = updateActions_1.UpdateActions[action];
-        if (!validatedAction) {
-            return errorCodes_1.ErrorCodes.LDBD_INVALID_PARAM;
+        const action = command.arguments[2].toUpperCase();
+        const validAction = UpdateActions_1.UpdateActions[action];
+        if (!validAction) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INVALID_PARAMETER} - The given update action is not valid`);
+            return ReturnCodes_1.ReturnCodes.INVALID_PARAMETER;
         }
-        if (validatedAction === updateActions_1.UpdateActions.TYPE) {
+        if (validAction === UpdateActions_1.UpdateActions.TYPE) {
             const columnTypeStr = command.arguments[3].toUpperCase();
-            const validColumnType = columnTypes_1.ColumnTypes[columnTypeStr];
+            const validColumnType = ColumnTypes_1.ColumnTypes[columnTypeStr];
             if (!validColumnType) {
-                return errorCodes_1.ErrorCodes.LDBD_BAD_TYPE;
+                logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.BAD_PARAMETER_TYPE} - The given column type is not valid`);
+                return ReturnCodes_1.ReturnCodes.BAD_PARAMETER_TYPE;
             }
-            await ColumnDAO_1.ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
-            logger_1.default.info("Updated leaderboard column " + existingColumn.name + " to " + columnTypeStr);
+            await dao_1.ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
+            logger_1.default.info(`Updated leaderboard column ${columnId} to ${columnTypeStr}`);
         }
-        else if (validatedAction === updateActions_1.UpdateActions.NAME) {
-            await ColumnDAO_1.ColumnDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
-            logger_1.default.info("Update leaderboard column " + existingColumn.name + `'s type to ` + value);
+        else if (validAction === UpdateActions_1.UpdateActions.NAME) {
+            const value = command.arguments[3];
+            await dao_1.ColumnDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
+            logger_1.default.info(`Update leaderboard column ${columnId}'s type to ${value}`);
         }
-        return true;
+        return ReturnCodes_1.ReturnCodes.SUCCESS;
     }
     ColumnController.updateLeaderboardColumn = updateLeaderboardColumn;
     async function deleteLeaderboardColumn(command) {
-        if (command.arguments.length != 2) {
-            logger_1.default.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-            return errorCodes_1.ErrorCodes.LDBD_BAD_PARAM;
+        if (validators_1.commandHasCorrectArgumentsLength(command, 2)) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
+            return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
         const leaderboardName = command.arguments[0];
-        let existingLeaderboard = await LeaderboardDAO_1.LeaderboardDAO.getLeaderboard(leaderboardName);
-        if (existingLeaderboard) {
-            logger_1.default.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-            return errorCodes_1.ErrorCodes.LDBD_NOT_FOUND;
+        const leaderboardId = await validators_1.getLeaderboardId(leaderboardName);
+        if (leaderboardId === -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND} - No leaderboard found for the given name`);
+            return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
-        const leaderboardId = existingLeaderboard.id;
         const columnName = command.arguments[1];
-        const existingColumn = await ColumnDAO_1.ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
-        if (existingColumn) {
-            logger_1.default.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
-            return errorCodes_1.ErrorCodes.LDBD_COL_NOT_FOUND;
+        const columnId = await validators_1.getColumnId(leaderboardId, columnName);
+        if (columnId === -1) {
+            logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`);
+            return ReturnCodes_1.ReturnCodes.COLUMN_NOT_FOUND;
         }
-        const columnId = existingColumn.id;
-        await ValueDAO_1.ValueDAO.deleteValuesByColumn(columnId);
-        await ColumnDAO_1.ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnId);
-        logger_1.default.info("Deleted leaderboard column " + columnName);
-        return true;
+        await dao_1.ValueDAO.deleteValuesByColumn(columnId);
+        await dao_1.ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnId);
+        logger_1.default.info(`Deleted leaderboard column ${columnName}`);
+        return ReturnCodes_1.ReturnCodes.SUCCESS;
     }
     ColumnController.deleteLeaderboardColumn = deleteLeaderboardColumn;
 })(ColumnController = exports.ColumnController || (exports.ColumnController = {}));

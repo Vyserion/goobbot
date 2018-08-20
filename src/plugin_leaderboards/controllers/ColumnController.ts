@@ -2,7 +2,7 @@ import { ColumnDAO, ValueDAO } from "../dao";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
-import { UpdateActions } from "../config/updateActions";
+import { UpdateActions } from "../config/UpdateActions";
 import { ColumnTypes } from "../config/ColumnTypes";
 import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId } from "../util/validators";
 

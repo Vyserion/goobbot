@@ -5,4 +5,4 @@ var UpdateActions;
     UpdateActions["NAME"] = "NAME";
     UpdateActions["TYPE"] = "TYPE";
 })(UpdateActions = exports.UpdateActions || (exports.UpdateActions = {}));
-//# sourceMappingURL=updateActions.js.map
+//# sourceMappingURL=UpdateActions.js.map

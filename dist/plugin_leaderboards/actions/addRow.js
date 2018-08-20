@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RowController_1 = require("../controllers/RowController");
-const errorCodes_1 = require("../config/errorCodes");
+const ReturnCodes_1 = require("../config/ReturnCodes");
 const addRow = async (command, message) => {
     let result = await RowController_1.RowController.insertLeaderboardRow(command);
     let response;
     switch (result) {
-        case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+        case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 2) {
                 response = `No leaderboard or row name was provided`;
             }
@@ -15,11 +15,11 @@ const addRow = async (command, message) => {
             }
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND: {
             response = `A leaderboard with the name ${command.arguments[0]} was not found`;
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_DUP_NAME: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
             response = `A row with the name ${command.arguments[1]} for leaderboard ${command.arguments[0]} already exists`;
             break;
         }

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const errorCodes_1 = require("../config/errorCodes");
+const ReturnCodes_1 = require("../config/ReturnCodes");
 const LeaderboardController_1 = require("../controllers/LeaderboardController");
 const deleteLeaderboard = async (command, message) => {
     let result = await LeaderboardController_1.LeaderboardController.deleteLeaderboard(command);
     let response;
     switch (result) {
-        case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+        case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             response = "No names were provided for the leaderboard";
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND: {
             response = "A leaderboard with the name " + command.arguments[0] + " was not found";
             break;
         }

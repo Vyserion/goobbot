@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RowController_1 = require("../controllers/RowController");
-const errorCodes_1 = require("../config/errorCodes");
+const ReturnCodes_1 = require("../config/ReturnCodes");
 const deleteRow = async (command, message) => {
     let result = await RowController_1.RowController.deleteLeaderboardRow(command);
     let response;
     switch (result) {
-        case errorCodes_1.ErrorCodes.LDBD_BAD_PARAM: {
+        case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 2) {
                 response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
             }
@@ -15,11 +15,11 @@ const deleteRow = async (command, message) => {
             }
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_NOT_FOUND: {
+        case ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND: {
             response = `A leaderbaord with the name ${command.arguments[0]} could now be found`;
             break;
         }
-        case errorCodes_1.ErrorCodes.LDBD_ROW_NOT_FOUND: {
+        case ReturnCodes_1.ReturnCodes.ROW_NOT_FOUND: {
             response = `A row with the name ${command.arguments[1]} could not be found`;
             break;
         }
