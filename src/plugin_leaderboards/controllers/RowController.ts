@@ -3,7 +3,7 @@ import { RowDAO } from "../dao/RowDAO";
 import { ValueDAO } from "../dao/ValueDAO";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 
 export namespace RowController {
 	export async function insertLeaderboardRow(command: Command) {

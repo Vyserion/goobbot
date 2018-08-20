@@ -1,6 +1,6 @@
 import { Command } from "../../core/command";
 import logger from "../../core/logger";
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 import { LeaderboardDAO } from "../dao/LeaderboardDAO";
 import { ColumnDAO } from "../dao/ColumnDAO";
 import { RowDAO } from "../dao/RowDAO";

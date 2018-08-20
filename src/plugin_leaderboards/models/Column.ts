@@ -1,4 +1,4 @@
-import { ColumnTypes } from "../config/columnTypes";
+import { ColumnTypes } from "../config/ColumnTypes";
 
 export interface Column {
 	id?: number;

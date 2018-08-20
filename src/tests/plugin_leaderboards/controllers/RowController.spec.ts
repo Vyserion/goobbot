@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { RowController } from "../../../plugin_leaderboards/controllers/RowController";
-import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
+import { ErrorCodes } from "../../../plugin_leaderboards/config/ErrorCodes";
 import { Command } from "../../../core/command";
 import { stub } from "sinon";
 import { RowDAO } from "../../../plugin_leaderboards/dao/RowDAO";

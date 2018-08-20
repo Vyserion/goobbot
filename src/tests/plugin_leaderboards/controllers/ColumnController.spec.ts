@@ -4,7 +4,7 @@ import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { ColumnController } from "../../../plugin_leaderboards/controllers/ColumnController";
-import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
+import { ErrorCodes } from "../../../plugin_leaderboards/config/ErrorCodes";
 import { Command } from "../../../core/command";
 import { stub } from "sinon";
 

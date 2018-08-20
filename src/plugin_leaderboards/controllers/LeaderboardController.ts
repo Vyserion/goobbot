@@ -2,7 +2,7 @@ import { LeaderboardDAO } from "../dao/LeaderboardDAO";
 import { ColumnDAO } from "../dao/ColumnDAO";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 import { RowDAO } from "../dao/RowDAO";
 import { Leaderboard, Column, Row }  from "../models";
 import { ValueDAO } from "../dao/ValueDAO";

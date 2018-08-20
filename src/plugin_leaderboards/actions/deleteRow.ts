@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { Command } from "../../core/command";
 import { RowController } from "../controllers/RowController";
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 
 const deleteRow = async (command: Command, message: Message) => {
 	let result = await RowController.deleteLeaderboardRow(command);

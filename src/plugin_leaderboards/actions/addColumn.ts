@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { ColumnController } from "../controllers/ColumnController";

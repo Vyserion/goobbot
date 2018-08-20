@@ -3,9 +3,9 @@ import { ColumnDAO } from "../dao/ColumnDAO";
 import { ValueDAO } from "../dao/ValueDAO";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
-import { ErrorCodes } from "../config/errorCodes";
+import { ErrorCodes } from "../config/ErrorCodes";
 import { UpdateActions } from "../config/updateActions";
-import { ColumnTypes } from "../config/columnTypes";
+import { ColumnTypes } from "../config/ColumnTypes";
 
 export namespace ColumnController {
 	export async function insertLeaderboardColumn(command: Command) {

@@ -4,9 +4,9 @@ import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
-import { ErrorCodes } from "../../../plugin_leaderboards/config/errorCodes";
+import { ErrorCodes } from "../../../plugin_leaderboards/config/ErrorCodes";
 import { Command } from "../../../core/command";
-import { ColumnTypes } from "../../../plugin_leaderboards/config/columnTypes";
+import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
 import { Leaderboard } from "../../../plugin_leaderboards/models";
 import { stub } from "sinon";
 
