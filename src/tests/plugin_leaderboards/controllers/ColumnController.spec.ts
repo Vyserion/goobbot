@@ -4,7 +4,7 @@ import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { ColumnController } from "../../../plugin_leaderboards/controllers/ColumnController";
-import { ErrorCodes } from "../../../plugin_leaderboards/config/ErrorCodes";
+import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
 import { Command } from "../../../core/command";
 import { stub } from "sinon";
 
@@ -15,13 +15,13 @@ describe("ColumnController ::", () => {
 			when(zeroCommand.arguments).thenReturn([]);
 
 			const zeroResult = await ColumnController.insertLeaderboardColumn(instance(zeroCommand));
-			expect(zeroResult).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(zeroResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 
 			const oneCommand: Command = mock(Command);
 			when(oneCommand.arguments).thenReturn(["1"]);
 
 			const oneResult = await ColumnController.insertLeaderboardColumn(instance(oneCommand));
-			expect(oneResult).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(oneResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than 3 arguments.", async () => {
@@ -29,7 +29,7 @@ describe("ColumnController ::", () => {
 			when(command.arguments).thenReturn(["1", "2", "3", "4"]);
 
 			const result = await ColumnController.insertLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that id.", async () => {
@@ -41,7 +41,7 @@ describe("ColumnController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await ColumnController.insertLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -58,7 +58,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([columnName]);
 
 			const result = await ColumnController.insertLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_DUP_NAME);
+			expect(result).to.equal(ReturnCodes.LDBD_DUP_NAME);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();
@@ -77,7 +77,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([]);
 
 			const result = await ColumnController.insertLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_TYPE);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();
@@ -131,7 +131,7 @@ describe("ColumnController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than 4 arguments", async () => {
@@ -139,7 +139,7 @@ describe("ColumnController ::", () => {
 			when(command.arguments).thenReturn(["", "", "", "", ""]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that name", async () => {
@@ -151,7 +151,7 @@ describe("ColumnController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -167,7 +167,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_COL_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();
@@ -185,7 +185,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([columnName]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_INVALID_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_INVALID_PARAM);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();
@@ -204,7 +204,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([columnName]);
 
 			const result = await ColumnController.updateLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_TYPE);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_TYPE);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();
@@ -259,7 +259,7 @@ describe("ColumnController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await ColumnController.deleteLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than 2 arguments.", async () => {
@@ -267,7 +267,7 @@ describe("ColumnController ::", () => {
 			when(command.arguments).thenReturn(["", "", ""]);
 
 			const result = await ColumnController.deleteLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that name.", async () => {
@@ -279,7 +279,7 @@ describe("ColumnController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await ColumnController.deleteLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -295,7 +295,7 @@ describe("ColumnController ::", () => {
 			stub(ColumnDAO, "getLeaderboardColumn").returns([]);
 
 			const result = await ColumnController.deleteLeaderboardColumn(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_COL_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_COL_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(ColumnDAO.getLeaderboardColumn as any).restore();

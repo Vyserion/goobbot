@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { prettyPrintLeaderboard } from "../util/format";
 import { Message } from "discord.js";
@@ -9,11 +9,11 @@ const getLeaderboard = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			response = "No names were provided to get the leaderboard";
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = "A leaderboard with the name " + command.arguments[0] + " was not found";
 			break;
 		}

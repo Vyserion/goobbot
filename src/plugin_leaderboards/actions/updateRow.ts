@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { RowController } from "../controllers/RowController";
 import { Message } from "discord.js";
@@ -8,7 +8,7 @@ const updateLeaderboardRow = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			if (command.arguments.length < 3) {
 				response =
 					"Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name";
@@ -17,11 +17,11 @@ const updateLeaderboardRow = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = `A leaderboard with the name ${command.arguments[0]} was not found`;
 			break;
 		}
-		case ErrorCodes.LDBD_ROW_NOT_FOUND: {
+		case ReturnCodes.LDBD_ROW_NOT_FOUND: {
 			response = `A leaderboard with the name ${command.arguments[1]} was not found`;
 			break;
 		}

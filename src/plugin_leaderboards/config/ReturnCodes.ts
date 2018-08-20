@@ -1,4 +1,4 @@
-export enum ErrorCodes {
+export enum ReturnCodes {
 	LDBD_BAD_PARAM,
 	LDBD_DUP_NAME,
 	LDBD_NOT_FOUND,

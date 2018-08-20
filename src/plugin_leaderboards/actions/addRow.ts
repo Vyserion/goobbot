@@ -1,14 +1,14 @@
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { RowController } from "../controllers/RowController";
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 
 const addRow = async (command: Command, message: Message) => {
 	let result = await RowController.insertLeaderboardRow(command);
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			if (command.arguments.length < 2) {
 				response = `No leaderboard or row name was provided`;
 			} else {
@@ -16,11 +16,11 @@ const addRow = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = `A leaderboard with the name ${command.arguments[0]} was not found`;
 			break;
 		}
-		case ErrorCodes.LDBD_DUP_NAME: {
+		case ReturnCodes.LDBD_DUP_NAME: {
 			response = `A row with the name ${command.arguments[1]} for leaderboard ${
 				command.arguments[0]
 			} already exists`;

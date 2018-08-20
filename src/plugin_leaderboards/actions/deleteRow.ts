@@ -1,14 +1,14 @@
 import { Message } from "discord.js";
 import { Command } from "../../core/command";
 import { RowController } from "../controllers/RowController";
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 
 const deleteRow = async (command: Command, message: Message) => {
 	let result = await RowController.deleteLeaderboardRow(command);
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			if (command.arguments.length < 2) {
 				response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
 			} else {
@@ -16,11 +16,11 @@ const deleteRow = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = `A leaderbaord with the name ${command.arguments[0]} could now be found`;
 			break;
 		}
-		case ErrorCodes.LDBD_ROW_NOT_FOUND: {
+		case ReturnCodes.LDBD_ROW_NOT_FOUND: {
 			response = `A row with the name ${command.arguments[1]} could not be found`;
 			break;
 		}

@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { LeaderboardController } from "../controllers/LeaderboardController";
@@ -8,11 +8,11 @@ const addLeaderboard = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			response = "No name was provided for the leaderboard";
 			break;
 		}
-		case ErrorCodes.LDBD_DUP_NAME: {
+		case ReturnCodes.LDBD_DUP_NAME: {
 			response = "A leaderboard with the name " + command.arguments[0] + " already exists";
 			break;
 		}

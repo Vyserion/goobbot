@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { ColumnController } from "../controllers/ColumnController";
@@ -8,7 +8,7 @@ const addColumn = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			if (command.arguments.length < 2) {
 				response = "No leaderboard or column name was provided";
 			} else {
@@ -16,11 +16,11 @@ const addColumn = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = "A leaderboard with the name " + command.arguments[0] + " was not found";
 			break;
 		}
-		case ErrorCodes.LDBD_DUP_NAME: {
+		case ReturnCodes.LDBD_DUP_NAME: {
 			response =
 				"A column with the name " +
 				command.arguments[1] +
@@ -29,7 +29,7 @@ const addColumn = async (command: Command, message: Message) => {
 				" already exists";
 			break;
 		}
-		case ErrorCodes.LDBD_BAD_TYPE: {
+		case ReturnCodes.LDBD_BAD_TYPE: {
 			response = "The column type " + command.arguments[2] + " is not allowed.";
 			break;
 		}

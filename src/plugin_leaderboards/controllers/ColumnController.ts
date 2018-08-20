@@ -3,7 +3,7 @@ import { ColumnDAO } from "../dao/ColumnDAO";
 import { ValueDAO } from "../dao/ValueDAO";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { UpdateActions } from "../config/updateActions";
 import { ColumnTypes } from "../config/ColumnTypes";
 
@@ -11,7 +11,7 @@ export namespace ColumnController {
 	export async function insertLeaderboardColumn(command: Command) {
 		if (command.arguments.length < 2 || command.arguments.length > 3) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const leaderboardName = command.arguments[0];
@@ -19,7 +19,7 @@ export namespace ColumnController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		const id = existingLeaderboard.id;
@@ -28,7 +28,7 @@ export namespace ColumnController {
 		let existingColumn = await ColumnDAO.getLeaderboardColumn(id, columnName);
 		if (existingColumn) {
 			logger.warn("LDBD_DUP_NAME: A leaderboard column with that name already exists for this leaderboard");
-			return ErrorCodes.LDBD_DUP_NAME;
+			return ReturnCodes.LDBD_DUP_NAME;
 		}
 
 		let columnType: string = ColumnTypes.DATA;
@@ -37,7 +37,7 @@ export namespace ColumnController {
 			const validColumnType = ColumnTypes[columnTypeStr];
 
 			if (!validColumnType) {
-				return ErrorCodes.LDBD_BAD_TYPE;
+				return ReturnCodes.LDBD_BAD_TYPE;
 			}
 			columnType = columnTypeStr;
 		}
@@ -50,7 +50,7 @@ export namespace ColumnController {
 	export async function updateLeaderboardColumn(command: Command) {
 		if (command.arguments.length != 4) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const name = command.arguments[0];
@@ -58,7 +58,7 @@ export namespace ColumnController {
 		const existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		const leaderboardId = existingLeaderboard.id;
@@ -68,7 +68,7 @@ export namespace ColumnController {
 		const existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
 		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
-			return ErrorCodes.LDBD_COL_NOT_FOUND;
+			return ReturnCodes.LDBD_COL_NOT_FOUND;
 		}
 
 		const columnId = existingColumn.id;
@@ -78,7 +78,7 @@ export namespace ColumnController {
 
 		const validatedAction = UpdateActions[action];
 		if (!validatedAction) {
-			return ErrorCodes.LDBD_INVALID_PARAM;
+			return ReturnCodes.LDBD_INVALID_PARAM;
 		}
 
 		if (validatedAction === UpdateActions.TYPE) {
@@ -86,7 +86,7 @@ export namespace ColumnController {
 			const validColumnType = ColumnTypes[columnTypeStr];
 
 			if (!validColumnType) {
-				return ErrorCodes.LDBD_BAD_TYPE;
+				return ReturnCodes.LDBD_BAD_TYPE;
 			}
 
 			await ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
@@ -102,7 +102,7 @@ export namespace ColumnController {
 	export async function deleteLeaderboardColumn(command: Command) {
 		if (command.arguments.length != 2) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const leaderboardName = command.arguments[0];
@@ -110,7 +110,7 @@ export namespace ColumnController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		const leaderboardId = existingLeaderboard.id;
@@ -120,7 +120,7 @@ export namespace ColumnController {
 		const existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboardId, columnName);
 		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
-			return ErrorCodes.LDBD_COL_NOT_FOUND;
+			return ReturnCodes.LDBD_COL_NOT_FOUND;
 		}
 
 		const columnId = existingColumn.id;

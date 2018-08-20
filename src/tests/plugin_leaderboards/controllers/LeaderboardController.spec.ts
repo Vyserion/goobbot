@@ -4,7 +4,7 @@ import { mock, instance, when } from "ts-mockito";
 import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
-import { ErrorCodes } from "../../../plugin_leaderboards/config/ErrorCodes";
+import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
 import { Command } from "../../../core/command";
 import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
 import { Leaderboard } from "../../../plugin_leaderboards/models";
@@ -28,7 +28,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await LeaderboardController.getLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that id.", async () => {
@@ -40,7 +40,7 @@ describe("LeaderboardController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await LeaderboardController.getLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -86,7 +86,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than one argument.", async () => {
@@ -94,7 +94,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn(["one", "two"]);
 
 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when a leaderboard with the same name is detected.", async () => {
@@ -106,7 +106,7 @@ describe("LeaderboardController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([leaderboardName]);
 
 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_DUP_NAME);
+			expect(result).to.equal(ReturnCodes.LDBD_DUP_NAME);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -134,7 +134,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await LeaderboardController.updateLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than 2 arguments", async () => {
@@ -142,7 +142,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn(["", "", ""]);
 
 			const result = await LeaderboardController.updateLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that name", async () => {
@@ -154,7 +154,7 @@ describe("LeaderboardController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await LeaderboardController.updateLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -183,7 +183,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn([]);
 
 			const result = await LeaderboardController.deleteLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should check for more than 1 argument", async () => {
@@ -191,7 +191,7 @@ describe("LeaderboardController ::", () => {
 			when(command.arguments).thenReturn(["", ""]);
 
 			const result = await LeaderboardController.deleteLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
 		});
 
 		it("should return an error when no leaderboard is found with that name", async () => {
@@ -203,7 +203,7 @@ describe("LeaderboardController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await LeaderboardController.deleteLeaderboard(instance(command));
-			expect(result).to.equal(ErrorCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});

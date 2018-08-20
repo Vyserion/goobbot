@@ -2,7 +2,7 @@ import { LeaderboardDAO } from "../dao/LeaderboardDAO";
 import { ColumnDAO } from "../dao/ColumnDAO";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { RowDAO } from "../dao/RowDAO";
 import { Leaderboard, Column, Row }  from "../models";
 import { ValueDAO } from "../dao/ValueDAO";
@@ -15,7 +15,7 @@ export namespace LeaderboardController {
 	export async function getLeaderboard(command: Command) {
 		if (command.arguments.length != 1) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const leaderboardName = command.arguments[0];
@@ -23,7 +23,7 @@ export namespace LeaderboardController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		let leaderboard = existingLeaderboard;
@@ -58,7 +58,7 @@ export namespace LeaderboardController {
 	export async function insertLeaderboard(command: Command) {
 		if (command.arguments.length != 1) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const name = command.arguments[0];
@@ -66,7 +66,7 @@ export namespace LeaderboardController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_DUP_NAME: A leaderboard with that name already exists");
-			return ErrorCodes.LDBD_DUP_NAME;
+			return ReturnCodes.LDBD_DUP_NAME;
 		}
 
 		await LeaderboardDAO.insertLeaderboard(name);
@@ -77,7 +77,7 @@ export namespace LeaderboardController {
 	export async function updateLeaderboard(command: Command) {
 		if (command.arguments.length != 2) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const name = command.arguments[0];
@@ -86,7 +86,7 @@ export namespace LeaderboardController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		const id = existingLeaderboard.id;
@@ -98,7 +98,7 @@ export namespace LeaderboardController {
 	export async function deleteLeaderboard(command: Command) {
 		if (command.arguments.length != 1) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ErrorCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.LDBD_BAD_PARAM;
 		}
 
 		const name = command.arguments[0];
@@ -106,7 +106,7 @@ export namespace LeaderboardController {
 		let existingLeaderboard = await LeaderboardDAO.getLeaderboard(name);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ErrorCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LDBD_NOT_FOUND;
 		}
 
 		const id = existingLeaderboard.id;

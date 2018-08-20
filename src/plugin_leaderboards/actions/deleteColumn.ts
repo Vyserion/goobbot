@@ -1,4 +1,4 @@
-import { ErrorCodes } from "../config/ErrorCodes";
+import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { ColumnController } from "../controllers/ColumnController";
@@ -8,7 +8,7 @@ const deleteColumn = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ErrorCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.LDBD_BAD_PARAM: {
 			if (command.arguments.length < 2) {
 				response =
 					"Not enough parameters provided = please check you have a leaderboard name and a column name.";
@@ -17,11 +17,11 @@ const deleteColumn = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ErrorCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LDBD_NOT_FOUND: {
 			response = "A leaderboard with the name " + command.arguments[0] + " was not found";
 			break;
 		}
-		case ErrorCodes.LDBD_COL_NOT_FOUND: {
+		case ReturnCodes.LDBD_COL_NOT_FOUND: {
 			response = "A leaderboard with the column " + command.arguments[1] + " was not found";
 			break;
 		}
