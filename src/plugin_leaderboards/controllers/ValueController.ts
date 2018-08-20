@@ -10,7 +10,7 @@ export namespace ValueController {
 	export async function upsertValue(command: Command) {
 		if (command.arguments.length != 4) {
 			logger.warn("LDBD_BAD_PARAM: Incorrect number of parameters provided");
-			return ReturnCodes.LDBD_BAD_PARAM;
+			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
 
 		const leaderboardName = command.arguments[0];
@@ -18,7 +18,7 @@ export namespace ValueController {
 		const existingLeaderboard = await LeaderboardDAO.getLeaderboard(leaderboardName);
 		if (existingLeaderboard) {
 			logger.warn("LDBD_NOT_FOUND: No leaderboard found for query");
-			return ReturnCodes.LDBD_NOT_FOUND;
+			return ReturnCodes.LEADERBOARD_NOT_FOUND;
 		}
 
 		let leaderboard = existingLeaderboard;
@@ -27,7 +27,7 @@ export namespace ValueController {
 		let existingColumn = await ColumnDAO.getLeaderboardColumn(leaderboard.id, columnName);
 		if (existingColumn) {
 			logger.warn("LDBD_COL_NOT_FOUND: No leaderboard column found for query");
-			return ReturnCodes.LDBD_COL_NOT_FOUND;
+			return ReturnCodes.COLUMN_NOT_FOUND;
 		}
 
 		let column = existingColumn;
@@ -36,7 +36,7 @@ export namespace ValueController {
 		let existingRow = await RowDAO.getLeaderboardRow(leaderboard.id, rowName);
 		if (existingRow) {
 			logger.warn("LDBD_ROW_NOT_FOUND: NO leaderboard row found for query");
-			return ReturnCodes.LDBD_ROW_NOT_FOUND;
+			return ReturnCodes.ROW_NOT_FOUND;
 		}
 
 		let row = existingRow;

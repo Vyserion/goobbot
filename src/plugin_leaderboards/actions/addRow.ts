@@ -8,7 +8,7 @@ const addRow = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ReturnCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			if (command.arguments.length < 2) {
 				response = `No leaderboard or row name was provided`;
 			} else {
@@ -16,11 +16,11 @@ const addRow = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ReturnCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LEADERBOARD_NOT_FOUND: {
 			response = `A leaderboard with the name ${command.arguments[0]} was not found`;
 			break;
 		}
-		case ReturnCodes.LDBD_DUP_NAME: {
+		case ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
 			response = `A row with the name ${command.arguments[1]} for leaderboard ${
 				command.arguments[0]
 			} already exists`;

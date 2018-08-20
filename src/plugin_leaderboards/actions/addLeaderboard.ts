@@ -8,11 +8,11 @@ const addLeaderboard = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ReturnCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			response = "No name was provided for the leaderboard";
 			break;
 		}
-		case ReturnCodes.LDBD_DUP_NAME: {
+		case ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
 			response = "A leaderboard with the name " + command.arguments[0] + " already exists";
 			break;
 		}

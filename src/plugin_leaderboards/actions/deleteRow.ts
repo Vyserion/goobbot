@@ -8,7 +8,7 @@ const deleteRow = async (command: Command, message: Message) => {
 
 	let response;
 	switch (result) {
-		case ReturnCodes.LDBD_BAD_PARAM: {
+		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			if (command.arguments.length < 2) {
 				response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
 			} else {
@@ -16,11 +16,11 @@ const deleteRow = async (command: Command, message: Message) => {
 			}
 			break;
 		}
-		case ReturnCodes.LDBD_NOT_FOUND: {
+		case ReturnCodes.LEADERBOARD_NOT_FOUND: {
 			response = `A leaderbaord with the name ${command.arguments[0]} could now be found`;
 			break;
 		}
-		case ReturnCodes.LDBD_ROW_NOT_FOUND: {
+		case ReturnCodes.ROW_NOT_FOUND: {
 			response = `A row with the name ${command.arguments[1]} could not be found`;
 			break;
 		}

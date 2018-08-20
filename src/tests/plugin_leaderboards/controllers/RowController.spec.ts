@@ -15,13 +15,13 @@ describe("RowController ::", () => {
 			when(zeroCommand.arguments).thenReturn([]);
 
 			const zeroResult = await RowController.insertLeaderboardRow(instance(zeroCommand));
-			expect(zeroResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(zeroResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 
 			const oneCommand: Command = mock(Command);
 			when(oneCommand.arguments).thenReturn(["1"]);
 
 			const oneResult = await RowController.insertLeaderboardRow(instance(oneCommand));
-			expect(oneResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(oneResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should check for more than 2 arguments.", async () => {
@@ -29,7 +29,7 @@ describe("RowController ::", () => {
 			when(command.arguments).thenReturn(["1", "2", "3"]);
 
 			const result = await RowController.insertLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should return an error code when no leaderboard is found with that id.", async () => {
@@ -41,7 +41,7 @@ describe("RowController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await RowController.insertLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LEADERBOARD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -58,7 +58,7 @@ describe("RowController ::", () => {
 			stub(RowDAO, "getLeaderboardRow").returns([rowName]);
 
 			const result = await RowController.insertLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_DUP_NAME);
+			expect(result).to.equal(ReturnCodes.LEADERBOARD_DUPLICATE_NAME);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(RowDAO.getLeaderboardRow as any).restore();
@@ -91,13 +91,13 @@ describe("RowController ::", () => {
 			when(zeroCommand.arguments).thenReturn([]);
 
 			const zeroResult = await RowController.updateLeaderboardRow(instance(zeroCommand));
-			expect(zeroResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(zeroResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 
 			const twoCommand: Command = mock(Command);
 			when(twoCommand.arguments).thenReturn(["", ""]);
 
 			const twoResult = await RowController.updateLeaderboardRow(instance(twoCommand));
-			expect(twoResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(twoResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should check for more than 3 arguments.", async () => {
@@ -105,7 +105,7 @@ describe("RowController ::", () => {
 			when(command.arguments).thenReturn(["", "", "", ""]);
 
 			const result = await RowController.updateLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should return an error code when no leaderboard is found with that name.", async () => {
@@ -117,7 +117,7 @@ describe("RowController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await RowController.updateLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LEADERBOARD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -134,7 +134,7 @@ describe("RowController ::", () => {
 			stub(RowDAO, "getLeaderboardRow").returns([]);
 
 			const result = await RowController.updateLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_ROW_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.ROW_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(RowDAO.getLeaderboardRow as any).restore();
@@ -166,13 +166,13 @@ describe("RowController ::", () => {
 			when(zeroCommand.arguments).thenReturn([]);
 
 			const zeroResult = await RowController.deleteLeaderboardRow(instance(zeroCommand));
-			expect(zeroResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(zeroResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 
 			const oneCommand: Command = mock(Command);
 			when(oneCommand.arguments).thenReturn([""]);
 
 			const oneResult = await RowController.deleteLeaderboardRow(instance(oneCommand));
-			expect(oneResult).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(oneResult).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should check for more than 2 arguments.", async () => {
@@ -180,7 +180,7 @@ describe("RowController ::", () => {
 			when(command.arguments).thenReturn(["", "", ""]);
 
 			const result = await RowController.deleteLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_BAD_PARAM);
+			expect(result).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
 		});
 
 		it("should return an error when no leaderboard is found with that name.", async () => {
@@ -192,7 +192,7 @@ describe("RowController ::", () => {
 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
 
 			const result = await RowController.deleteLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.LEADERBOARD_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 		});
@@ -209,7 +209,7 @@ describe("RowController ::", () => {
 			stub(RowDAO, "getLeaderboardRow").returns([]);
 
 			const result = await RowController.deleteLeaderboardRow(instance(command));
-			expect(result).to.equal(ReturnCodes.LDBD_ROW_NOT_FOUND);
+			expect(result).to.equal(ReturnCodes.ROW_NOT_FOUND);
 
 			(LeaderboardDAO.getLeaderboard as any).restore();
 			(RowDAO.getLeaderboardRow as any).restore();
