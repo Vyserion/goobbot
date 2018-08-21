@@ -1,19 +1,17 @@
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
-import { Message } from "discord.js";
 import { ValueController } from "../controllers/ValueController";
 
-const upsertValue = async (command: Command, message: Message) => {
-	let result = await ValueController.upsertValue(command);
+export async function upsertValue(command: Command): Promise<string> {
+	const result = await ValueController.upsertValue(command);
 
 	let response;
 	switch (result) {
 		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			if (command.arguments.length < 4) {
-				response =
-					"Not enough parameters provided - please check you have a Leaderboard Name, Column Name, Row Name, and the value.";
+				response = `Not enough parameters provided - please check you have a Leaderboard Name, Column Name, Row Name, and the value`;
 			} else {
-				response = "Too many parameters were provided";
+				response = `Too many parameters were provided`;
 			}
 			break;
 		}
@@ -30,14 +28,10 @@ const upsertValue = async (command: Command, message: Message) => {
 			break;
 		}
 		default: {
-			response = `Successfully updated the value in column ${command.arguments[1]} and row ${
-				command.arguments[2]
-			}`;
+			response = `Successfully updated the value in column ${command.arguments[1]} and row ${command.arguments[2]}`;
 			break;
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default upsertValue;
+	return response;
+}

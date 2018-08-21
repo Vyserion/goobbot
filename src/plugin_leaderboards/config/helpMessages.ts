@@ -1,39 +1,39 @@
-import { commands } from "./commands";
+import { Commands } from "./commands";
 
 const showCommands =
 	"User Commands: \n" +
 	"- Get Leaderboards: !leaderboards\n" +
 	"- Get Leaderboard: " +
-	commands.GET_LEADERBOARD +
+	Commands.GET_LEADERBOARD +
 	"\n" +
 	"\n" +
 	"Admin Commands\n" +
 	"- Add Leaderboard: " +
-	commands.CREATE_LEADERBOARD +
+	Commands.CREATE_LEADERBOARD +
 	"\n" +
 	"- Update Leaderboard: " +
-	commands.UPDATE_LEADERBOARD +
+	Commands.UPDATE_LEADERBOARD +
 	"\n" +
 	"- Delete Leaderboard: " +
-	commands.DELETE_LEADERBOARD +
+	Commands.DELETE_LEADERBOARD +
 	"\n" +
 	"- Add Column: " +
-	commands.CREATE_COLUMN +
+	Commands.CREATE_COLUMN +
 	"\n" +
 	"- Update Column: " +
-	commands.UPDATE_COLUMN +
+	Commands.UPDATE_COLUMN +
 	"\n" +
 	"- Delete Column: " +
-	commands.DELETE_COLUMN +
+	Commands.DELETE_COLUMN +
 	"\n" +
 	"- Add Row: " +
-	commands.CREATE_ROW +
+	Commands.CREATE_ROW +
 	"\n" +
 	"- Update Row: " +
-	commands.UPDATE_ROW +
+	Commands.UPDATE_ROW +
 	"\n" +
 	"- Delete Row: " +
-	commands.DELETE_ROW +
+	Commands.DELETE_ROW +
 	"\n" +
 	"\n" +
 	"For more information, use the command: '!leaderboards help [command]'";

@@ -1,10 +1,9 @@
 import { Command } from "../../core/command";
-import { Message } from "discord.js";
 import { RowController } from "../controllers/RowController";
 import { ReturnCodes } from "../config/ReturnCodes";
 
-const addRow = async (command: Command, message: Message) => {
-	let result = await RowController.insertLeaderboardRow(command);
+export async function addRow(command: Command): Promise<string> {
+	const result = await RowController.insertLeaderboardRow(command);
 
 	let response;
 	switch (result) {
@@ -21,9 +20,7 @@ const addRow = async (command: Command, message: Message) => {
 			break;
 		}
 		case ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
-			response = `A row with the name ${command.arguments[1]} for leaderboard ${
-				command.arguments[0]
-			} already exists`;
+			response = `A row with the name ${command.arguments[1]} for leaderboard ${command.arguments[0]} already exists`;
 			break;
 		}
 		default: {
@@ -32,7 +29,5 @@ const addRow = async (command: Command, message: Message) => {
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default addRow;
+	return response;
+}

@@ -1,18 +1,17 @@
-import { Message } from "discord.js";
 import { Command } from "../../core/command";
 import { RowController } from "../controllers/RowController";
 import { ReturnCodes } from "../config/ReturnCodes";
 
-const deleteRow = async (command: Command, message: Message) => {
-	let result = await RowController.deleteLeaderboardRow(command);
+export async function deleteRow(command: Command): Promise<string> {
+	const result = await RowController.deleteLeaderboardRow(command);
 
 	let response;
 	switch (result) {
 		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			if (command.arguments.length < 2) {
-				response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
+				response = `Not enough parameters provided = please check you have a leaderboard name and a row name`;
 			} else {
-				response = "Too many arguments were provided";
+				response = `Too many arguments were provided`;
 			}
 			break;
 		}
@@ -30,7 +29,5 @@ const deleteRow = async (command: Command, message: Message) => {
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default deleteRow;
+	return response;
+}

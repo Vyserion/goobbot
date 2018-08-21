@@ -1,19 +1,17 @@
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { RowController } from "../controllers/RowController";
-import { Message } from "discord.js";
 
-const updateLeaderboardRow = async (command: Command, message: Message) => {
-	let result = await RowController.updateLeaderboardRow(command);
+export async function updateLeaderboardRow(command: Command): Promise<string> {
+	const result = await RowController.updateLeaderboardRow(command);
 
 	let response;
 	switch (result) {
 		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
 			if (command.arguments.length < 3) {
-				response =
-					"Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name";
+				response = `Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name`;
 			} else {
-				response = "Too many parameters were provided";
+				response = `Too many parameters were provided`;
 			}
 			break;
 		}
@@ -31,7 +29,5 @@ const updateLeaderboardRow = async (command: Command, message: Message) => {
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default updateLeaderboardRow;
+	return response;
+}

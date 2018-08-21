@@ -1,13 +1,12 @@
-import { Message } from "discord.js";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
-const getLeaderboards = async (message: Message) => {
-	let results = await LeaderboardController.getLeaderboards();
+export async function getLeaderboards(): Promise<string> {
+	const results = await LeaderboardController.getLeaderboards();
 
-	let response = "";
+	let response = ``;
 
 	if (results.length === 0) {
-		response = "There are currently no leaderboards";
+		response = `There are currently no leaderboards`;
 	} else {
 		for (let leaderboardIdx in results) {
 			let leaderboard = results[leaderboardIdx];
@@ -16,7 +15,5 @@ const getLeaderboards = async (message: Message) => {
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default getLeaderboards;
+	return response;
+}

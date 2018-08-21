@@ -1,20 +1,19 @@
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Command } from "../../core/command";
 import { prettyPrintLeaderboard } from "../util/format";
-import { Message } from "discord.js";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
-const getLeaderboard = async (command: Command, message: Message) => {
-	let result = await LeaderboardController.getLeaderboard(command);
+export async function getLeaderboard(command: Command): Promise<string> {
+	const result = await LeaderboardController.getLeaderboard(command);
 
 	let response;
 	switch (result) {
 		case ReturnCodes.INCORRECT_PARAM_LENGTH: {
-			response = "No names were provided to get the leaderboard";
+			response = `No names were provided to get the leaderboard`;
 			break;
 		}
 		case ReturnCodes.LEADERBOARD_NOT_FOUND: {
-			response = "A leaderboard with the name " + command.arguments[0] + " was not found";
+			response = `A leaderboard with the name ${command.arguments[0]} was not found`;
 			break;
 		}
 		default: {
@@ -23,7 +22,5 @@ const getLeaderboard = async (command: Command, message: Message) => {
 		}
 	}
 
-	message.channel.send(response);
-};
-
-export default getLeaderboard;
+	return response;
+}

@@ -1,87 +1,84 @@
 import { Command } from "../core/command";
-import { Message } from "discord.js";
-import { commands } from "./config/commands";
+import { Message, MessageOptions } from "discord.js";
+import { Commands } from "./config/commands";
 
-import addLeaderboard from "./actions/addLeaderboard";
-import addColumn from "./actions/addColumn";
-import addRow from "./actions/addRow";
-import deleteLeaderboard from "./actions/deleteLeaderboard";
-import deleteColumn from "./actions/deleteColumn";
-import deleteRow from "./actions/deleteRow";
-import getLeaderboards from "./actions/getLeaderboards";
-import getLeaderboard from "./actions/getLeaderboard";
-import updateLeaderboard from "./actions/updateLeaderboard";
-import updateLeaderboardColumn from "./actions/updateLeaderboardColumn";
-import updateLeaderboardRow from "./actions/updateRow";
-import upsertValue from "./actions/upsertValue";
-import showHelp from "./actions/help";
+import { addColumn, addLeaderboard, addRow, deleteColumn, deleteLeaderboard, deleteRow, getLeaderboard, getLeaderboards, updateLeaderboard, updateLeaderboardColumn, updateLeaderboardRow, upsertValue  } from "./actions";
+import { showHelp } from "./actions";
 
 export class LeaderboardHandler {
 	name: string = "leaderboards";
 
-	handleCommand = (command: Command, message: Message): void => {
+	handleCommand = async (command: Command, message: Message): Promise<void> => {
 		let action: string = command.action ? command.action : "";
 		action = action.toLowerCase();
 
+		let response: string;
 		switch (action) {
-			case commands.CREATE_LEADERBOARD: {
-				addLeaderboard(command, message);
+			case Commands.CREATE_LEADERBOARD: {
+				response = await addLeaderboard(command);
 				break;
 			}
-			case commands.CREATE_COLUMN: {
-				addColumn(command, message);
+			case Commands.CREATE_COLUMN: {
+				response = await addColumn(command);
 				break;
 			}
-			case commands.CREATE_ROW: {
-				addRow(command, message);
-				break;
-			}
-
-			case commands.UPDATE_LEADERBOARD: {
-				updateLeaderboard(command, message);
-				break;
-			}
-			case commands.UPDATE_COLUMN: {
-				updateLeaderboardColumn(command, message);
-				break;
-			}
-			case commands.UPDATE_ROW: {
-				updateLeaderboardRow(command, message);
+			case Commands.CREATE_ROW: {
+				response = await addRow(command);
 				break;
 			}
 
-			case commands.DELETE_LEADERBOARD: {
-				deleteLeaderboard(command, message);
+			case Commands.UPDATE_LEADERBOARD: {
+				response = await updateLeaderboard(command);
 				break;
 			}
-			case commands.DELETE_COLUMN: {
-				deleteColumn(command, message);
+			case Commands.UPDATE_COLUMN: {
+				response = await updateLeaderboardColumn(command);
 				break;
 			}
-			case commands.DELETE_ROW: {
-				deleteRow(command, message);
-				break;
-			}
-
-			case commands.GET_LEADERBOARD: {
-				getLeaderboard(command, message);
+			case Commands.UPDATE_ROW: {
+				response = await updateLeaderboardRow(command);
 				break;
 			}
 
-			case commands.UPSERT_VALUE: {
-				upsertValue(command, message);
+			case Commands.DELETE_LEADERBOARD: {
+				response = await deleteLeaderboard(command);
+				break;
+			}
+			case Commands.DELETE_COLUMN: {
+				response = await deleteColumn(command);
+				break;
+			}
+			case Commands.DELETE_ROW: {
+				response = await deleteRow(command);
 				break;
 			}
 
-			case commands.HELP: {
-				showHelp(command, message);
+			case Commands.GET_LEADERBOARD: {
+				response = await getLeaderboard(command);
+				break;
+			}
+
+			case Commands.UPSERT_VALUE: {
+				response = await upsertValue(command);
+				break;
+			}
+
+			case Commands.HELP: {
+				response = await showHelp(command);
 				break;
 			}
 
 			default: {
-				getLeaderboards(message);
+				response = await getLeaderboards();
 				break;
 			}
 		}
+
+		const options: MessageOptions = {
+			embed: {
+				color: 'red'
+			}
+		}
+		message.channel.send(response, options);
 	};
 }
