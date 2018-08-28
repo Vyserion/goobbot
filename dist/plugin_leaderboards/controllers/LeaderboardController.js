@@ -23,27 +23,14 @@ var LeaderboardController;
         }
         const columns = await dao_1.ColumnDAO.getLeaderboardColumns(leaderboard.id);
         const rows = await dao_1.RowDAO.getLeaderboardRows(leaderboard.id);
+        const values = await dao_1.ValueDAO.getValues(leaderboard.id);
         const leaderboardObj = {
             id: leaderboard.id,
             name: leaderboard.name,
-            rows: [],
-            columns: []
+            rows: rows,
+            columns: columns,
+            values: values
         };
-        // TODO: Tidy up this function call.
-        // TODO: Add values.
-        for (let column of columns) {
-            let col = {
-                name: column.name,
-                type: column.type
-            };
-            leaderboardObj.columns.push(col);
-        }
-        for (let row of rows) {
-            let r = {
-                name: row.name
-            };
-            leaderboardObj.rows.push(r);
-        }
         return leaderboardObj;
     }
     LeaderboardController.getLeaderboard = getLeaderboard;

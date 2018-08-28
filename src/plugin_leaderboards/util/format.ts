@@ -1,22 +1,36 @@
-import { Leaderboard, Column, Row } from "../models";
+import { Leaderboard } from "../models";
 
 export const prettyPrintLeaderboard = (leaderboard: Leaderboard) => {
-	let str = "";
+	let output = "";
 
-	str += leaderboard.name;
-	str += "\n\n";
+	output += leaderboard.name;
+	output += "\n\n";
 
-	for (let leaderboardCol of leaderboard.columns) {
-		let col: Column = leaderboardCol;
-		str += col.name;
-		str += "\n";
+	const printedRows = [];
+	let titleRow = "| | ";
+	for (let col of leaderboard.columns) {
+		titleRow += `${col.name} | `;
+	}
+	printedRows.push(titleRow.trim());
+
+	for (let row of leaderboard.rows) {
+		let rowStr = "| ";
+		rowStr += `${row.name} | `;
+
+		for (let col of leaderboard.columns) {
+			for (let val of leaderboard.values) {
+				if (val.rowId === row.id && val.columnId === col.id) {
+					rowStr += `${val.value} | `;
+				}
+			}
+		}
+
+		printedRows.push(rowStr.trim());
 	}
 
-	for (let leaderboardRow of leaderboard.rows) {
-		let row: Row = leaderboardRow;
-		str += row.name;
-		str += "\n";
-	}
+	// TODO: DO SOMETHING WITH THE GODAMN SPACING
 
-	return str;
+	output += printedRows.join("\n");
+
+	return output;
 };
