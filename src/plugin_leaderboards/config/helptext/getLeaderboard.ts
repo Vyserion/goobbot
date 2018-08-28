@@ -1,4 +1,4 @@
-export const getLeaderboards = 
+export const getLeaderboard = 
     `This command will show the contents of a leaderboard.
 
     Model:

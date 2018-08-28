@@ -1,4 +1,4 @@
-export const deleteRow = 
+export const createRow = 
     `This command will create a new row for a leaderboard.
     
     Model:
