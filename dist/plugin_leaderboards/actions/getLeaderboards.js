@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LeaderboardController_1 = require("../controllers/LeaderboardController");
-const getLeaderboards = async (message) => {
-    let results = await LeaderboardController_1.LeaderboardController.getLeaderboards();
-    let response = "";
+async function getLeaderboards() {
+    const results = await LeaderboardController_1.LeaderboardController.getLeaderboards();
+    let response = ``;
     if (results.length === 0) {
-        response = "There are currently no leaderboards";
+        response = `There are currently no leaderboards`;
     }
     else {
         for (let leaderboardIdx in results) {
@@ -14,7 +14,7 @@ const getLeaderboards = async (message) => {
             response += "\n";
         }
     }
-    message.channel.send(response);
-};
-exports.default = getLeaderboards;
+    return response;
+}
+exports.getLeaderboards = getLeaderboards;
 //# sourceMappingURL=getLeaderboards.js.map

@@ -2,16 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const RowController_1 = require("../controllers/RowController");
 const ReturnCodes_1 = require("../config/ReturnCodes");
-const deleteRow = async (command, message) => {
-    let result = await RowController_1.RowController.deleteLeaderboardRow(command);
+async function deleteRow(command) {
+    const result = await RowController_1.RowController.deleteLeaderboardRow(command);
     let response;
     switch (result) {
         case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 2) {
-                response = "Not enough parameters provided = please check you have a leaderboard name and a row name";
+                response = `Not enough parameters provided = please check you have a leaderboard name and a row name`;
             }
             else {
-                response = "Too many arguments were provided";
+                response = `Too many arguments were provided`;
             }
             break;
         }
@@ -28,7 +28,7 @@ const deleteRow = async (command, message) => {
             break;
         }
     }
-    message.channel.send(response);
-};
-exports.default = deleteRow;
+    return response;
+}
+exports.deleteRow = deleteRow;
 //# sourceMappingURL=deleteRow.js.map

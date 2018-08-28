@@ -12,7 +12,7 @@ export namespace DataManager {
 		port: port
 	});
 
-	pool.on("error", (err) => {
+	pool.on("error", err => {
 		logger.error("Unexpected error on idle client", err);
 		process.exit(-1);
 	});

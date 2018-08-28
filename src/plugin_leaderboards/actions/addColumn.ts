@@ -20,7 +20,9 @@ export async function addColumn(command: Command): Promise<string> {
 			break;
 		}
 		case ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
-			response = `A column with the name ${command.arguments[1]} for leaderboard ${command.arguments[0]} already exists`;
+			response = `A column with the name ${command.arguments[1]} for leaderboard ${
+				command.arguments[0]
+			} already exists`;
 			break;
 		}
 		case ReturnCodes.BAD_PARAMETER_TYPE: {

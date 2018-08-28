@@ -12,7 +12,7 @@ var DataManager;
         password: process.env.POSTGRES_PASSWORD,
         port: port
     });
-    pool.on("error", (err) => {
+    pool.on("error", err => {
         logger_1.default.error("Unexpected error on idle client", err);
         process.exit(-1);
     });

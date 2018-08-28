@@ -2,7 +2,7 @@ import { LeaderboardDAO, ColumnDAO, RowDAO, ValueDAO } from "../dao";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Leaderboard, Column, Row }  from "../models";
+import { Leaderboard, Column, Row } from "../models";
 import { commandHasCorrectArgumentsLength, getLeaderboardId } from "../util/validators";
 
 export namespace LeaderboardController {
@@ -77,7 +77,7 @@ export namespace LeaderboardController {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
-		
+
 		const leaderboardName = command.arguments[0];
 		const leaderboardId = await getLeaderboardId(leaderboardName);
 		if (leaderboardId === -1) {

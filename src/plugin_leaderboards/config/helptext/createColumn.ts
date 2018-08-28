@@ -1,8 +1,7 @@
 import { Commands } from "../Commands";
 import { ColumnTypes } from "../ColumnTypes";
 
-export const createColumn = 
-    `This command will create a new column for the given leaderboard.
+export const createColumn = `This command will create a new column for the given leaderboard.
     This column name must be unique for the leaderboard.
     
     Model:

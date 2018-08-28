@@ -1,8 +1,11 @@
 import { DataManager } from "../../core/dataManager";
 
-
 export namespace ValueDAO {
-	export async function upsertValue(leaderboardColumnId: number, leaderboardRowId: number, value: any): Promise<void> {
+	export async function upsertValue(
+		leaderboardColumnId: number,
+		leaderboardRowId: number,
+		value: any
+	): Promise<void> {
 		const query = `INSERT INTO leaderboard_values VALUES (DEFAULT, $1, $2, $3) ON CONFLICT (leaderboard_col_id, leaderboard_row_id) DO UPDATE SET value = $3`;
 		const params = [leaderboardColumnId, leaderboardRowId, value];
 

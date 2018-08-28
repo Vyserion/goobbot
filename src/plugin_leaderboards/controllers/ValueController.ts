@@ -21,7 +21,9 @@ export namespace ValueController {
 		const columnName = command.arguments[1];
 		const columnId = await getColumnId(leaderboardId, columnName);
 		if (columnId === -1) {
-			logger.warn(`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`);
+			logger.warn(
+				`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`
+			);
 			return ReturnCodes.COLUMN_NOT_FOUND;
 		}
 

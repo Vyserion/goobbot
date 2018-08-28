@@ -6,7 +6,6 @@ export const prettyPrintLeaderboard = (leaderboard: Leaderboard) => {
 	str += leaderboard.name;
 	str += "\n\n";
 
-
 	for (let leaderboardCol of leaderboard.columns) {
 		let col: Column = leaderboardCol;
 		str += col.name;

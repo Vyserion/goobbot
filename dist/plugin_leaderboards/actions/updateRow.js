@@ -2,17 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReturnCodes_1 = require("../config/ReturnCodes");
 const RowController_1 = require("../controllers/RowController");
-const updateLeaderboardRow = async (command, message) => {
-    let result = await RowController_1.RowController.updateLeaderboardRow(command);
+async function updateLeaderboardRow(command) {
+    const result = await RowController_1.RowController.updateLeaderboardRow(command);
     let response;
     switch (result) {
         case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 3) {
-                response =
-                    "Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name";
+                response = `Not enough parameters provided - please check you have a Leaderboard Name, Column Name, and the new Column Name`;
             }
             else {
-                response = "Too many parameters were provided";
+                response = `Too many parameters were provided`;
             }
             break;
         }
@@ -29,7 +28,7 @@ const updateLeaderboardRow = async (command, message) => {
             break;
         }
     }
-    message.channel.send(response);
-};
-exports.default = updateLeaderboardRow;
+    return response;
+}
+exports.updateLeaderboardRow = updateLeaderboardRow;
 //# sourceMappingURL=updateRow.js.map

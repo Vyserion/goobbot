@@ -2,17 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReturnCodes_1 = require("../config/ReturnCodes");
 const ValueController_1 = require("../controllers/ValueController");
-const upsertValue = async (command, message) => {
-    let result = await ValueController_1.ValueController.upsertValue(command);
+async function upsertValue(command) {
+    const result = await ValueController_1.ValueController.upsertValue(command);
     let response;
     switch (result) {
         case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
             if (command.arguments.length < 4) {
-                response =
-                    "Not enough parameters provided - please check you have a Leaderboard Name, Column Name, Row Name, and the value.";
+                response = `Not enough parameters provided - please check you have a Leaderboard Name, Column Name, Row Name, and the value`;
             }
             else {
-                response = "Too many parameters were provided";
+                response = `Too many parameters were provided`;
             }
             break;
         }
@@ -33,7 +32,7 @@ const upsertValue = async (command, message) => {
             break;
         }
     }
-    message.channel.send(response);
-};
-exports.default = upsertValue;
+    return response;
+}
+exports.upsertValue = upsertValue;
 //# sourceMappingURL=upsertValue.js.map

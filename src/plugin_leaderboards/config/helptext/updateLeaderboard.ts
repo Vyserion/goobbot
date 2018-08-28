@@ -1,7 +1,6 @@
 import { Commands } from "../Commands";
 
-export const updateLeaderboard = 
-    `This command will update a leaderboard from it's old name to a new one.
+export const updateLeaderboard = `This command will update a leaderboard from it's old name to a new one.
     When updating a leaderboard, the leaderboard name must be unique.
 
     Model:

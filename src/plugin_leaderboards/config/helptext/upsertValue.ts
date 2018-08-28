@@ -1,7 +1,6 @@
 import { Commands } from "../Commands";
 
-export const upsertValue = 
-    `This command will update a value in a leaderboard.
+export const upsertValue = `This command will update a value in a leaderboard.
     
     Model:
     ${process.env.PREFIX}leaderboards ${Commands.UPSERT_VALUE} [leaderboard name] [column name] [row name] [value]

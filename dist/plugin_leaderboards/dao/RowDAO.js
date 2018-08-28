@@ -6,7 +6,7 @@ var RowDAO;
     async function getLeaderboardRows(leaderboardId) {
         let query = `SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
         let params = [leaderboardId];
-        return await dataManager_1.DataManager.query(query, params);
+        return (await dataManager_1.DataManager.query(query, params));
     }
     RowDAO.getLeaderboardRows = getLeaderboardRows;
     async function getLeaderboardRow(leaderboardId, rowName) {

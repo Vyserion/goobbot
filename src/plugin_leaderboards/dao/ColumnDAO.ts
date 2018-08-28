@@ -6,14 +6,14 @@ export namespace ColumnDAO {
 		let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
 		let params = [leaderboardId];
 
-		return await DataManager.query(query, params) as Column[];
+		return (await DataManager.query(query, params)) as Column[];
 	}
 
 	export async function getLeaderboardColumn(leaderboardId: number, columnName: string): Promise<Column> | null {
 		let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
 		let params = [leaderboardId, columnName];
 
-		const columnResult = await DataManager.query(query, params) as Column[];
+		const columnResult = (await DataManager.query(query, params)) as Column[];
 		if (columnResult.length > 0) {
 			return columnResult[0];
 		} else {
@@ -34,7 +34,7 @@ export namespace ColumnDAO {
 		let params = [leaderboardId, id, name];
 
 		await DataManager.query(query, params);
-		return;	
+		return;
 	}
 
 	export async function updateLeaderboardColumnType(leaderboardId: number, id: number, type: string): Promise<void> {

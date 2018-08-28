@@ -1,38 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const helpMessages_1 = require("../config/helpMessages");
 const commands_1 = require("../config/commands");
-const showHelp = async (command, message) => {
+const helptext_1 = require("../config/helptext");
+async function showHelp(command) {
     if (command.arguments.length === 0) {
-        message.channel.send(helpMessages_1.default.showCommands);
+        return helptext_1.showCommands;
     }
     else {
-        let requestedCommand = command.arguments[0].toLowerCase();
+        const requestedCommand = command.arguments[0].toLowerCase();
         let response = "";
-        if (requestedCommand === commands_1.commands.GET_LEADERBOARD)
-            response = helpMessages_1.default.getLeaderboard;
-        else if (requestedCommand === commands_1.commands.CREATE_LEADERBOARD)
-            response = helpMessages_1.default.createLeaderboard;
-        else if (requestedCommand === commands_1.commands.UPDATE_LEADERBOARD)
-            response = helpMessages_1.default.updateLeaderboard;
-        else if (requestedCommand === commands_1.commands.DELETE_LEADERBOARD)
-            response = helpMessages_1.default.deleteLeaderboard;
-        else if (requestedCommand === commands_1.commands.CREATE_COLUMN)
-            response = helpMessages_1.default.createColumn;
-        else if (requestedCommand === commands_1.commands.UPDATE_COLUMN)
-            response = helpMessages_1.default.updateColumn;
-        else if (requestedCommand === commands_1.commands.DELETE_COLUMN)
-            response = helpMessages_1.default.deleteColumn;
-        else if (requestedCommand === commands_1.commands.CREATE_ROW)
-            response = helpMessages_1.default.createRow;
-        else if (requestedCommand === commands_1.commands.UPDATE_ROW)
-            response = helpMessages_1.default.updateRow;
-        else if (requestedCommand === commands_1.commands.DELETE_ROW)
-            response = helpMessages_1.default.deleteRow;
+        if (requestedCommand === commands_1.Commands.GET_LEADERBOARD)
+            response = helptext_1.getLeaderboard;
+        else if (requestedCommand === commands_1.Commands.CREATE_LEADERBOARD)
+            response = helptext_1.createLeaderboard;
+        else if (requestedCommand === commands_1.Commands.UPDATE_LEADERBOARD)
+            response = helptext_1.updateLeaderboard;
+        else if (requestedCommand === commands_1.Commands.DELETE_LEADERBOARD)
+            response = helptext_1.deleteLeaderboard;
+        else if (requestedCommand === commands_1.Commands.CREATE_COLUMN)
+            response = helptext_1.createColumn;
+        else if (requestedCommand === commands_1.Commands.UPDATE_COLUMN)
+            response = helptext_1.updateColumn;
+        else if (requestedCommand === commands_1.Commands.DELETE_COLUMN)
+            response = helptext_1.deleteColumn;
+        else if (requestedCommand === commands_1.Commands.CREATE_ROW)
+            response = helptext_1.createRow;
+        else if (requestedCommand === commands_1.Commands.UPDATE_ROW)
+            response = helptext_1.updateRow;
+        else if (requestedCommand === commands_1.Commands.DELETE_ROW)
+            response = helptext_1.deleteRow;
+        else if (requestedCommand === commands_1.Commands.UPSERT_VALUE)
+            response = helptext_1.upsertValue;
         else
-            response = helpMessages_1.default.getLeaderboards;
-        message.channel.send(response);
+            response = helptext_1.getLeaderboards;
+        return response;
     }
-};
-exports.default = showHelp;
+}
+exports.showHelp = showHelp;
 //# sourceMappingURL=help.js.map

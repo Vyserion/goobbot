@@ -20,7 +20,9 @@ export async function addRow(command: Command): Promise<string> {
 			break;
 		}
 		case ReturnCodes.LEADERBOARD_DUPLICATE_NAME: {
-			response = `A row with the name ${command.arguments[1]} for leaderboard ${command.arguments[0]} already exists`;
+			response = `A row with the name ${command.arguments[1]} for leaderboard ${
+				command.arguments[0]
+			} already exists`;
 			break;
 		}
 		default: {

@@ -1,7 +1,6 @@
 import { Commands } from "../Commands";
 
-export const deleteRow = 
-    `This command will delete a row from a leaderboard, and any data it may contain.
+export const deleteRow = `This command will delete a row from a leaderboard, and any data it may contain.
     
     Model:
     ${process.env.PREFIX}leaderboards ${Commands.DELETE_ROW} [leaderboard name] [row name]

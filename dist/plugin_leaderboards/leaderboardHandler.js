@@ -1,79 +1,75 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const commands_1 = require("./config/commands");
-const addLeaderboard_1 = require("./actions/addLeaderboard");
-const addColumn_1 = require("./actions/addColumn");
-const addRow_1 = require("./actions/addRow");
-const deleteLeaderboard_1 = require("./actions/deleteLeaderboard");
-const deleteColumn_1 = require("./actions/deleteColumn");
-const deleteRow_1 = require("./actions/deleteRow");
-const getLeaderboards_1 = require("./actions/getLeaderboards");
-const getLeaderboard_1 = require("./actions/getLeaderboard");
-const updateLeaderboard_1 = require("./actions/updateLeaderboard");
-const updateLeaderboardColumn_1 = require("./actions/updateLeaderboardColumn");
-const updateRow_1 = require("./actions/updateRow");
-const upsertValue_1 = require("./actions/upsertValue");
-const help_1 = require("./actions/help");
+const actions_1 = require("./actions");
+const actions_2 = require("./actions");
 class LeaderboardHandler {
     constructor() {
         this.name = "leaderboards";
-        this.handleCommand = (command, message) => {
+        this.handleCommand = async (command, message) => {
             let action = command.action ? command.action : "";
             action = action.toLowerCase();
+            let response;
             switch (action) {
-                case commands_1.commands.CREATE_LEADERBOARD: {
-                    addLeaderboard_1.default(command, message);
+                case commands_1.Commands.CREATE_LEADERBOARD: {
+                    response = await actions_1.addLeaderboard(command);
                     break;
                 }
-                case commands_1.commands.CREATE_COLUMN: {
-                    addColumn_1.default(command, message);
+                case commands_1.Commands.CREATE_COLUMN: {
+                    response = await actions_1.addColumn(command);
                     break;
                 }
-                case commands_1.commands.CREATE_ROW: {
-                    addRow_1.default(command, message);
+                case commands_1.Commands.CREATE_ROW: {
+                    response = await actions_1.addRow(command);
                     break;
                 }
-                case commands_1.commands.UPDATE_LEADERBOARD: {
-                    updateLeaderboard_1.default(command, message);
+                case commands_1.Commands.UPDATE_LEADERBOARD: {
+                    response = await actions_1.updateLeaderboard(command);
                     break;
                 }
-                case commands_1.commands.UPDATE_COLUMN: {
-                    updateLeaderboardColumn_1.default(command, message);
+                case commands_1.Commands.UPDATE_COLUMN: {
+                    response = await actions_1.updateLeaderboardColumn(command);
                     break;
                 }
-                case commands_1.commands.UPDATE_ROW: {
-                    updateRow_1.default(command, message);
+                case commands_1.Commands.UPDATE_ROW: {
+                    response = await actions_1.updateLeaderboardRow(command);
                     break;
                 }
-                case commands_1.commands.DELETE_LEADERBOARD: {
-                    deleteLeaderboard_1.default(command, message);
+                case commands_1.Commands.DELETE_LEADERBOARD: {
+                    response = await actions_1.deleteLeaderboard(command);
                     break;
                 }
-                case commands_1.commands.DELETE_COLUMN: {
-                    deleteColumn_1.default(command, message);
+                case commands_1.Commands.DELETE_COLUMN: {
+                    response = await actions_1.deleteColumn(command);
                     break;
                 }
-                case commands_1.commands.DELETE_ROW: {
-                    deleteRow_1.default(command, message);
+                case commands_1.Commands.DELETE_ROW: {
+                    response = await actions_1.deleteRow(command);
                     break;
                 }
-                case commands_1.commands.GET_LEADERBOARD: {
-                    getLeaderboard_1.default(command, message);
+                case commands_1.Commands.GET_LEADERBOARD: {
+                    response = await actions_1.getLeaderboard(command);
                     break;
                 }
-                case commands_1.commands.UPSERT_VALUE: {
-                    upsertValue_1.default(command, message);
+                case commands_1.Commands.UPSERT_VALUE: {
+                    response = await actions_1.upsertValue(command);
                     break;
                 }
-                case commands_1.commands.HELP: {
-                    help_1.default(command, message);
+                case commands_1.Commands.HELP: {
+                    response = await actions_2.showHelp(command);
                     break;
                 }
                 default: {
-                    getLeaderboards_1.default(message);
+                    response = await actions_1.getLeaderboards();
                     break;
                 }
             }
+            const options = {
+                embed: {
+                    color: "red"
+                }
+            };
+            message.channel.send(response, options);
         };
     }
 }

@@ -5,13 +5,13 @@ var LeaderboardDAO;
 (function (LeaderboardDAO) {
     async function getLeaderboards() {
         const query = `SELECT * FROM leaderboards`;
-        return await dataManager_1.DataManager.query(query);
+        return (await dataManager_1.DataManager.query(query));
     }
     LeaderboardDAO.getLeaderboards = getLeaderboards;
     async function getLeaderboard(name) {
         let query = `SELECT * FROM leaderboards WHERE name = $1`;
         let params = [name];
-        const rowResult = await dataManager_1.DataManager.query(query, params);
+        const rowResult = (await dataManager_1.DataManager.query(query, params));
         if (rowResult.length > 0) {
             return rowResult[0];
         }

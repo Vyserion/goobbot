@@ -6,7 +6,7 @@ export namespace RowDAO {
 		let query = `SELECT * FROM leaderboard_rows WHERE leaderboard_id = $1`;
 		let params = [leaderboardId];
 
-		return await DataManager.query(query, params) as Row[];
+		return (await DataManager.query(query, params)) as Row[];
 	}
 
 	export async function getLeaderboardRow(leaderboardId: number, rowName: string): Promise<Row> | null {

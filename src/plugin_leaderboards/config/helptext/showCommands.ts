@@ -1,7 +1,6 @@
 import { Commands } from "../commands";
 
-export const showCommands = 
-    `User Commands:
+export const showCommands = `User Commands:
     - Get Leaderboards: !leaderboards
     - Get Leaderboard: ${Commands.GET_LEADERBOARD}
     - Update Value: ${Commands.UPSERT_VALUE}

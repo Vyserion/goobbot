@@ -6,13 +6,13 @@ var ColumnDAO;
     async function getLeaderboardColumns(leaderboardId) {
         let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
         let params = [leaderboardId];
-        return await dataManager_1.DataManager.query(query, params);
+        return (await dataManager_1.DataManager.query(query, params));
     }
     ColumnDAO.getLeaderboardColumns = getLeaderboardColumns;
     async function getLeaderboardColumn(leaderboardId, columnName) {
         let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
         let params = [leaderboardId, columnName];
-        const columnResult = await dataManager_1.DataManager.query(query, params);
+        const columnResult = (await dataManager_1.DataManager.query(query, params));
         if (columnResult.length > 0) {
             return columnResult[0];
         }

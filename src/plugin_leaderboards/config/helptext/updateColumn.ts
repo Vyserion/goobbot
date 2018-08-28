@@ -1,8 +1,7 @@
 import { Commands } from "../Commands";
 import { ColumnTypes } from "../ColumnTypes";
 
-export const updateColumn = 
-    `This command will update a column in various ways.
+export const updateColumn = `This command will update a column in various ways.
     Both the name and type of column can be updated.
     
     Model:

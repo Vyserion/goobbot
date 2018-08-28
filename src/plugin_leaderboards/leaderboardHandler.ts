@@ -2,7 +2,20 @@ import { Command } from "../core/command";
 import { Message, MessageOptions } from "discord.js";
 import { Commands } from "./config/commands";
 
-import { addColumn, addLeaderboard, addRow, deleteColumn, deleteLeaderboard, deleteRow, getLeaderboard, getLeaderboards, updateLeaderboard, updateLeaderboardColumn, updateLeaderboardRow, upsertValue  } from "./actions";
+import {
+	addColumn,
+	addLeaderboard,
+	addRow,
+	deleteColumn,
+	deleteLeaderboard,
+	deleteRow,
+	getLeaderboard,
+	getLeaderboards,
+	updateLeaderboard,
+	updateLeaderboardColumn,
+	updateLeaderboardRow,
+	upsertValue
+} from "./actions";
 import { showHelp } from "./actions";
 
 export class LeaderboardHandler {
@@ -76,9 +89,9 @@ export class LeaderboardHandler {
 
 		const options: MessageOptions = {
 			embed: {
-				color: 'red'
+				color: "red"
 			}
-		}
+		};
 		message.channel.send(response, options);
 	};
 }

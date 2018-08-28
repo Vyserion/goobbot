@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const RowController_1 = require("../controllers/RowController");
 const ReturnCodes_1 = require("../config/ReturnCodes");
-const addRow = async (command, message) => {
-    let result = await RowController_1.RowController.insertLeaderboardRow(command);
+async function addRow(command) {
+    const result = await RowController_1.RowController.insertLeaderboardRow(command);
     let response;
     switch (result) {
         case ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH: {
@@ -28,7 +28,7 @@ const addRow = async (command, message) => {
             break;
         }
     }
-    message.channel.send(response);
-};
-exports.default = addRow;
+    return response;
+}
+exports.addRow = addRow;
 //# sourceMappingURL=addRow.js.map

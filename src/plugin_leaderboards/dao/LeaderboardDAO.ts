@@ -5,14 +5,14 @@ export namespace LeaderboardDAO {
 	export async function getLeaderboards(): Promise<Leaderboard[]> {
 		const query = `SELECT * FROM leaderboards`;
 
-		return await DataManager.query(query) as Leaderboard[];
+		return (await DataManager.query(query)) as Leaderboard[];
 	}
 
 	export async function getLeaderboard(name: string): Promise<Leaderboard> | null {
 		let query = `SELECT * FROM leaderboards WHERE name = $1`;
 		let params = [name];
 
-		const rowResult: Leaderboard[] = await DataManager.query(query, params) as Leaderboard[];
+		const rowResult: Leaderboard[] = (await DataManager.query(query, params)) as Leaderboard[];
 		if (rowResult.length > 0) {
 			return rowResult[0];
 		} else {

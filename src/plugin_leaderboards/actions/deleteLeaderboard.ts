@@ -22,6 +22,6 @@ export async function deleteLeaderboard(command: Command): Promise<string> {
 	}
 
 	return response;
-};
+}
 
 export default deleteLeaderboard;

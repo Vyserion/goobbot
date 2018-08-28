@@ -30,4 +30,4 @@ export async function deleteColumn(command: Command): Promise<string> {
 	}
 
 	return response;
-};
+}

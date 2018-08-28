@@ -28,7 +28,9 @@ export async function upsertValue(command: Command): Promise<string> {
 			break;
 		}
 		default: {
-			response = `Successfully updated the value in column ${command.arguments[1]} and row ${command.arguments[2]}`;
+			response = `Successfully updated the value in column ${command.arguments[1]} and row ${
+				command.arguments[2]
+			}`;
 			break;
 		}
 	}
