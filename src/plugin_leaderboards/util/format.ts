@@ -1,36 +1,67 @@
 import { Leaderboard } from "../models";
 
 export const prettyPrintLeaderboard = (leaderboard: Leaderboard) => {
-	let output = "";
+	// Build a columns array for length calc
 
-	output += leaderboard.name;
-	output += "\n\n";
+	const columns = [];
 
-	const printedRows = [];
-	let titleRow = "| | ";
-	for (let col of leaderboard.columns) {
-		titleRow += `${col.name} | `;
+	const rowColumn = [""];
+	for (const row of leaderboard.rows) {
+		rowColumn.push(row.name);
 	}
-	printedRows.push(titleRow.trim());
+	columns.push(rowColumn);
 
-	for (let row of leaderboard.rows) {
-		let rowStr = "| ";
-		rowStr += `${row.name} | `;
+	for (const col of leaderboard.columns) {
+		const column = [];
+		column.push(col.name);
 
-		for (let col of leaderboard.columns) {
-			for (let val of leaderboard.values) {
-				if (val.rowId === row.id && val.columnId === col.id) {
-					rowStr += `${val.value} | `;
+		for (const row of leaderboard.rows) {
+			for (const val of leaderboard.values) {
+				if (val["rowid"] === row.id && val["columnid"] === col.id) {
+					column.push(val.value);
 				}
 			}
 		}
 
-		printedRows.push(rowStr.trim());
+		columns.push(column);
 	}
 
-	// TODO: DO SOMETHING WITH THE GODAMN SPACING
+	// Get column lengths
 
-	output += printedRows.join("\n");
+	const columnLengths = new Array(columns.length).fill(0);
+	for (const colIdx in columns) {
+		for (const val of columns[colIdx]) {
+			if (val.length > columnLengths[colIdx]) {
+				columnLengths[colIdx] = val.length;
+			}
+		}
+	}
 
+	// Build output string
+
+	let output = "```";
+
+	output += `${leaderboard.name} \n\n`;
+
+	for (let rowIdx = 0; rowIdx < leaderboard.rows.length + 1; rowIdx++) {
+		for (const colIdx in columns) {
+			const col = columns[colIdx];
+			let val = col[rowIdx];
+
+			let valStr = `| ${val}`;
+			if (val.length < columnLengths[colIdx]) {
+				for (let i = 0; i < columnLengths[colIdx] - val.length; i++) {
+					valStr += " ";
+				}
+			}
+			valStr += " ";
+
+			output += valStr;
+		}
+
+		output += "|\n";
+	}
+
+	output += "```";
 	return output;
 };

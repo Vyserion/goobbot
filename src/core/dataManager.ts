@@ -18,7 +18,8 @@ export namespace DataManager {
 	});
 
 	export async function query(query: string, params?: any[]): Promise<any[]> {
-		logger.debug("Running query:", query);
+		logger.debug("Running query:");
+		logger.debug(query);
 
 		const results = await doQuery(query, params);
 		return results.rows;

@@ -51,96 +51,96 @@ describe("util/format ::", () => {
 			const values: Value[] = [
 				// Column One
 				{
-					id: 1,
-					columnId: 1,
-					rowId: 1,
-					value: 4
+					leaderboard_id: 1,
+					columnid: 1,
+					rowid: 1,
+					value: "4"
 				},
 				{
-					id: 2,
-					columnId: 1,
-					rowId: 2,
-					value: 9
+					leaderboard_id: 1,
+					columnid: 1,
+					rowid: 2,
+					value: "9"
 				},
 				{
-					id: 3,
-					columnId: 1,
-					rowId: 3,
-					value: 1
+					leaderboard_id: 1,
+					columnid: 1,
+					rowid: 3,
+					value: "1"
 				},
 				{
-					id: 4,
-					columnId: 1,
-					rowId: 4,
-					value: 12
+					leaderboard_id: 1,
+					columnid: 1,
+					rowid: 4,
+					value: "12"
 				},
 				{
-					id: 5,
-					columnId: 1,
-					rowId: 5,
-					value: 7
+					leaderboard_id: 1,
+					columnid: 1,
+					rowid: 5,
+					value: "7"
 				},
 				// Column Two
 				{
-					id: 6,
-					columnId: 1,
-					rowId: 1,
-					value: 7
+					leaderboard_id: 1,
+					columnid: 2,
+					rowid: 1,
+					value: "7"
 				},
 				{
-					id: 7,
-					columnId: 1,
-					rowId: 2,
-					value: 8
+					leaderboard_id: 1,
+					columnid: 2,
+					rowid: 2,
+					value: "8"
 				},
 				{
-					id: 8,
-					columnId: 1,
-					rowId: 3,
-					value: 5
+					leaderboard_id: 1,
+					columnid: 2,
+					rowid: 3,
+					value: "5"
 				},
 				{
-					id: 9,
-					columnId: 1,
-					rowId: 4,
-					value: 1
+					leaderboard_id: 1,
+					columnid: 2,
+					rowid: 4,
+					value: "1"
 				},
 				{
-					id: 10,
-					columnId: 1,
-					rowId: 5,
-					value: 23
+					leaderboard_id: 1,
+					columnid: 2,
+					rowid: 5,
+					value: "23"
 				},
 				// Column Three
 				{
-					id: 11,
-					columnId: 1,
-					rowId: 1,
-					value: 3
+					leaderboard_id: 1,
+					columnid: 3,
+					rowid: 1,
+					value: "3"
 				},
 				{
-					id: 12,
-					columnId: 1,
-					rowId: 2,
-					value: 1
+					leaderboard_id: 1,
+					columnid: 3,
+					rowid: 2,
+					value: "1"
 				},
 				{
-					id: 13,
-					columnId: 1,
-					rowId: 3,
-					value: 6
+					leaderboard_id: 1,
+					columnid: 3,
+					rowid: 3,
+					value: "6"
 				},
 				{
-					id: 14,
-					columnId: 1,
-					rowId: 4,
-					value: 1
+					leaderboard_id: 1,
+					columnid: 3,
+					rowid: 4,
+					value: "1"
 				},
 				{
-					id: 15,
-					columnId: 1,
-					rowId: 5,
-					value: 3
+					leaderboard_id: 1,
+					columnid: 3,
+					rowid: 5,
+					value: "3"
 				}
 			];
 
@@ -153,16 +153,19 @@ describe("util/format ::", () => {
 			};
 
 			// Formatting here is important - it will add the tabs in.
-			const expectedOutput = `Test Leaderboard Name
+			const consoleStr = "```";
+			const expectedOutput = `${consoleStr}Test Leaderboard Name 
 
-| | Column One | Column Two | Column Three |
-| Row One | 4 | 7 | 3 |
-| Row Two | 9 | 8 | 1 |
-| Row Three | 1 | 5 | 6 |
-| Row Four | 12 | 1 | 1 |
-| Row Five | 7 | 23 | 3 |`;
+|           | Column One | Column Two | Column Three |
+| Row One   | 4          | 7          | 3            |
+| Row Two   | 9          | 8          | 1            |
+| Row Three | 1          | 5          | 6            |
+| Row Four  | 12         | 1          | 1            |
+| Row Five  | 7          | 23         | 3            |
+${consoleStr}`;
 
 			const output = prettyPrintLeaderboard(input);
+
 			expect(output).to.equal(expectedOutput);
 		});
 	});

@@ -6,7 +6,7 @@ import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId, getRow
 
 export namespace ValueController {
 	export async function upsertValue(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 4)) {
+		if (!commandHasCorrectArgumentsLength(command, 4)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -19,8 +19,8 @@ export namespace ValueController {
 		}
 
 		const columnName = command.arguments[1];
-		const columnId = await getColumnId(leaderboardId, columnName);
-		if (columnId === -1) {
+		const columnid = await getColumnId(leaderboardId, columnName);
+		if (columnid === -1) {
 			logger.warn(
 				`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`
 			);
@@ -28,14 +28,14 @@ export namespace ValueController {
 		}
 
 		const rowName = command.arguments[2];
-		const rowId = await getRowId(leaderboardId, rowName);
-		if (rowId > -1) {
+		const rowid = await getRowId(leaderboardId, rowName);
+		if (rowid > -1) {
 			logger.warn(`${ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
 			return ReturnCodes.ROW_NOT_FOUND;
 		}
 		let value = command.arguments[3];
 
-		await ValueDAO.upsertValue(columnId, rowId, value);
+		await ValueDAO.upsertValue(columnid, rowid, value);
 		logger.info(`Upserted leaderboard value ${value} in column ${columnName} and row ${rowName}`);
 		return ReturnCodes.SUCCESS;
 	}

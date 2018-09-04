@@ -11,7 +11,7 @@ var LeaderboardController;
     }
     LeaderboardController.getLeaderboards = getLeaderboards;
     async function getLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -35,7 +35,7 @@ var LeaderboardController;
     }
     LeaderboardController.getLeaderboard = getLeaderboard;
     async function insertLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -51,7 +51,7 @@ var LeaderboardController;
     }
     LeaderboardController.insertLeaderboard = insertLeaderboard;
     async function updateLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 2)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 2)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -68,7 +68,7 @@ var LeaderboardController;
     }
     LeaderboardController.updateLeaderboard = updateLeaderboard;
     async function deleteLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }

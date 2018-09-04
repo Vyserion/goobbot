@@ -1,6 +1,6 @@
 export interface Value {
-	id?: number;
-	columnId: number;
-	rowId: number;
+	leaderboard_id?: number;
+	rowid: number;
+	columnid: number;
 	value: any;
 }

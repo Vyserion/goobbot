@@ -11,7 +11,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function getLeaderboard(command: Command) {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -39,7 +39,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function insertLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -57,7 +57,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function updateLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 2)) {
+		if (!commandHasCorrectArgumentsLength(command, 2)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -76,7 +76,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function deleteLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}

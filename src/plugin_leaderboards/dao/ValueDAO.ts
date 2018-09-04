@@ -3,7 +3,7 @@ import { Value } from "../models";
 
 export namespace ValueDAO {
 	export async function getValues(leaderboardId: number): Promise<Value[]> {
-		const query = `SELECT l.id AS leaderboard_id, lr.id AS rowId, lc.id AS columnId, lv.value
+		const query = `SELECT l.id AS leaderboardId, lr.id AS rowid, lc.id AS columnid, lv.value AS value
 		FROM leaderboard_values lv
 		JOIN leaderboard_rows lr ON lr.id = lv.leaderboard_row_id
 		JOIN leaderboard_columns lc ON lc.id = lv.leaderboard_col_id
@@ -11,8 +11,7 @@ export namespace ValueDAO {
 		WHERE l.id = $1;`;
 		const params = [leaderboardId];
 
-		await DataManager.query(query, params);
-		return;
+		return (await DataManager.query(query, params)) as Value[];
 	}
 
 	export async function upsertValue(

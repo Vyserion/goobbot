@@ -26,6 +26,7 @@ export class LeaderboardHandler {
 		action = action.toLowerCase();
 
 		let response: string;
+		let embed: boolean = true;
 		switch (action) {
 			case Commands.CREATE_LEADERBOARD: {
 				response = await addLeaderboard(command);
@@ -68,6 +69,7 @@ export class LeaderboardHandler {
 
 			case Commands.GET_LEADERBOARD: {
 				response = await getLeaderboard(command);
+				embed = false;
 				break;
 			}
 
@@ -87,11 +89,17 @@ export class LeaderboardHandler {
 			}
 		}
 
-		const options: MessageOptions = {
-			embed: {
-				color: "red"
-			}
-		};
-		message.channel.send(response, options);
+		if (embed) {
+			const options: MessageOptions = {
+				embed: {
+					title: "Vybot",
+					description: response,
+					color: 0xff0000 // Red
+				}
+			};
+			message.channel.send(options);
+		} else {
+			message.channel.send(response);
+		}
 	};
 }
