@@ -1,6 +1,19 @@
 import { DataManager } from "../../core/dataManager";
+import { Value } from "../models";
 
 export namespace ValueDAO {
+	export async function getValues(leaderboardId: number): Promise<Value[]> {
+		const query = `SELECT l.id AS leaderboardId, lr.id AS rowid, lc.id AS columnid, lv.value AS value
+		FROM leaderboard_values lv
+		JOIN leaderboard_rows lr ON lr.id = lv.leaderboard_row_id
+		JOIN leaderboard_columns lc ON lc.id = lv.leaderboard_col_id
+		JOIN leaderboards l ON l.id = lr.leaderboard_id AND l.id = lc.leaderboard_id
+		WHERE l.id = $1;`;
+		const params = [leaderboardId];
+
+		return (await DataManager.query(query, params)) as Value[];
+	}
+
 	export async function upsertValue(
 		leaderboardColumnId: number,
 		leaderboardRowId: number,

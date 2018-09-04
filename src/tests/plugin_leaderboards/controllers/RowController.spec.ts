@@ -144,13 +144,13 @@ describe("RowController ::", () => {
 			const leaderboardName: string = "leaderboardName";
 			const leaderboardId: number = 1;
 			const rowName: string = "rowName";
-			const rowId: number = 2;
+			const rowid: number = 2;
 
 			const command: Command = mock(Command);
 			when(command.arguments).thenReturn([leaderboardName, rowName, "New Row Name"]);
 
 			stub(LeaderboardDAO, "getLeaderboard").returns([{ id: leaderboardId }]);
-			stub(RowDAO, "getLeaderboardRow").returns([{ id: rowId }]);
+			stub(RowDAO, "getLeaderboardRow").returns([{ id: rowid }]);
 
 			const result = await RowController.updateLeaderboardRow(instance(command));
 			expect(result).to.be.true;
@@ -219,13 +219,13 @@ describe("RowController ::", () => {
 			const leaderboardName: string = "leaderboard name";
 			const leaderboardId: number = 1;
 			const rowName: string = "row name";
-			const rowId: number = 2;
+			const rowid: number = 2;
 
 			const command: Command = mock(Command);
 			when(command.arguments).thenReturn([leaderboardName, rowName]);
 
 			stub(LeaderboardDAO, "getLeaderboard").returns([{ id: leaderboardId }]);
-			stub(RowDAO, "getLeaderboardRow").returns([{ id: rowId }]);
+			stub(RowDAO, "getLeaderboardRow").returns([{ id: rowid }]);
 
 			const result = await RowController.deleteLeaderboardRow(instance(command));
 			expect(result).to.be.true;

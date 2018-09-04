@@ -3,6 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dataManager_1 = require("../../core/dataManager");
 var ValueDAO;
 (function (ValueDAO) {
+    async function getValues(leaderboardId) {
+        const query = `SELECT l.id AS leaderboardId, lr.id AS rowid, lc.id AS columnid, lv.value AS value
+		FROM leaderboard_values lv
+		JOIN leaderboard_rows lr ON lr.id = lv.leaderboard_row_id
+		JOIN leaderboard_columns lc ON lc.id = lv.leaderboard_col_id
+		JOIN leaderboards l ON l.id = lr.leaderboard_id AND l.id = lc.leaderboard_id
+		WHERE l.id = $1;`;
+        const params = [leaderboardId];
+        return (await dataManager_1.DataManager.query(query, params));
+    }
+    ValueDAO.getValues = getValues;
     async function upsertValue(leaderboardColumnId, leaderboardRowId, value) {
         const query = `INSERT INTO leaderboard_values VALUES (DEFAULT, $1, $2, $3) ON CONFLICT (leaderboard_col_id, leaderboard_row_id) DO UPDATE SET value = $3`;
         const params = [leaderboardColumnId, leaderboardRowId, value];

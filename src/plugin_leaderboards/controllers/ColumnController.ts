@@ -8,7 +8,7 @@ import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId } from 
 
 export namespace ColumnController {
 	export async function insertLeaderboardColumn(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 2, 3)) {
+		if (!commandHasCorrectArgumentsLength(command, 2, 3)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -21,8 +21,8 @@ export namespace ColumnController {
 		}
 
 		const columnName = command.arguments[1];
-		const columnId = await getColumnId(leaderboardId, columnName);
-		if (columnId > -1) {
+		const columnid = await getColumnId(leaderboardId, columnName);
+		if (columnid > -1) {
 			logger.warn(
 				`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name already exists`
 			);
@@ -46,7 +46,7 @@ export namespace ColumnController {
 	}
 
 	export async function updateLeaderboardColumn(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 4)) {
+		if (!commandHasCorrectArgumentsLength(command, 4)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -59,8 +59,8 @@ export namespace ColumnController {
 		}
 
 		const columnName = command.arguments[1];
-		const columnId = await getColumnId(leaderboardId, columnName);
-		if (columnId === -1) {
+		const columnid = await getColumnId(leaderboardId, columnName);
+		if (columnid === -1) {
 			logger.warn(
 				`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`
 			);
@@ -82,20 +82,20 @@ export namespace ColumnController {
 				return ReturnCodes.BAD_PARAMETER_TYPE;
 			}
 
-			await ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnId, columnTypeStr);
-			logger.info(`Updated leaderboard column ${columnId} to ${columnTypeStr}`);
+			await ColumnDAO.updateLeaderboardColumnType(leaderboardId, columnid, columnTypeStr);
+			logger.info(`Updated leaderboard column ${columnid} to ${columnTypeStr}`);
 		} else if (validAction === UpdateActions.NAME) {
 			const value = command.arguments[3];
 
-			await ColumnDAO.updateLeaderboardColumnName(leaderboardId, columnId, value);
-			logger.info(`Update leaderboard column ${columnId}'s type to ${value}`);
+			await ColumnDAO.updateLeaderboardColumnName(leaderboardId, columnid, value);
+			logger.info(`Update leaderboard column ${columnid}'s type to ${value}`);
 		}
 
 		return ReturnCodes.SUCCESS;
 	}
 
 	export async function deleteLeaderboardColumn(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 2)) {
+		if (!commandHasCorrectArgumentsLength(command, 2)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -108,16 +108,16 @@ export namespace ColumnController {
 		}
 
 		const columnName = command.arguments[1];
-		const columnId = await getColumnId(leaderboardId, columnName);
-		if (columnId === -1) {
+		const columnid = await getColumnId(leaderboardId, columnName);
+		if (columnid === -1) {
 			logger.warn(
 				`${ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard column with that name does not exist`
 			);
 			return ReturnCodes.COLUMN_NOT_FOUND;
 		}
 
-		await ValueDAO.deleteValuesByColumn(columnId);
-		await ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnId);
+		await ValueDAO.deleteValuesByColumn(columnid);
+		await ColumnDAO.deleteLeaderboardColumn(leaderboardId, columnid);
 		logger.info(`Deleted leaderboard column ${columnName}`);
 		return ReturnCodes.SUCCESS;
 	}

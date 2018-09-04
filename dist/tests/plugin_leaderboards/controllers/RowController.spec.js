@@ -108,11 +108,11 @@ describe("RowController ::", () => {
             const leaderboardName = "leaderboardName";
             const leaderboardId = 1;
             const rowName = "rowName";
-            const rowId = 2;
+            const rowid = 2;
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, rowName, "New Row Name"]);
             sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, "getLeaderboard").returns([{ id: leaderboardId }]);
-            sinon_1.stub(RowDAO_1.RowDAO, "getLeaderboardRow").returns([{ id: rowId }]);
+            sinon_1.stub(RowDAO_1.RowDAO, "getLeaderboardRow").returns([{ id: rowid }]);
             const result = await RowController_1.RowController.updateLeaderboardRow(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
             LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();
@@ -162,11 +162,11 @@ describe("RowController ::", () => {
             const leaderboardName = "leaderboard name";
             const leaderboardId = 1;
             const rowName = "row name";
-            const rowId = 2;
+            const rowid = 2;
             const command = ts_mockito_1.mock(command_1.Command);
             ts_mockito_1.when(command.arguments).thenReturn([leaderboardName, rowName]);
             sinon_1.stub(LeaderboardDAO_1.LeaderboardDAO, "getLeaderboard").returns([{ id: leaderboardId }]);
-            sinon_1.stub(RowDAO_1.RowDAO, "getLeaderboardRow").returns([{ id: rowId }]);
+            sinon_1.stub(RowDAO_1.RowDAO, "getLeaderboardRow").returns([{ id: rowid }]);
             const result = await RowController_1.RowController.deleteLeaderboardRow(ts_mockito_1.instance(command));
             chai_1.expect(result).to.be.true;
             LeaderboardDAO_1.LeaderboardDAO.getLeaderboard.restore();

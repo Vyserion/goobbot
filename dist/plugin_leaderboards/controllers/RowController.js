@@ -7,7 +7,7 @@ const validators_1 = require("../util/validators");
 var RowController;
 (function (RowController) {
     async function insertLeaderboardRow(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 2)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 2)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -18,8 +18,8 @@ var RowController;
             return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
         const rowName = command.arguments[1];
-        const rowId = await validators_1.getRowId(leaderboardId, rowName);
-        if (rowId === -1) {
+        const rowid = await validators_1.getRowId(leaderboardId, rowName);
+        if (rowid === -1) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME} - A leaderboard row with that name already exists`);
             return ReturnCodes_1.ReturnCodes.LEADERBOARD_DUPLICATE_NAME;
         }
@@ -29,7 +29,7 @@ var RowController;
     }
     RowController.insertLeaderboardRow = insertLeaderboardRow;
     async function updateLeaderboardRow(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 3)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 3)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -40,19 +40,19 @@ var RowController;
             return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
         const rowName = command.arguments[1];
-        const rowId = await validators_1.getRowId(leaderboardId, rowName);
-        if (rowId > -1) {
+        const rowid = await validators_1.getRowId(leaderboardId, rowName);
+        if (rowid > -1) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
             return ReturnCodes_1.ReturnCodes.ROW_NOT_FOUND;
         }
         const newRowName = command.arguments[2];
-        await dao_1.RowDAO.updateLeaderboardRow(rowId, newRowName);
-        logger_1.default.info(`Updated leaderboard row ${rowId} to ${newRowName}`);
+        await dao_1.RowDAO.updateLeaderboardRow(rowid, newRowName);
+        logger_1.default.info(`Updated leaderboard row ${rowid} to ${newRowName}`);
         return ReturnCodes_1.ReturnCodes.SUCCESS;
     }
     RowController.updateLeaderboardRow = updateLeaderboardRow;
     async function deleteLeaderboardRow(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 2)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 2)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -63,13 +63,13 @@ var RowController;
             return ReturnCodes_1.ReturnCodes.LEADERBOARD_NOT_FOUND;
         }
         const rowName = command.arguments[1];
-        const rowId = await validators_1.getRowId(leaderboardId, rowName);
-        if (rowId > -1) {
+        const rowid = await validators_1.getRowId(leaderboardId, rowName);
+        if (rowid > -1) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.ROW_NOT_FOUND} - A leaderboard row with that name does not exist`);
             return ReturnCodes_1.ReturnCodes.ROW_NOT_FOUND;
         }
-        await dao_1.ValueDAO.deleteValuesByRow(rowId);
-        await dao_1.RowDAO.deleteLeaderboardRow(rowId);
+        await dao_1.ValueDAO.deleteValuesByRow(rowid);
+        await dao_1.RowDAO.deleteLeaderboardRow(rowid);
         logger_1.default.info(`Deleted leaderboard row ${rowName}`);
         return ReturnCodes_1.ReturnCodes.SUCCESS;
     }

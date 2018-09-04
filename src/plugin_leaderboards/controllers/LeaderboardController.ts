@@ -2,7 +2,7 @@ import { LeaderboardDAO, ColumnDAO, RowDAO, ValueDAO } from "../dao";
 import logger from "../../core/logger";
 import { Command } from "../../core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Leaderboard, Column, Row } from "../models";
+import { Leaderboard } from "../models";
 import { commandHasCorrectArgumentsLength, getLeaderboardId } from "../util/validators";
 
 export namespace LeaderboardController {
@@ -11,7 +11,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function getLeaderboard(command: Command) {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -25,37 +25,21 @@ export namespace LeaderboardController {
 
 		const columns = await ColumnDAO.getLeaderboardColumns(leaderboard.id);
 		const rows = await RowDAO.getLeaderboardRows(leaderboard.id);
+		const values = await ValueDAO.getValues(leaderboard.id);
 
 		const leaderboardObj: Leaderboard = {
 			id: leaderboard.id,
 			name: leaderboard.name,
-			rows: [],
-			columns: []
+			rows: rows,
+			columns: columns,
+			values: values
 		};
-
-		// TODO: Tidy up this function call.
-		// TODO: Add values.
-
-		for (let column of columns) {
-			let col: Column = {
-				name: column.name,
-				type: column.type
-			};
-			leaderboardObj.columns.push(col);
-		}
-
-		for (let row of rows) {
-			let r: Row = {
-				name: row.name
-			};
-			leaderboardObj.rows.push(r);
-		}
 
 		return leaderboardObj;
 	}
 
 	export async function insertLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -73,7 +57,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function updateLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 2)) {
+		if (!commandHasCorrectArgumentsLength(command, 2)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}
@@ -92,7 +76,7 @@ export namespace LeaderboardController {
 	}
 
 	export async function deleteLeaderboard(command: Command): Promise<ReturnCodes> {
-		if (commandHasCorrectArgumentsLength(command, 1)) {
+		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
 		}

@@ -11,7 +11,7 @@ var LeaderboardController;
     }
     LeaderboardController.getLeaderboards = getLeaderboards;
     async function getLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -23,32 +23,19 @@ var LeaderboardController;
         }
         const columns = await dao_1.ColumnDAO.getLeaderboardColumns(leaderboard.id);
         const rows = await dao_1.RowDAO.getLeaderboardRows(leaderboard.id);
+        const values = await dao_1.ValueDAO.getValues(leaderboard.id);
         const leaderboardObj = {
             id: leaderboard.id,
             name: leaderboard.name,
-            rows: [],
-            columns: []
+            rows: rows,
+            columns: columns,
+            values: values
         };
-        // TODO: Tidy up this function call.
-        // TODO: Add values.
-        for (let column of columns) {
-            let col = {
-                name: column.name,
-                type: column.type
-            };
-            leaderboardObj.columns.push(col);
-        }
-        for (let row of rows) {
-            let r = {
-                name: row.name
-            };
-            leaderboardObj.rows.push(r);
-        }
         return leaderboardObj;
     }
     LeaderboardController.getLeaderboard = getLeaderboard;
     async function insertLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -64,7 +51,7 @@ var LeaderboardController;
     }
     LeaderboardController.insertLeaderboard = insertLeaderboard;
     async function updateLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 2)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 2)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }
@@ -81,7 +68,7 @@ var LeaderboardController;
     }
     LeaderboardController.updateLeaderboard = updateLeaderboard;
     async function deleteLeaderboard(command) {
-        if (validators_1.commandHasCorrectArgumentsLength(command, 1)) {
+        if (!validators_1.commandHasCorrectArgumentsLength(command, 1)) {
             logger_1.default.warn(`${ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
             return ReturnCodes_1.ReturnCodes.INCORRECT_PARAM_LENGTH;
         }

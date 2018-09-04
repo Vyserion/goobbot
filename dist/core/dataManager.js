@@ -17,7 +17,8 @@ var DataManager;
         process.exit(-1);
     });
     async function query(query, params) {
-        logger_1.default.debug("Running query:", query);
+        logger_1.default.debug("Running query:");
+        logger_1.default.debug(query);
         const results = await doQuery(query, params);
         return results.rows;
     }
