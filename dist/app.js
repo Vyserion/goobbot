@@ -7,7 +7,5 @@ if (process.env.NODE_ENV !== "production") {
 const bot_1 = require("./core/bot");
 const logger_1 = require("./core/logger");
 logger_1.default.info("VyBot is starting up...");
-const bot = new bot_1.Bot();
-bot.registerActions();
-bot.start();
+bot_1.startup();
 //# sourceMappingURL=app.js.map

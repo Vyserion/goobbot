@@ -1,56 +1,55 @@
 import { Client, Message, TextChannel } from "discord.js";
-import pluginManager from "./pluginManager";
+import { registerPlugins, isPluginMessage, handlePluginMessage } from "./pluginManager";
 import logger from "./logger";
 
-export class Bot {
-	client: Client;
+let client: Client;
 
-	constructor() {
-		this.client = new Client();
-	}
+export async function startup() {
+    client = new Client();
 
-	startup() {
-		this.registerActions();
-		this.start();
-	}
+    registerPlugins();
 
-	start() {
-		logger.info("Logging into Discord API...");
-		this.client.login(process.env.APP_KEY);
-	}
+    await registerActions();
+    await start();
+}
 
-	registerActions() {
-		logger.info("Registering actions...");
+async function registerActions() {
+    logger.info("Registering Discord API actions...");
 
-		this.client.on("ready", this.onReady);
-		this.client.on("message", this.onMessage);
-	}
+    await client.on("ready", onReady);
+    await client.on("message", onMessage);
+}
 
-	onReady() {
-		const showWelcomeMessage: boolean = process.env.SEND_WELCOME_MESSAGE === "true";
+function onReady() {
+    const showWelcomeMessage = process.env.SEND_WELCOME_MESSAGE === "true";
 
-		if (showWelcomeMessage) {
-			this.client.guilds.forEach(guild => {
-				guild.channels.forEach(channel => {
-					if (channel.name === "bot_test") {
-						let chan: TextChannel = <TextChannel>this.client.channels.get(channel.id);
-						chan.send("Hello, " + guild.name + "!");
-					}
-				});
-			});
-		} else {
-			logger.debug("Bypassing channel welcome messages");
-		}
+    if (showWelcomeMessage) {
+        // TODO: Fix this.
+        client.guilds.forEach(guild => {
+            guild.channels.forEach(channel => {
+                if (channel.name === "bot_test") {
+                    let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
+                    chan.send("Hello, " + guild.name + "!");
+                }
+            });
+        });
+    } else {
+        logger.debug("Bypassing channel welcome messages");
+    }
 
-		logger.info("VyBot is ready!");
-	}
+    logger.info("VyBot is ready!");
+}
 
-	onMessage(message: Message) {
-		if (pluginManager.isPluginMessage(message.content)) {
-			logger.debug("Command recieved: ");
-			logger.debug("                 " + message.content);
+function onMessage(message: Message) {
+    if (isPluginMessage(message.content)) {
+        logger.debug("Command recieved: ");
+        logger.debug("                 " + message.content);
 
-			pluginManager.handlePluginMessage(message);
-		}
-	}
+        handlePluginMessage(message);
+    }
+}
+
+async function start() {
+    logger.info("Logging into Discord API...");
+    await client.login(process.env.APP_KEY);
 }

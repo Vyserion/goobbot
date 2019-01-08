@@ -1,7 +1,7 @@
 import "mocha";
 import { expect } from "chai";
 import { mock, instance, when, verify } from "ts-mockito";
-import PluginManager from "../../core/pluginManager";
+import PluginManager from "../../core/oldpluginManager";
 import { Command } from "../../core/command";
 import { Message } from "discord.js";
 import { LeaderboardHandler } from "../../plugin_leaderboards/leaderboardHandler";
