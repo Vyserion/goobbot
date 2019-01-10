@@ -1,8 +1,8 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { ValueController } from "../controllers/ValueController";
 
-export async function upsertValue(command: Command): Promise<string> {
+export async function upsertValue(command: TCommand): Promise<string> {
 	const result = await ValueController.upsertValue(command);
 
 	let response;

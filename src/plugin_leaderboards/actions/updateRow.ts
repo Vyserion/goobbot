@@ -1,8 +1,8 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { RowController } from "../controllers/RowController";
 
-export async function updateLeaderboardRow(command: Command): Promise<string> {
+export async function updateLeaderboardRow(command: TCommand): Promise<string> {
 	const result = await RowController.updateLeaderboardRow(command);
 
 	let response;

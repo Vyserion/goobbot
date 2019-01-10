@@ -1,4 +1,4 @@
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { Commands } from "../config/commands";
 
 import {
@@ -17,7 +17,7 @@ import {
 	upsertValue
 } from "../config/helptext";
 
-export async function showHelp(command: Command): Promise<string> {
+export async function showHelp(command: TCommand): Promise<string> {
 	if (command.arguments.length === 0) {
 		return showCommands;
 	} else {

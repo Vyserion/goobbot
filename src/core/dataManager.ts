@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from "pg";
-import logger from "./logger";
+import logger from "../new_core/logger";
 
 export namespace DataManager {
 	const port: number = (process.env.POSTGRES_PORT as any) as number;
@@ -44,7 +44,8 @@ export namespace DataManager {
 				command: query,
 				rowCount: 0,
 				oid: 0,
-				rows: []
+				rows: [],
+				fields: []
 			};
 		}
 	}

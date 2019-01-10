@@ -1,8 +1,8 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { ColumnController } from "../controllers/ColumnController";
 
-export async function addColumn(command: Command): Promise<string> {
+export async function addColumn(command: TCommand): Promise<string> {
 	const result = await ColumnController.insertLeaderboardColumn(command);
 
 	let response: string;

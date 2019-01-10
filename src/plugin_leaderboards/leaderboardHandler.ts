@@ -1,4 +1,4 @@
-import { Command } from "../core/command";
+import { TCommand } from "../new_core/command";
 import { Message, MessageOptions } from "discord.js";
 import { Commands } from "./config/commands";
 
@@ -21,7 +21,7 @@ import { showHelp } from "./actions";
 export class LeaderboardHandler {
 	name: string = "leaderboards";
 
-	handleCommand = async (command: Command, message: Message): Promise<void> => {
+	handleCommand = async (command: TCommand, message: Message): Promise<void> => {
 		let action: string = command.action ? command.action : "";
 		action = action.toLowerCase();
 

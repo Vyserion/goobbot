@@ -1,9 +1,9 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { prettyPrintLeaderboard } from "../util/format";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
-export async function getLeaderboard(command: Command): Promise<string> {
+export async function getLeaderboard(command: TCommand): Promise<string> {
 	const result = await LeaderboardController.getLeaderboard(command);
 
 	let response;

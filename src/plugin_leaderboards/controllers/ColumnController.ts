@@ -1,13 +1,13 @@
 import { ColumnDAO, ValueDAO } from "../dao";
-import logger from "../../core/logger";
-import { Command } from "../../core/command";
+import logger from "../../new_core/logger";
+import { TCommand } from "../../new_core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { UpdateActions } from "../config/UpdateActions";
 import { ColumnTypes } from "../config/ColumnTypes";
 import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId } from "../util/validators";
 
 export namespace ColumnController {
-	export async function insertLeaderboardColumn(command: Command): Promise<ReturnCodes> {
+	export async function insertLeaderboardColumn(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 2, 3)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
@@ -45,7 +45,7 @@ export namespace ColumnController {
 		return ReturnCodes.SUCCESS;
 	}
 
-	export async function updateLeaderboardColumn(command: Command): Promise<ReturnCodes> {
+	export async function updateLeaderboardColumn(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 4)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
@@ -94,7 +94,7 @@ export namespace ColumnController {
 		return ReturnCodes.SUCCESS;
 	}
 
-	export async function deleteLeaderboardColumn(command: Command): Promise<ReturnCodes> {
+	export async function deleteLeaderboardColumn(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 2)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;

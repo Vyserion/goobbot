@@ -1,6 +1,6 @@
 import { LeaderboardDAO, ColumnDAO, RowDAO, ValueDAO } from "../dao";
-import logger from "../../core/logger";
-import { Command } from "../../core/command";
+import logger from "../../new_core/logger";
+import { TCommand } from "../../new_core/command";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Leaderboard } from "../models";
 import { commandHasCorrectArgumentsLength, getLeaderboardId } from "../util/validators";
@@ -10,7 +10,7 @@ export namespace LeaderboardController {
 		return await LeaderboardDAO.getLeaderboards();
 	}
 
-	export async function getLeaderboard(command: Command) {
+	export async function getLeaderboard(command: TCommand) {
 		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
@@ -38,7 +38,7 @@ export namespace LeaderboardController {
 		return leaderboardObj;
 	}
 
-	export async function insertLeaderboard(command: Command): Promise<ReturnCodes> {
+	export async function insertLeaderboard(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
@@ -56,7 +56,7 @@ export namespace LeaderboardController {
 		return ReturnCodes.SUCCESS;
 	}
 
-	export async function updateLeaderboard(command: Command): Promise<ReturnCodes> {
+	export async function updateLeaderboard(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 2)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;
@@ -75,7 +75,7 @@ export namespace LeaderboardController {
 		return ReturnCodes.SUCCESS;
 	}
 
-	export async function deleteLeaderboard(command: Command): Promise<ReturnCodes> {
+	export async function deleteLeaderboard(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 1)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;

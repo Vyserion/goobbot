@@ -11,10 +11,7 @@ const logger = createLogger({
 	format: combine(timestamp(), vybotLogFormat),
 	level: logLevel,
 	transports: [
-		new transports.Console({
-			name: "console",
-			colorize: true
-		})
+		new transports.Console()
 	]
 });
 

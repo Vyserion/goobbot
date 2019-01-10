@@ -1,8 +1,8 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
-export async function addLeaderboard(command: Command): Promise<string> {
+export async function addLeaderboard(command: TCommand): Promise<string> {
 	const result = await LeaderboardController.insertLeaderboard(command);
 
 	let response;

@@ -1,8 +1,8 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { ColumnController } from "../controllers/ColumnController";
 
-export async function deleteColumn(command: Command): Promise<string> {
+export async function deleteColumn(command: TCommand): Promise<string> {
 	const result = await ColumnController.deleteLeaderboardColumn(command);
 
 	let response;

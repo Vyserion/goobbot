@@ -1,11 +1,11 @@
-import { Command } from "../../core/command";
-import logger from "../../core/logger";
+import { TCommand } from "../../new_core/command";
+import logger from "../../new_core/logger";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { ValueDAO } from "../dao";
 import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId, getRowId } from "../util/validators";
 
 export namespace ValueController {
-	export async function upsertValue(command: Command): Promise<ReturnCodes> {
+	export async function upsertValue(command: TCommand): Promise<ReturnCodes> {
 		if (!commandHasCorrectArgumentsLength(command, 4)) {
 			logger.warn(`${ReturnCodes.INCORRECT_PARAM_LENGTH} - Incorrect number of parameters provided`);
 			return ReturnCodes.INCORRECT_PARAM_LENGTH;

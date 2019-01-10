@@ -1,8 +1,8 @@
-import { Command } from "../../core/command";
+import { TCommand } from "../../new_core/command";
 import { RowController } from "../controllers/RowController";
 import { ReturnCodes } from "../config/ReturnCodes";
 
-export async function deleteRow(command: Command): Promise<string> {
+export async function deleteRow(command: TCommand): Promise<string> {
 	const result = await RowController.deleteLeaderboardRow(command);
 
 	let response;
