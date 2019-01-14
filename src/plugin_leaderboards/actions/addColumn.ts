@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../new_core/command";
+import { TCommand } from "../../core/command";
 import { ColumnController } from "../controllers/ColumnController";
 
 export async function addColumn(command: TCommand): Promise<string> {

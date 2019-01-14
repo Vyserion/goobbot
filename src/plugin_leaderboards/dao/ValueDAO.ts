@@ -1,4 +1,4 @@
-import { DataManager } from "../../core/dataManager";
+import { execQuery } from "../../core/dataManager";
 import { Value } from "../models";
 
 export namespace ValueDAO {
@@ -11,7 +11,7 @@ export namespace ValueDAO {
 		WHERE l.id = $1;`;
 		const params = [leaderboardId];
 
-		return (await DataManager.query(query, params)) as Value[];
+		return (await execQuery(query, params)) as Value[];
 	}
 
 	export async function upsertValue(
@@ -22,7 +22,7 @@ export namespace ValueDAO {
 		const query = `INSERT INTO leaderboard_values VALUES (DEFAULT, $1, $2, $3) ON CONFLICT (leaderboard_col_id, leaderboard_row_id) DO UPDATE SET value = $3`;
 		const params = [leaderboardColumnId, leaderboardRowId, value];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -30,7 +30,7 @@ export namespace ValueDAO {
 		const query = `DELETE FROM leaderboard_values WHERE leaderboard_row_id = (?)`;
 		const params = [leaderboardRowId];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -38,7 +38,7 @@ export namespace ValueDAO {
 		const query = `DELETE FROM leaderboard_values WHERE leaderboard_col_id = (?)`;
 		const params = [leaderboardColumnId];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -48,7 +48,7 @@ export namespace ValueDAO {
         AND leaderboard_row_id IN (SELECT id FROM leaderboard_rows WHERE leaderboard_id = ?)`;
 		const params = [leaderboardId, leaderboardId];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 }

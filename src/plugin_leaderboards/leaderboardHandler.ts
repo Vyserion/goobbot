@@ -1,4 +1,4 @@
-import { TCommand } from "../new_core/command";
+import { TCommand } from "../core/command";
 import { Message, MessageOptions } from "discord.js";
 import { Commands } from "./config/commands";
 

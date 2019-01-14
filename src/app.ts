@@ -3,8 +3,8 @@ if (process.env.NODE_ENV !== "production") {
 	config();
 }
 
-import { startup } from "./new_core/bot";
-import logger from "./new_core/logger";
+import { startup } from "./core/bot";
+import logger from "./core/logger";
 
 logger.info("VyBot is starting up...");
 

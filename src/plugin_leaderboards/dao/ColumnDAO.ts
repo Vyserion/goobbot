@@ -1,4 +1,4 @@
-import { DataManager } from "../../core/dataManager";
+import { execQuery } from "../../core/dataManager";
 import { Column } from "../models";
 
 export namespace ColumnDAO {
@@ -6,14 +6,14 @@ export namespace ColumnDAO {
 		let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1`;
 		let params = [leaderboardId];
 
-		return (await DataManager.query(query, params)) as Column[];
+		return (await execQuery(query, params)) as Column[];
 	}
 
 	export async function getLeaderboardColumn(leaderboardId: number, columnName: string): Promise<Column> | null {
 		let query = `SELECT * FROM leaderboard_columns WHERE leaderboard_id = $1 AND name = $2`;
 		let params = [leaderboardId, columnName];
 
-		const columnResult = (await DataManager.query(query, params)) as Column[];
+		const columnResult = (await execQuery(query, params)) as Column[];
 		if (columnResult.length > 0) {
 			return columnResult[0];
 		} else {
@@ -25,7 +25,7 @@ export namespace ColumnDAO {
 		let query = `INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)`;
 		let params = [leaderboardId, name, type];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -33,7 +33,7 @@ export namespace ColumnDAO {
 		let query = `UPDATE leaderboard_columns SET name = ($3) WHERE leaderboard_id = ($1) AND id = ($2)`;
 		let params = [leaderboardId, id, name];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -41,7 +41,7 @@ export namespace ColumnDAO {
 		let query = `UPDATE leaderboard_columns SET type = ($3) WHERE leaderboard_id = ($1) AND id = ($2)`;
 		let params = [leaderboardId, id, type];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -49,7 +49,7 @@ export namespace ColumnDAO {
 		let query = `DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1)`;
 		let params = [leaderboardId];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 
@@ -57,7 +57,7 @@ export namespace ColumnDAO {
 		let query = `DELETE FROM leaderboard_columns WHERE leaderboard_id = ($1) AND id = ($2)`;
 		let params = [leaderboardId, id];
 
-		await DataManager.query(query, params);
+		await execQuery(query, params);
 		return;
 	}
 }

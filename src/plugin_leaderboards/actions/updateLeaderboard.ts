@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../new_core/command";
+import { TCommand } from "../../core/command";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
 export async function updateLeaderboard(command: TCommand): Promise<string> {

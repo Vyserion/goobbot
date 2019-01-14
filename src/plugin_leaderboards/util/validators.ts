@@ -1,4 +1,4 @@
-import { TCommand } from "../../new_core/command";
+import { TCommand } from "../../core/command";
 import { LeaderboardDAO, ColumnDAO, RowDAO } from "../dao";
 
 export async function commandHasCorrectArgumentsLength(command: TCommand, min: number, max?: number): Promise<boolean> {

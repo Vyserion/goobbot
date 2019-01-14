@@ -1,4 +1,4 @@
-import { createCommand, TCommand } from "../new_core/command";
+import { createCommand, TCommand } from "../core/command";
 import { notAPluginMessage } from "./messages";
 import { LeaderboardHandler } from "../plugin_leaderboards/leaderboardHandler";
 import { Message } from "discord.js";

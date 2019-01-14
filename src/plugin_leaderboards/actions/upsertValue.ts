@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../new_core/command";
+import { TCommand } from "../../core/command";
 import { ValueController } from "../controllers/ValueController";
 
 export async function upsertValue(command: TCommand): Promise<string> {
