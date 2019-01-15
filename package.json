@@ -4,12 +4,13 @@
   "description": "This project contains all of the code required to run an instance of VyBot.",
   "main": "./dist/app.js",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build": "npm run clean && tsc",
+    "build:watch": "npm run clean && tsc --watch",
+    "clean": "rimraf ./dist",
     "start": "node ./dist/app.js",
     "test": "mocha ./dist/**/*.spec.js",
     "test:watch": "mocha -w ./dist/**/*.spec.js",
-    "tidy": "prettier --write **/*.ts app.ts && npm run build"
+    "tidy": "npm run clean && prettier --write **/*.ts app.ts && npm run build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "npm": "6.6.0-next.1",
     "pg": "^7.4.1",
     "prettier": "^1.14.2",
+    "rimraf": "^2.6.3",
     "sinon": "7.2.2",
     "uws": "99.0.0",
     "winston": "3.1.0",
