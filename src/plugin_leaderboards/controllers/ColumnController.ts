@@ -1,6 +1,6 @@
 import { ColumnDAO, ValueDAO } from "../dao";
-import logger from "../../core/logger";
-import { TCommand } from "../../core/command";
+import logger from "../../core/util/logger";
+import { TCommand } from "../../core/typings";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { UpdateActions } from "../config/UpdateActions";
 import { ColumnTypes } from "../config/ColumnTypes";

@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import { isPluginMessage } from "./PluginManager";
+import { isPluginMessage } from "./plugins";
 
 describe("core/pluginManager", () => {
 	// @ts-ignore - Reads as unused variable.

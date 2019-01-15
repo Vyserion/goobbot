@@ -1,4 +1,4 @@
-import { execQuery } from "../../core/dataManager";
+import { execQuery } from "../../core/util/dataManager";
 import { Leaderboard } from "../models";
 
 export namespace LeaderboardDAO {

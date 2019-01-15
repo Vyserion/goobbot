@@ -1,5 +1,5 @@
-import { TCommand } from "../../core/command";
-import logger from "../../core/logger";
+import { TCommand } from "../../core/typings";
+import logger from "../../core/util/logger";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { ValueDAO } from "../dao";
 import { commandHasCorrectArgumentsLength, getLeaderboardId, getColumnId, getRowId } from "../util/validators";

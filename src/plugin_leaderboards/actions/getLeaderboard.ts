@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../core/command";
+import { TCommand } from "../../core/typings";
 import { prettyPrintLeaderboard } from "../util/format";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 

@@ -1,13 +1,11 @@
 import { Client, Message, TextChannel } from "discord.js";
-import { registerPlugins, isPluginMessage, handlePluginMessage } from "./pluginManager";
-import logger from "./logger";
+import { processMessage, isPluginMessage } from "./util/plugins";
+import logger from "./util/logger";
 
 let client: Client;
 
 export async function startup() {
     client = new Client();
-
-    registerPlugins();
 
     await registerActions();
     await start();
@@ -45,7 +43,7 @@ function onMessage(message: Message) {
         logger.debug("Command recieved: ");
         logger.debug("                 " + message.content);
 
-        handlePluginMessage(message);
+        processMessage(message);
     }
 }
 

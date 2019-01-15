@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import { TCommand } from "../../../core/command";
+import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "./validators";
 
 describe("plugins/leaderboards/util/validators", () => {

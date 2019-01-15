@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 import { startup } from "./core/bot";
-import logger from "./core/logger";
+import logger from "./core/util/logger";
 
 logger.info("VyBot is starting up...");
 

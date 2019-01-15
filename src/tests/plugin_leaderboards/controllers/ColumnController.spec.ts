@@ -5,7 +5,7 @@
 // import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 // import { ColumnController } from "../../../plugin_leaderboards/controllers/ColumnController";
 // import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
-// import { Command } from "../../../core/command";
+// import { Command } from "../../../core/typings";
 // import { stub } from "sinon";
 
 // describe("ColumnController ::", () => {

@@ -1,6 +1,6 @@
 import { RowDAO, ValueDAO } from "../dao";
-import logger from "../../core/logger";
-import { TCommand } from "../../core/command";
+import logger from "../../core/util/logger";
+import { TCommand } from "../../core/typings";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { commandHasCorrectArgumentsLength, getLeaderboardId, getRowId } from "../util/validators";
 

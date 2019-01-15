@@ -4,7 +4,7 @@
 // import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
 // import { RowController } from "../../../plugin_leaderboards/controllers/RowController";
 // import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
-// import { Command } from "../../../core/command";
+// import { Command } from "../../../core/typings";
 // import { stub } from "sinon";
 // import { RowDAO } from "../../../plugin_leaderboards/dao/RowDAO";
 

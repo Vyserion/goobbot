@@ -1,4 +1,4 @@
-import { execQuery } from "../../core/dataManager";
+import { execQuery } from "../../core/util/dataManager";
 import { Value } from "../models";
 
 export namespace ValueDAO {

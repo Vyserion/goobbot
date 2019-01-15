@@ -5,7 +5,7 @@
 // import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
 // import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
 // import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
-// import { Command } from "../../../core/command";
+// import { Command } from "../../../core/typings";
 // import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
 // import { Leaderboard } from "../../../plugin_leaderboards/models";
 // import { stub } from "sinon";

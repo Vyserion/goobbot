@@ -1,6 +1,6 @@
 import { LeaderboardDAO, ColumnDAO, RowDAO, ValueDAO } from "../dao";
-import logger from "../../core/logger";
-import { TCommand } from "../../core/command";
+import logger from "../../core/util/logger";
+import { TCommand } from "../../core/typings";
 import { ReturnCodes } from "../config/ReturnCodes";
 import { Leaderboard } from "../models";
 import { commandHasCorrectArgumentsLength, getLeaderboardId } from "../util/validators";

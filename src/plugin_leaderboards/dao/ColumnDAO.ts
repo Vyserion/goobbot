@@ -1,4 +1,4 @@
-import { execQuery } from "../../core/dataManager";
+import { execQuery } from "../../core/util/dataManager";
 import { Column } from "../models";
 
 export namespace ColumnDAO {

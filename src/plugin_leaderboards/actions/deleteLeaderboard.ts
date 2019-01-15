@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../core/command";
+import { TCommand } from "../../core/typings";
 import { LeaderboardController } from "../controllers/LeaderboardController";
 
 export async function deleteLeaderboard(command: TCommand): Promise<string> {

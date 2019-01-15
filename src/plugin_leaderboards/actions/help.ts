@@ -1,4 +1,4 @@
-import { TCommand } from "../../core/command";
+import { TCommand } from "../../core/typings";
 import { Commands } from "../config/commands";
 
 import {

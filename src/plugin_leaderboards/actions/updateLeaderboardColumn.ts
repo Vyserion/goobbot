@@ -1,5 +1,5 @@
 import { ReturnCodes } from "../config/ReturnCodes";
-import { TCommand } from "../../core/command";
+import { TCommand } from "../../core/typings";
 import { ColumnController } from "../controllers/ColumnController";
 
 export async function updateLeaderboardColumn(command: TCommand): Promise<string> {

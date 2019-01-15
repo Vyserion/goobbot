@@ -1,10 +1,11 @@
 import "mocha";
 import { expect } from "chai";
-import { createCommand, TCommand } from "./command";
 import { Message } from "discord.js";
 import { mock, instance, when } from "ts-mockito";
+import { createCommand } from "./command";
+import { TCommand } from "../typings";
 
-describe("core/command", () => {
+describe("core/typings", () => {
 	// @ts-ignore - Reads as unused variable.
 	let env;
 

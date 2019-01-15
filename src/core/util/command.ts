@@ -1,11 +1,5 @@
 import { Message } from "discord.js";
-
-export type TCommand = {
-    plugin: string;
-    action?: string;
-    arguments: string[];
-    originalMessage: Message;
-}
+import { TCommand } from "../typings";
 
 export function createCommand(message: Message): TCommand {
     let input = stripPrefix(message.content);
