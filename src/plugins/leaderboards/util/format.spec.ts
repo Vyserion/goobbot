@@ -1,13 +1,13 @@
 import "mocha";
 import { expect } from "chai";
-import { Leaderboard, Column, Row, Value } from "../../../plugin_leaderboards/models";
+import { TLeaderboard, TColumn, TRow, TValue } from "../typings";
 import { prettyPrintLeaderboard } from "../../../plugin_leaderboards/util/format";
 import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
 
-describe("util/format ::", () => {
-	describe("prettyPrintLeaderboard", () => {
+describe("plugins/leaderboards/util/format", () => {
+	describe("prettyPrintLeaderboard()", () => {
 		it("should format the output correctly", () => {
-			const cols: Column[] = [
+			const cols: TColumn[] = [
 				{
 					id: 1,
 					name: "Column One",
@@ -25,7 +25,7 @@ describe("util/format ::", () => {
 				}
 			];
 
-			const rows: Row[] = [
+			const rows: TRow[] = [
 				{
 					id: 1,
 					name: "Row One"
@@ -48,7 +48,7 @@ describe("util/format ::", () => {
 				}
 			];
 
-			const values: Value[] = [
+			const values: TValue[] = [
 				// Column One
 				{
 					leaderboard_id: 1,
@@ -144,7 +144,7 @@ describe("util/format ::", () => {
 				}
 			];
 
-			const input: Leaderboard = {
+			const input: TLeaderboard = {
 				id: 1,
 				name: "Test Leaderboard Name",
 				columns: cols,
