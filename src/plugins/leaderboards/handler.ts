@@ -12,8 +12,6 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
     }
 
     async handleMessage() {
-        console.log(this.command.plugin);
-
         const action: string = this.command.action ? this.command.action.toLowerCase() : "";
         const actionHandler: IActionHandlerStrategy = this.getActionHandlerStrategy(action);
         await actionHandler.handleAction();
