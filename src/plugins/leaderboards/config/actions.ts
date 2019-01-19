@@ -19,5 +19,5 @@ export enum Actions {
 }
 
 export interface IActionHandlerStrategy {
-    handleAction(): Promise<void>;
+    handleAction(): Promise<string>;
 }

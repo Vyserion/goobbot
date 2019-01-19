@@ -1,5 +1,8 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
+import { commandHasCorrectArgumentLength, leaderboardExists } from "../util/validators";
+import { createLeaderboard } from "../dao/leaderboards";
+import logger from "../../../core/util/logger";
 
 export class CreateLeaderboardHandler implements IActionHandlerStrategy {
     private readonly command: TCommand;
@@ -8,7 +11,21 @@ export class CreateLeaderboardHandler implements IActionHandlerStrategy {
         this.command = command;
     }
 
-    async handleAction() {
-        console.log(this.command.plugin);
+    async handleAction(): Promise<string> {
+        const correctArguments = commandHasCorrectArgumentLength(this.command, 1);
+        if (!correctArguments) {
+            return "No name was provided for the leaderboard.";
+        }
+
+        const name = this.command.arguments[0];
+
+        const exists = await leaderboardExists(name);
+        if (exists) {
+            return `A leaderboard with the name ${name} already exists.`;
+        }
+
+        await createLeaderboard(name);
+        logger.info(`Created new leaderboard ${name}`);
+        return `Successfully created leaderboard ${name}.`;
     }
 }
