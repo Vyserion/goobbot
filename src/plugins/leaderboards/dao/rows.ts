@@ -28,10 +28,23 @@ export async function createRow(name: string, leaderboardId: number): Promise<vo
     await execQuery(query, params);
 }
 
-export async function deleteRows(leaderboardId: number): Promise<void> {
-    const query = `DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
-    const params = [leaderboardId];
+export async function updateRowName(rowId: number, newName: string): Promise<void> {
+    const query = `UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1);`;
+    const params = [ rowId, newName ];
 
     await execQuery(query, params);
-    return;
+}
+
+export async function deleteRows(leaderboardId: number): Promise<void> {
+    const query = `DELETE FROM leaderboard_rows WHERE leaderboard_id = ($1)`;
+    const params = [ leaderboardId ];
+
+    await execQuery(query, params);
+}
+
+export async function deleteRow(rowId: number): Promise<void> {
+    const query = `DELETE FROM leaderboard_rows WHERE leaderboard_row_id = ($1)`;
+    const params = [ rowId ];
+
+    await execQuery(query, params);
 }

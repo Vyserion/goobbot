@@ -11,6 +11,9 @@ import { CreateColumnHandler } from "./actions/createColumn";
 import { UpdateColumnHandler } from "./actions/updateColumn";
 import { DeleteColumnHandler } from "./actions/deleteColumn";
 import { CreateRowHandler } from "./actions/createRow";
+import { UpdateRowHandler } from "./actions/updateRow";
+import { DeleteRowHandler } from "./actions/deleteRow";
+import { UpdateValueHandler } from "./actions/updateValue";
 
 export class LeaderboardHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand;
@@ -51,7 +54,16 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
                 
             case Actions.createRow:
                 return new CreateRowHandler(this.command);
-            
+
+            case Actions.updateRow:
+                return new UpdateRowHandler(this.command);
+
+            case Actions.deleteRow:
+                return new DeleteRowHandler(this.command);
+
+            case Actions.upsertValue:
+                return new UpdateValueHandler(this.command);
+
             default:
                 return;
         }

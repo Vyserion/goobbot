@@ -3,12 +3,9 @@ import { Message, MessageOptions } from "discord.js";
 import { Commands } from "./config/commands";
 
 import {
-	addColumn,
-	addRow,
 	deleteColumn,
 	deleteRow,
 	getLeaderboards,
-	updateLeaderboardColumn,
 	updateLeaderboardRow,
 	upsertValue
 } from "./actions";
@@ -24,20 +21,6 @@ export class LeaderboardHandler {
 		let response: string;
 		let embed: boolean = true;
 		switch (action) {
-
-			case Commands.UPDATE_ROW: {
-				response = await updateLeaderboardRow(command);
-				break;
-			}
-
-			case Commands.DELETE_COLUMN: {
-				response = await deleteColumn(command);
-				break;
-			}
-			case Commands.DELETE_ROW: {
-				response = await deleteRow(command);
-				break;
-			}
 
 			case Commands.UPSERT_VALUE: {
 				response = await upsertValue(command);

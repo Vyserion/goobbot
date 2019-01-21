@@ -14,6 +14,13 @@ export async function getValues(leaderboardId: number): Promise<TValue[]> {
     return results;
 }
 
+export async function upsertValue(columnId: number, rowId: number, value: string): Promise<void> {
+    const query = `INSERT INTO leaderboard_values VALUES (DEFAULT, $1, $2, $3) ON CONFLICT (leaderboard_col_id, leaderboard_row_id) DO UPDATE SET value = $3`;
+    const params = [ columnId, rowId, value ];
+
+    await execQuery(query, params);
+}
+
 export async function deleteValuesByLeaderboard(leaderboardId: number): Promise<void> {
     const query = `DELETE FROM leaderboard_values
     WHERE leaderboard_col_id IN (SELECT id FROM leaderboard_columns WHERE leaderboard_id = ?)
@@ -26,6 +33,13 @@ export async function deleteValuesByLeaderboard(leaderboardId: number): Promise<
 export async function deleteValuesByColumn(columnId: number): Promise<void> {
     const query = `DELETE FROM leaderboard_values WHERE leaderboard_col_id = (?)`;
     const params = [ columnId ];
+
+    await execQuery(query, params);
+}
+
+export async  function deleteValuesByRow(rowId: number): Promise<void> {
+    const query = `DELETE FROM leaderboard_rows WHERE leaderboard_row_id = (?)`;
+    const params = [ rowId ];
 
     await execQuery(query, params);
 }
