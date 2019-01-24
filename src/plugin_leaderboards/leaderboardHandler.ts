@@ -22,16 +22,6 @@ export class LeaderboardHandler {
 		let embed: boolean = true;
 		switch (action) {
 
-			case Commands.UPSERT_VALUE: {
-				response = await upsertValue(command);
-				break;
-			}
-
-			case Commands.HELP: {
-				response = await showHelp(command);
-				break;
-			}
-
 			default: {
 				response = await getLeaderboards();
 				break;

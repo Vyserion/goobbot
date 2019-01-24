@@ -14,6 +14,8 @@ import { CreateRowHandler } from "./actions/createRow";
 import { UpdateRowHandler } from "./actions/updateRow";
 import { DeleteRowHandler } from "./actions/deleteRow";
 import { UpdateValueHandler } from "./actions/updateValue";
+import { HelpHandler } from "./actions/help";
+import { GetLeaderboardsHandler } from "./actions/getLeaderboards";
 
 export class LeaderboardHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand;
@@ -64,8 +66,11 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
             case Actions.upsertValue:
                 return new UpdateValueHandler(this.command);
 
+            case Actions.help:  
+                return new HelpHandler(this.command);
+
             default:
-                return;
+                return new GetLeaderboardsHandler(this.command);
         }
     }
 

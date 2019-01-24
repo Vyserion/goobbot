@@ -6,7 +6,7 @@ export * from "./deleteLeaderboard";
 export * from "./deleteRow";
 export * from "./getLeaderboard";
 export * from "./getLeaderboards";
-export * from "./showCommands";
+export * from "./showCommands"; // GOT TO HERE
 export * from "./updateColumn";
 export * from "./updateLeaderboard";
 export * from "./updateRow";

@@ -1,6 +1,12 @@
 import { TLeaderboard } from "../typings";
 import { execQuery } from "../../../core/util/dataManager";
 
+export async function getLeaderboards(): Promise<TLeaderboard[]> {
+    const query = `SELECT * FROM leaderboards`;
+    const results = await execQuery(query);
+    return results;
+}
+
 export async function getLeaderboard(name: string): Promise<TLeaderboard> {
     const query = `SELECT * FROM leaderboards WHERE name = $1`;
     const params = [ name ];
