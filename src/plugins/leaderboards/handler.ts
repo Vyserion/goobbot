@@ -1,21 +1,21 @@
 import { IPluginHandlerStrategy, TCommand } from "../../core/typings";
 import { Actions, IActionHandlerStrategy } from "./config";
 import {
-    CreateLeaderboardHandler
+    CreateLeaderboardHandler,
+    UpdateLeaderboardHandler,
+    DeleteLeaderboardHandler,
+    GetLeaderboardHandler,
+    CreateColumnHandler,
+    UpdateColumnHandler,
+    DeleteColumnHandler,
+    CreateRowHandler,
+    UpdateRowHandler,
+    DeleteRowHandler,
+    UpdateValueHandler,
+    HelpHandler,
+    GetLeaderboardsHandler
 } from "./actions";
 import { Message } from "discord.js";
-import { UpdateLeaderboardHandler } from "./actions/updateLeaderboard";
-import { DeleteLeaderboardHandler } from "./actions/deleteLeaderboard";
-import { GetLeaderboardHandler } from "./actions/getLeaderboard";
-import { CreateColumnHandler } from "./actions/createColumn";
-import { UpdateColumnHandler } from "./actions/updateColumn";
-import { DeleteColumnHandler } from "./actions/deleteColumn";
-import { CreateRowHandler } from "./actions/createRow";
-import { UpdateRowHandler } from "./actions/updateRow";
-import { DeleteRowHandler } from "./actions/deleteRow";
-import { UpdateValueHandler } from "./actions/updateValue";
-import { HelpHandler } from "./actions/help";
-import { GetLeaderboardsHandler } from "./actions/getLeaderboards";
 
 export class LeaderboardHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand;
@@ -70,7 +70,7 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
                 return new HelpHandler(this.command);
 
             default:
-                return new GetLeaderboardsHandler(this.command);
+                return new GetLeaderboardsHandler();
         }
     }
 

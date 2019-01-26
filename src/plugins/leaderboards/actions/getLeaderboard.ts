@@ -1,9 +1,9 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { getColumns } from "../dao/columns";
-import { getRows } from "../dao/rows";
+import { Leaderboards } from "../dao/leaderboards";
+import { Columns } from "../dao/columns";
+import { Rows } from "../dao/rows";
 import { getValues } from "../dao/values";
 import { TLeaderboard } from "../typings";
 import { prettyPrintLeaderboard } from "../util/format";
@@ -22,13 +22,13 @@ export class GetLeaderboardHandler implements IActionHandlerStrategy {
         }
 
         const name = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(name);
+        const leaderboard = await Leaderboards.getLeaderboard(name);
         if (!leaderboard) {
             return `A leaderboard with the name ${name} was not found.`;
         }
 
-        const columns = await getColumns(leaderboard.id);
-        const rows = await getRows(leaderboard.id);
+        const columns = await Columns.getColumns(leaderboard.id);
+        const rows = await Rows.getRows(leaderboard.id);
         const values = await getValues(leaderboard.id);
 
         const filledLeaderboard: TLeaderboard = {

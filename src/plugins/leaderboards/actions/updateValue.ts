@@ -1,9 +1,9 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { getColumn } from "../dao/columns";
-import { getRow } from "../dao/rows";
+import { Leaderboards } from "../dao/leaderboards";
+import { Columns } from "../dao/columns";
+import { Rows } from "../dao/rows";
 import { upsertValue } from "../dao/values";
 import logger from "../../../core/util/logger";
 
@@ -21,19 +21,19 @@ export class UpdateValueHandler implements IActionHandlerStrategy {
         }
 
         const leaderboardName = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
 
         const columnName = this.command.arguments[1];
-        const column = await getColumn(columnName, leaderboard.id);
+        const column = await Columns.getColumn(columnName, leaderboard.id);
         if (!column) {
             return `A column with the with name ${columnName} does not exists for leaderboard ${leaderboardName}.`;
         }
 
         const rowName = this.command.arguments[2];
-        const row = await getRow(rowName, leaderboard.id);
+        const row = await Rows.getRow(rowName, leaderboard.id);
         if (!row) {
             return `A row with the name ${rowName} does not exist for leaderboard ${leaderboardName}.`;
         }

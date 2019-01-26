@@ -2,10 +2,10 @@ import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
 import { deleteValuesByLeaderboard } from "../dao/values";
-import { getLeaderboard, deleteLeaderboard } from "../dao/leaderboards";
+import { Leaderboards } from "../dao/leaderboards";
 import logger from "../../../core/util/logger";
-import { deleteRows } from "../dao/rows";
-import { deleteColumns } from "../dao/columns";
+import { Rows } from "../dao/rows";
+import { Columns } from "../dao/columns";
 
 export class DeleteLeaderboardHandler implements IActionHandlerStrategy {
     private readonly command: TCommand;
@@ -22,15 +22,15 @@ export class DeleteLeaderboardHandler implements IActionHandlerStrategy {
 
         const name = this.command.arguments[0];
 
-        const leaderboard = await getLeaderboard(name);
+        const leaderboard = await Leaderboards.getLeaderboard(name);
         if (!leaderboard) {
             return `A leaderboard with the name ${name} could not be found.`;
         }
 
         await deleteValuesByLeaderboard(leaderboard.id);
-        await deleteRows(leaderboard.id);
-        await deleteColumns(leaderboard.id);
-        await deleteLeaderboard(leaderboard.id);
+        await Rows.deleteRows(leaderboard.id);
+        await Columns.deleteColumns(leaderboard.id);
+        await Leaderboards.deleteLeaderboard(leaderboard.id);
         logger.info(`Successfully deleted leaderboard ${name}`);
         return `Successfully deleted leaderboard ${name};`
     }

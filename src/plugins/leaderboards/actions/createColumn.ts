@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy, ColumnTypes } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, columnExists } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { createColumn } from "../dao/columns";
+import { Leaderboards } from "../dao/leaderboards";
+import { Columns } from "../dao/columns";
 import logger from "../../../core/util/logger";
 
 export class CreateColumnHandler implements IActionHandlerStrategy {
@@ -13,13 +13,17 @@ export class CreateColumnHandler implements IActionHandlerStrategy {
     }
 
     async handleAction(): Promise<string> {
-        const correctArguments = commandHasCorrectArgumentLength(this.command, 2);
+        const correctArguments = commandHasCorrectArgumentLength(this.command, 2, 3);
         if (!correctArguments) {
-            return "No leaderboard or column name was provided.";
+            if (this.command.arguments.length < 3) {
+                return "No leaderboard or column name was provided.";
+            } else {
+                return "Too many arguments provided.";
+            }
         }
 
         const leaderboardName = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
@@ -40,7 +44,7 @@ export class CreateColumnHandler implements IActionHandlerStrategy {
             columnType = validColumnType;
         }
 
-        await createColumn(columnName, columnType, leaderboard.id);
+        await Columns.createColumn(columnName, columnType, leaderboard.id);
         logger.info(`Successfully created column ${columnName} in leaderboard ${leaderboardName}`);
         return `Successfully created leaderboard column ${columnName}.`;
     }

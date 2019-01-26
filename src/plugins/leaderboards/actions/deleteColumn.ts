@@ -1,10 +1,9 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { getColumn } from "../dao/columns";
+import { Leaderboards } from "../dao/leaderboards";
+import { Columns } from "../dao/columns";
 import { deleteValuesByColumn } from "../dao/values";
-import { deleteColumn } from "../dao/columns";
 
 export class DeleteColumnHandler implements IActionHandlerStrategy {
     private readonly command: TCommand;
@@ -20,19 +19,19 @@ export class DeleteColumnHandler implements IActionHandlerStrategy {
         }
 
         const leaderboardName = this.command.arguments[1];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
 
         const columnName = this.command.arguments[2];
-        const column = await getColumn(columnName, leaderboard.id);
+        const column = await Columns.getColumn(columnName, leaderboard.id);
         if (!column) {
             return `A column with the name ${columnName} was not found for leaderboard ${leaderboardName}.`;
         }
 
         await deleteValuesByColumn(column.id);
-        await deleteColumn(leaderboard.id, column.id);
+        await Columns.deleteColumn(leaderboard.id, column.id);
         return `Succesfully removed column ${columnName}.`;
     }
 }

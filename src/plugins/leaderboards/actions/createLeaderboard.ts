@@ -1,7 +1,7 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, leaderboardExists } from "../util/validators";
-import { createLeaderboard } from "../dao/leaderboards";
+import { Leaderboards } from "../dao/leaderboards";
 import logger from "../../../core/util/logger";
 
 export class CreateLeaderboardHandler implements IActionHandlerStrategy {
@@ -24,7 +24,7 @@ export class CreateLeaderboardHandler implements IActionHandlerStrategy {
             return `A leaderboard with the name ${name} already exists.`;
         }
 
-        await createLeaderboard(name);
+        await Leaderboards.createLeaderboard(name);
         logger.info(`Created new leaderboard ${name}`);
         return `Successfully created leaderboard ${name}.`;
     }

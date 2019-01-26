@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, rowExists } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { createRow } from "../dao/rows";
+import { Leaderboards } from "../dao/leaderboards";
+import { Rows } from "../dao/rows";
 import logger from "../../../core/util/logger";
 
 export class CreateRowHandler implements IActionHandlerStrategy {
@@ -19,18 +19,18 @@ export class CreateRowHandler implements IActionHandlerStrategy {
         }
 
         const leaderboardName = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
 
         const rowName = this.command.arguments[1];
-        const exists = rowExists(rowName, leaderboard.id);
+        const exists = await rowExists(rowName, leaderboard.id);
         if (exists) {
             return `A row with the name ${rowName} already exists for leaderboard ${leaderboardName}.`;
         }
 
-        await createRow(rowName, leaderboard.id);
+        await Rows.createRow(rowName, leaderboard.id);
         logger.info(`Successfully created column ${rowName} in leaderboard ${leaderboardName}`);
         return `Sucessfully created leaderboard row ${rowName}.`;
     }

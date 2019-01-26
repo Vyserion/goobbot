@@ -1,15 +1,3 @@
-// import "mocha";
-// import { expect } from "chai";
-// import { mock, instance, when } from "ts-mockito";
-// import { LeaderboardDAO } from "../../../plugin_leaderboards/dao/LeaderboardDAO";
-// import { ColumnDAO } from "../../../plugin_leaderboards/dao/ColumnDAO";
-// import { LeaderboardController } from "../../../plugin_leaderboards/controllers/LeaderboardController";
-// import { ReturnCodes } from "../../../plugin_leaderboards/config/ReturnCodes";
-// import { Command } from "../../../core/typings";
-// import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
-// import { Leaderboard } from "../../../plugin_leaderboards/models";
-// import { stub } from "sinon";
-
 // describe("LeaderboardController ::", () => {
 // 	describe("getLeaderboards()", () => {
 // 		it("should return the list of leaderboards from the DAO.", async () => {
@@ -77,54 +65,6 @@
 
 // 			(LeaderboardDAO.getLeaderboard as any).restore();
 // 			(ColumnDAO.getLeaderboardColumns as any).restore();
-// 		});
-// 	});
-
-// 	describe("insertLeaderboard()", () => {
-// 		it("should check for less than one argument.", async () => {
-// 			const command: Command = mock(Command);
-// 			when(command.arguments).thenReturn([]);
-
-// 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-// 			expect(result).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
-// 		});
-
-// 		it("should check for more than one argument.", async () => {
-// 			const command: Command = mock(Command);
-// 			when(command.arguments).thenReturn(["one", "two"]);
-
-// 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-// 			expect(result).to.equal(ReturnCodes.INCORRECT_PARAM_LENGTH);
-// 		});
-
-// 		it("should return an error when a leaderboard with the same name is detected.", async () => {
-// 			const leaderboardName: string = "leaderboardname";
-
-// 			const command: Command = mock(Command);
-// 			when(command.arguments).thenReturn([leaderboardName]);
-
-// 			stub(LeaderboardDAO, "getLeaderboard").returns([leaderboardName]);
-
-// 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-// 			expect(result).to.equal(ReturnCodes.LEADERBOARD_DUPLICATE_NAME);
-
-// 			(LeaderboardDAO.getLeaderboard as any).restore();
-// 		});
-
-// 		it("should return true when the leaderboard is inserted correctly.", async () => {
-// 			const leaderboardName: string = "leaderboardName";
-
-// 			const command: Command = mock(Command);
-// 			when(command.arguments).thenReturn([leaderboardName]);
-
-// 			stub(LeaderboardDAO, "getLeaderboard").returns([]);
-// 			stub(LeaderboardDAO, "insertLeaderboard").returns([]);
-
-// 			const result = await LeaderboardController.insertLeaderboard(instance(command));
-// 			expect(result).to.be.true;
-
-// 			(LeaderboardDAO.getLeaderboard as any).restore();
-// 			(LeaderboardDAO.insertLeaderboard as any).restore();
 // 		});
 // 	});
 

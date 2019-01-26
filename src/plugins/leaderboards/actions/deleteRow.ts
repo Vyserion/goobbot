@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { getRow, deleteRow } from "../dao/rows";
+import { Leaderboards } from "../dao/leaderboards";
+import { Rows } from "../dao/rows";
 import { deleteValuesByRow } from "../dao/values";
 
 export class DeleteRowHandler implements IActionHandlerStrategy {
@@ -19,19 +19,19 @@ export class DeleteRowHandler implements IActionHandlerStrategy {
         }
 
         const leaderboardName = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
 
         const rowName = this.command.arguments[1];
-        const row = await getRow(rowName, leaderboard.id);
+        const row = await Rows.getRow(rowName, leaderboard.id);
         if (!row) {
             return `A row with the name ${rowName} for the leaderboard ${leaderboardName} was not found.`;
         }
 
         await deleteValuesByRow(row.id);
-        await deleteRow(row.id);
+        await Rows.deleteRow(row.id);
         return `Successfully removed row ${rowName}.`;
     }
 }

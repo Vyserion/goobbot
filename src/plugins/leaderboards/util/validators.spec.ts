@@ -77,7 +77,7 @@ describe("plugins/leaderboards/util/validators", () => {
                 ],
                 originalMessage: null
             };
-            const result = commandHasCorrectArgumentLength(command, 1, 3);
+            const result = commandHasCorrectArgumentLength(command, 2, 3);
             expect(result).to.be.false;
         });
 
@@ -111,7 +111,7 @@ describe("plugins/leaderboards/util/validators", () => {
             expect(result).to.be.false;
         });
 
-        it("should return false when the command has an amount of arguments of than the maximum", () => {
+        it("should return true when the command has an amount of arguments of than the maximum", () => {
             const command: TCommand = {
                 plugin: "string",
                 arguments: [
@@ -122,7 +122,7 @@ describe("plugins/leaderboards/util/validators", () => {
                 originalMessage: null
             };
             const result = commandHasCorrectArgumentLength(command, 1, 3);
-            expect(result).to.be.false;
+            expect(result).to.be.true;
         });
 
     });

@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy, ColumnTypes } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, columnExists } from "../util/validators";
-import { getLeaderboard } from "../dao/leaderboards";
-import { getColumn, updateColumnName, updateColumnType } from "../dao/columns";
+import { Leaderboards } from "../dao/leaderboards";
+import { Columns } from "../dao/columns";
 import { TColumn, TLeaderboard } from "../typings";
 
 enum UpdateActions {
@@ -24,13 +24,13 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
         }
 
         const leaderboardName = this.command.arguments[0];
-        const leaderboard = await getLeaderboard(leaderboardName);
+        const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
         if (!leaderboard) {
             return `A leaderboard with the name ${leaderboardName} was not found.`;
         }
 
         const columnName = this.command.arguments[1];
-        const column = await getColumn(columnName, leaderboard.id);
+        const column = await Columns.getColumn(columnName, leaderboard.id);
         if (!column) {
             return `A column with the name ${columnName} for leaderboard ${leaderboardName} was not found.`;
         }
@@ -56,7 +56,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
             return `A column with the name ${newName} already exists for leaderboard ${leaderboard.name}`
         }
 
-        await updateColumnName(newName, column.id, leaderboard.id);
+        await Columns.updateColumnName(newName, column.id, leaderboard.id);
         return `Successfully changed column ${column.name} to ${newName}`;
     }
 
@@ -67,7 +67,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
             return `The column type ${newType} is invalid.`;
         }
 
-        await updateColumnType(validColumnType, column.id, leaderboard.id);
+        await Columns.updateColumnType(validColumnType, column.id, leaderboard.id);
         return `Successfully change column ${column.name}'s type to ${newType}`;
     }
 }
