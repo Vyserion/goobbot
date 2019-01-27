@@ -43,7 +43,9 @@ export function prettyPrintLeaderboard(leaderboard: TLeaderboard): string {
     let output = codeMarker;
     // 3.1 Add the name.
     output += `${leaderboard.name} \n\n`;
-
+    leaderboard.rows.unshift({
+        name: "header placeholder"
+    });
     leaderboard.rows.forEach((_, rowIndex) => {
         columns.forEach((column, columnIndex) => {
             // 3.2 Add the value.

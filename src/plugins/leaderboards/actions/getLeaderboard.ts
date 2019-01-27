@@ -32,10 +32,10 @@ export class GetLeaderboardHandler implements IActionHandlerStrategy {
         const values = await Values.getValues(leaderboard.id);
 
         const filledLeaderboard: TLeaderboard = {
+            name: leaderboard.name,
             rows: rows,
             columns: columns,
             values: values,
-            ...leaderboard
         };
 
         return prettyPrintLeaderboard(filledLeaderboard);
