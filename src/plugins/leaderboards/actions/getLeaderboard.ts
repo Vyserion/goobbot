@@ -4,7 +4,7 @@ import { commandHasCorrectArgumentLength } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { Rows } from "../dao/rows";
-import { getValues } from "../dao/values";
+import { Values } from "../dao/values";
 import { TLeaderboard } from "../typings";
 import { prettyPrintLeaderboard } from "../util/format";
 
@@ -29,7 +29,7 @@ export class GetLeaderboardHandler implements IActionHandlerStrategy {
 
         const columns = await Columns.getColumns(leaderboard.id);
         const rows = await Rows.getRows(leaderboard.id);
-        const values = await getValues(leaderboard.id);
+        const values = await Values.getValues(leaderboard.id);
 
         const filledLeaderboard: TLeaderboard = {
             rows: rows,

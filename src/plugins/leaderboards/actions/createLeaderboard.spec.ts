@@ -24,7 +24,7 @@ describe("plugins/leaderboards/actions/createLeaderboard", () => {
         });
 
 
-        it("should return an error if a leaderbaord with the same name is found", async () => {
+        it("should return an error if a leaderboard with the same name is found", async () => {
             const leaderboardName = "My Leaderboard";
             const command: TCommand = {
                 plugin: "leaderboards",

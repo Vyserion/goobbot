@@ -4,7 +4,7 @@ import { commandHasCorrectArgumentLength } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { Rows } from "../dao/rows";
-import { upsertValue } from "../dao/values";
+import { Values } from "../dao/values";
 import logger from "../../../core/util/logger";
 
 export class UpdateValueHandler implements IActionHandlerStrategy {
@@ -40,7 +40,7 @@ export class UpdateValueHandler implements IActionHandlerStrategy {
 
         const value = this.command.arguments[4];
 
-        await upsertValue(column.id, row.id, value);
+        await Values.upsertValue(column.id, row.id, value);
         logger.info(`Successfully upserted value in ${leaderboardName}`);
         return `Successfully updated the value.`;
     }

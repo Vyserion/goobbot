@@ -1,7 +1,7 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
-import { deleteValuesByLeaderboard } from "../dao/values";
+import { Values } from "../dao/values";
 import { Leaderboards } from "../dao/leaderboards";
 import logger from "../../../core/util/logger";
 import { Rows } from "../dao/rows";
@@ -27,7 +27,7 @@ export class DeleteLeaderboardHandler implements IActionHandlerStrategy {
             return `A leaderboard with the name ${name} could not be found.`;
         }
 
-        await deleteValuesByLeaderboard(leaderboard.id);
+        await Values.deleteValuesByLeaderboard(leaderboard.id);
         await Rows.deleteRows(leaderboard.id);
         await Columns.deleteColumns(leaderboard.id);
         await Leaderboards.deleteLeaderboard(leaderboard.id);

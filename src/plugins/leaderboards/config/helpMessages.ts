@@ -101,7 +101,7 @@ Example, updating the name:
 ${process.env.PREFIX}leaderboards ${Actions.updateColumn} "My Leaderboard" "A Column" name "New Column Name"
 
 Example, updating the type:
-${process.env.PREFIX}leaderboard ${Actions.updateColumn} "My Leaderbaord" "A Column" type ${ColumnTypes.DATA}
+${process.env.PREFIX}leaderboard ${Actions.updateColumn} "My Leaderboard" "A Column" type ${ColumnTypes.DATA}
 
 Allowes Column Types:
 - ${ColumnTypes.DATA}

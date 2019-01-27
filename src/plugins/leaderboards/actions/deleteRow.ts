@@ -3,7 +3,7 @@ import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import { Rows } from "../dao/rows";
-import { deleteValuesByRow } from "../dao/values";
+import { Values } from "../dao/values";
 
 export class DeleteRowHandler implements IActionHandlerStrategy {
     private readonly command: TCommand;
@@ -30,7 +30,7 @@ export class DeleteRowHandler implements IActionHandlerStrategy {
             return `A row with the name ${rowName} for the leaderboard ${leaderboardName} was not found.`;
         }
 
-        await deleteValuesByRow(row.id);
+        await Values.deleteValuesByRow(row.id);
         await Rows.deleteRow(row.id);
         return `Successfully removed row ${rowName}.`;
     }
