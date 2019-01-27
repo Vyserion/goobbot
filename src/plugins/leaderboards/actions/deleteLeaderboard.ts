@@ -32,6 +32,6 @@ export class DeleteLeaderboardHandler implements IActionHandlerStrategy {
         await Columns.deleteColumns(leaderboard.id);
         await Leaderboards.deleteLeaderboard(leaderboard.id);
         logger.info(`Successfully deleted leaderboard ${name}`);
-        return `Successfully deleted leaderboard ${name};`
+        return `Successfully deleted leaderboard ${name}`;
     }
 }
