@@ -51,9 +51,9 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
     async changeName(column: TColumn, leaderboard: TLeaderboard): Promise<string> {
         const newName = this.command.arguments[3];
 
-        const exists = columnExists(newName, leaderboard.id);
+        const exists = await columnExists(newName, leaderboard.id);
         if (exists) {
-            return `A column with the name ${newName} already exists for leaderboard ${leaderboard.name}`
+            return `A column with the name ${newName} already exists for leaderboard ${leaderboard.name}`;
         }
 
         await Columns.updateColumnName(newName, column.id, leaderboard.id);
@@ -68,6 +68,6 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
         }
 
         await Columns.updateColumnType(validColumnType, column.id, leaderboard.id);
-        return `Successfully change column ${column.name}'s type to ${newType}`;
+        return `Successfully changed column ${column.name}'s type to ${newType}`;
     }
 }
