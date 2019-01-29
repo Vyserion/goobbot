@@ -6,22 +6,22 @@ export type TLeaderboard = {
 	columns: TColumn[];
 	rows: TRow[];
 	values: TValue[];
-}
+};
 
 export type TColumn = {
 	id?: number;
 	name: string;
 	type: ColumnTypes;
-}
+};
 
 export type TRow = {
 	id?: number;
 	name: string;
-}
+};
 
 export type TValue = {
 	leaderboard_id?: number;
 	rowid: number;
 	columnid: number;
 	value: any;
-}
+};

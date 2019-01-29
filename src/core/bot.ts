@@ -5,49 +5,49 @@ import logger from "./util/logger";
 let client: Client;
 
 export async function startup() {
-    client = new Client();
+	client = new Client();
 
-    await registerActions();
-    await start();
+	await registerActions();
+	await start();
 }
 
 async function registerActions() {
-    logger.info("Registering Discord API actions...");
+	logger.info("Registering Discord API actions...");
 
-    await client.on("ready", onReady);
-    await client.on("message", onMessage);
+	await client.on("ready", onReady);
+	await client.on("message", onMessage);
 }
 
 function onReady() {
-    const showWelcomeMessage = process.env.SEND_WELCOME_MESSAGE === "true";
+	const showWelcomeMessage = process.env.SEND_WELCOME_MESSAGE === "true";
 
-    if (showWelcomeMessage) {
-        // TODO: Fix this.
-        client.guilds.forEach(guild => {
-            guild.channels.forEach(channel => {
-                if (channel.name === "bot_test") {
-                    let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
-                    chan.send("Hello, " + guild.name + "!");
-                }
-            });
-        });
-    } else {
-        logger.debug("Bypassing channel welcome messages");
-    }
+	if (showWelcomeMessage) {
+		// TODO: Fix this.
+		client.guilds.forEach(guild => {
+			guild.channels.forEach(channel => {
+				if (channel.name === "bot_test") {
+					let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
+					chan.send("Hello, " + guild.name + "!");
+				}
+			});
+		});
+	} else {
+		logger.debug("Bypassing channel welcome messages");
+	}
 
-    logger.info("VyBot is ready!");
+	logger.info("VyBot is ready!");
 }
 
 function onMessage(message: Message) {
-    if (isPluginMessage(message.content)) {
-        logger.debug("Command recieved: ");
-        logger.debug("                 " + message.content);
+	if (isPluginMessage(message.content)) {
+		logger.debug("Command recieved: ");
+		logger.debug("                 " + message.content);
 
-        processMessage(message);
-    }
+		processMessage(message);
+	}
 }
 
 async function start() {
-    logger.info("Logging into Discord API...");
-    await client.login(process.env.APP_KEY);
+	logger.info("Logging into Discord API...");
+	await client.login(process.env.APP_KEY);
 }

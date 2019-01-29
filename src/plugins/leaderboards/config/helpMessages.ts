@@ -20,7 +20,6 @@ Admin Commands:
 For more information, use the command: ${process.env.PREFIX}leaderboards help [command]
 `;
 
-
 export const createLeaderboardMessage = `This command will create an empty leaderboard.
 The leaderboard name must be unique.
 
@@ -30,8 +29,6 @@ ${process.env.PREFIX}leaderboards ${Actions.createLeaderboard} [leaderboard name
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.createLeaderboard} "My Leaderboard"`;
 
-
-
 export const getLeaderboardMessage = `This command will show a leaderboard.
 
 Command:
@@ -40,8 +37,6 @@ ${process.env.PREFIX}leaderboards ${Actions.getLeaderboard} [leaderboard name]
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.getLeaderboard} "My Leaderboard"`;
 
-
-
 export const getLeaderboardsMessage = `This command will list all leaderboards.
 
 Command:
@@ -49,8 +44,6 @@ ${process.env.PREFIX}leaderboards
 
 Example:
 ${process.env.PREFIX}leaderboards`;
-
-
 
 export const updateLeaderboardMessage = `This command will update a leaderboard.
 The leaderboard name must be unique.
@@ -61,8 +54,6 @@ ${process.env.PREFIX}leaderboards ${Actions.updateLeaderboard} [leaderboard name
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.updateLeaderboard} "My Leaderboard" "My Updated Leaderboard"`;
 
-
-
 export const deleteLeaderboardMessage = `This command will delete a leaderboard and any data it may contain.
 Any data removed is permanently lost.
 
@@ -71,8 +62,6 @@ ${process.env.PREFIX}leaderboards ${Actions.deleteLeaderboard} [leaderboard name
 
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.deleteLeaderboard} "My Leaderboard"`;
-
-
 
 export const createColumnMessage = `This command will create a new column for the given leaderboard.
 This column must be unique to the leadeboard.
@@ -88,8 +77,6 @@ ${process.env.PREFIX}leaderboards ${Actions.createColumn} "My Leaderboard" "A Co
 
 Allowed Column Types:
 - ${ColumnTypes.DATA}`;
-
-
 
 export const updateColumnMessage = `This command will update a column in various ways.
 Both the name and type of column can be updated.
@@ -107,8 +94,6 @@ Allowes Column Types:
 - ${ColumnTypes.DATA}
 `;
 
-
-
 export const deleteColumnMessage = `This command will delete a column from a leaderboard, and any data it may contain.
 Any data removed is permanently lost.
 
@@ -116,9 +101,7 @@ Command:
 ${process.env.PREFIX}leaderboards ${Actions.deleteColumn} [leaderboard name] [column name]
 
 Example:
-${process.env.PREFIX}leaderboards ${Actions.deleteColumn} "My Leaderboard" "A Column"`
-
-
+${process.env.PREFIX}leaderboards ${Actions.deleteColumn} "My Leaderboard" "A Column"`;
 
 export const createRowMessage = `This command will create a new row for the given leaderboard.
 This row must be unique to the leaderboard.
@@ -129,8 +112,6 @@ ${process.env.PREFIX}leaderboards ${Actions.createRow} [leaderboard name] [row n
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.createRow} "My Leaderboard" "A Row"`;
 
-
-
 export const updateRowMessage = `This command will update the name of a row.
 
 Command:
@@ -140,8 +121,6 @@ Example:
 ${process.env.PREFIX}leaderboards ${Actions.updateRow} "My Leaderboard" "A Row" "An Updated Row"
 `;
 
-
-
 export const deleteRowMessage = `This command will delete a row from a leaderboard, and any data it may contain.
 Any data removed is permanently lost.
 
@@ -150,8 +129,6 @@ ${process.env.PREFIX}leaderboards ${Actions.deleteRow} [leaderboard name] [row n
 
 Example:
 ${process.env.PREFIX}leaderboards ${Actions.deleteRow} "My Leaderboard" "A Row"`;
-
-
 
 export const upsertValueMessage = `This command will add or update a value in a leaderboard.
 

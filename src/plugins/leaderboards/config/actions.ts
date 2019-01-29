@@ -1,23 +1,23 @@
 export enum Actions {
-    createLeaderboard = "new",
-    updateLeaderboard = "update",
-    deleteLeaderboard = "delete",
+	createLeaderboard = "new",
+	updateLeaderboard = "update",
+	deleteLeaderboard = "delete",
 
-    createColumn = "newcol",
-    updateColumn = "updatecol",
-    deleteColumn = "deletecol",
+	createColumn = "newcol",
+	updateColumn = "updatecol",
+	deleteColumn = "deletecol",
 
-    createRow = "newrow",
-    updateRow = "updaterow",
-    deleteRow = "deleterow",
-    
-    upsertValue = "update",
+	createRow = "newrow",
+	updateRow = "updaterow",
+	deleteRow = "deleterow",
 
-    getLeaderboard = "show",
-    
-    help = "help"
+	upsertValue = "update",
+
+	getLeaderboard = "show",
+
+	help = "help"
 }
 
 export interface IActionHandlerStrategy {
-    handleAction(): Promise<string>;
+	handleAction(): Promise<string>;
 }

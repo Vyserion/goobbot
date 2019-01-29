@@ -10,9 +10,7 @@ const logLevel = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : "info";
 const logger = createLogger({
 	format: combine(timestamp(), vybotLogFormat),
 	level: logLevel,
-	transports: [
-		new transports.Console()
-	]
+	transports: [new transports.Console()]
 });
 
 logger.debug("Logging set to " + logLevel);

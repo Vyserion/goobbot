@@ -210,6 +210,6 @@ describe("core/typings", () => {
 	// 		for (let i = 0; i < expectedOutput.length; i++) {
 	// 			expect(results[i]).to.equal(expectedOutput[i]);
 	// 		}
-		// });
+	// });
 	// });
 });
