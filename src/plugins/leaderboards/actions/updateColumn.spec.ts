@@ -3,11 +3,10 @@ import { expect } from "chai";
 import { stub, SinonStub } from "sinon";
 import { TCommand } from "../../../core/typings";
 import { Actions, ColumnTypes } from "../config";
-import { UpdateColumnHandler } from "./updateColumn";
+import { UpdateColumnHandler, UpdateActions } from "./updateColumn";
 import { Leaderboards } from "../dao/leaderboards";
 import { TLeaderboard, TColumn } from "../typings";
 import { Columns } from "../dao/columns";
-import { UpdateActions } from "../../../plugin_leaderboards/config/UpdateActions";
 
 function getColumnStub(name: string): Promise<TColumn> {
     const column: TColumn = {

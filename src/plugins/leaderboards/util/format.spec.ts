@@ -1,8 +1,8 @@
 import "mocha";
 import { expect } from "chai";
 import { TLeaderboard, TColumn, TRow, TValue } from "../typings";
-import { ColumnTypes } from "../../../plugin_leaderboards/config/ColumnTypes";
 import { prettyPrintLeaderboard } from "./format";
+import { ColumnTypes } from "../config";
 
 describe("plugins/leaderboards/util/format", () => {
 	describe("prettyPrintLeaderboard()", () => {

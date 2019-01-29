@@ -5,7 +5,7 @@ import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { TColumn, TLeaderboard } from "../typings";
 
-enum UpdateActions {
+export enum UpdateActions {
     NAME = "NAME",
     TYPE = "TYPE"
 };
