@@ -37,7 +37,7 @@ export class UpdateRowHandler implements IActionHandlerStrategy {
         }
 
         await Rows.updateRowName(row.id, newName);
-        logger.info(`Successfully updated leaderboard ${name} to ${newName}`);
-        return `Successfully updated row ${name}.`;
+        logger.info(`Successfully updated row ${rowName} to ${newName}`);
+        return `Successfully updated row ${rowName}.`;
     }
 }
