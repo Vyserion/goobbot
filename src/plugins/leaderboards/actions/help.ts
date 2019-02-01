@@ -11,7 +11,8 @@ import {
 	updateRowMessage,
 	deleteRowMessage,
 	getLeaderboardMessage,
-	getLeaderboardsMessage
+	getLeaderboardsMessage,
+	upsertValueMessage
 } from "../config";
 import { TCommand } from "../../../core/typings";
 import { showCommandMessage } from "../config";
@@ -52,6 +53,8 @@ export class HelpHandler implements IActionHandlerStrategy {
 
 			case Actions.getLeaderboard:
 				return getLeaderboardMessage;
+			case Actions.upsertValue:
+				return upsertValueMessage;
 
 			default:
 				return getLeaderboardsMessage;
