@@ -22,15 +22,7 @@ function onReady() {
 	const showWelcomeMessage = process.env.SEND_WELCOME_MESSAGE === "true";
 
 	if (showWelcomeMessage) {
-		// TODO: Fix this.
-		client.guilds.forEach(guild => {
-			guild.channels.forEach(channel => {
-				if (channel.name === "bot_test") {
-					let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
-					chan.send("Hello, " + guild.name + "!");
-				}
-			});
-		});
+		printWelcomeMessage();
 	} else {
 		logger.debug("Bypassing channel welcome messages");
 	}
@@ -50,4 +42,17 @@ function onMessage(message: Message) {
 async function start() {
 	logger.info("Logging into Discord API...");
 	await client.login(process.env.APP_KEY);
+}
+
+async function printWelcomeMessage() {
+	logger.info('Printing welcome messages');
+	client.guilds.forEach(guild => {
+		guild.channels.forEach(channel => {
+			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test
+			if (channel.name === "bot_test") {
+				let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
+				chan.send("Hello, " + guild.name + "!");
+			}
+		});
+	});
 }
