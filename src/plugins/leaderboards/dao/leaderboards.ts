@@ -20,23 +20,23 @@ export namespace Leaderboards {
 		}
 	}
 
-	export async function createLeaderboard(name: string): Promise<void> {
-		const query = `INSERT INTO leaderboards VALUES (DEFAULT, $1)`;
-		const params = [name];
+	export async function createLeaderboard(name: string, guildId: number): Promise<void> {
+		const query = `INSERT INTO leaderboards VALUES (DEFAULT, $1, $2)`;
+		const params = [ guildId, name ];
 
 		await execQuery(query, params);
 	}
 
 	export async function updateLeaderboard(name: string, newName: string): Promise<void> {
 		const query = `UPDATE leaderboards SET name = ($1) WHERE name LIKE ($2)`;
-		const params = [newName, name];
+		const params = [ newName, name ];
 
 		await execQuery(query, params);
 	}
 
 	export async function deleteLeaderboard(id: number): Promise<void> {
 		const query = `DELETE FROM leaderboards WHERE id = ($1)`;
-		const params = [id];
+		const params = [ id ];
 
 		await execQuery(query, params);
 	}
