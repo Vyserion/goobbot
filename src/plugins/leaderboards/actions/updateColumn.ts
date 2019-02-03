@@ -5,6 +5,7 @@ import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { TColumn, TLeaderboard } from "../typings";
 import { getGuildId } from "../../../util/guilds";
+import logger from "../../../core/util/logger";
 
 export enum UpdateActions {
 	NAME = "NAME",
@@ -59,6 +60,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 		}
 
 		await Columns.updateColumnName(newName, column.id, leaderboard.id);
+		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name} to ${newName}`;
 	}
 
@@ -70,6 +72,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 		}
 
 		await Columns.updateColumnType(validColumnType, column.id, leaderboard.id);
+		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name}'s type to ${newType}`;
 	}
 }
