@@ -17,6 +17,8 @@ export async function init() {
 		logger.error("Unexpected error on idle client", err);
 		process.exit(-1);
 	});
+
+	logger.info("Database connection successful");
 }
 
 export async function execQuery(query: string, params?: any[]) {
@@ -39,6 +41,7 @@ async function doQuery(query: string, params?: any[]): Promise<QueryResult> {
 
 		return results;
 	} catch (e) {
+		logger.debug(e);
 		logger.error("Error running query: " + query);
 		logger.error("Error code: " + e.code);
 
