@@ -7,6 +7,10 @@ import { UpdateRowHandler } from "./updateRow";
 import { Leaderboards } from "../dao/leaderboards";
 import { TLeaderboard, TRow } from "../typings";
 import { Rows } from "../dao/rows";
+import { UtilDao } from "../../../util/dao";
+import { TGuild } from "../../../util/typings/guilds";
+import { Message, Guild } from "discord.js";
+import { mock, when } from "ts-mockito";
 
 function getRowStub(name: string): Promise<TRow> {
 	const row: TRow = {
@@ -40,13 +44,22 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 
 		it("should return an error if no leaderboard is found", async () => {
 			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [leaderboardName, "A Row", "A New Row"],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			stub(Leaderboards, "getLeaderboard").resolves(null);
 
 			const actionHandler = new UpdateRowHandler(command);
@@ -54,19 +67,29 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const expectedResult = `A leaderboard with the name ${leaderboardName} was not found.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
 
 		it("should return an error if no row is found", async () => {
 			const leaderboardName = "My Leaderboard";
 			const rowName = "A Row";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [leaderboardName, rowName, "A New Row"],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -81,6 +104,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const expectedResult = `A row with the name ${rowName} for leaderboard ${leaderboardName} was not found.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Rows.getRow as SinonStub).restore();
 		});
@@ -89,13 +113,22 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const leaderboardName = "My Leaderboard";
 			const rowName = "A Row";
 			const newRowName = "A New Row";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [leaderboardName, rowName, newRowName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -113,6 +146,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const expectedResult = `A row with the name ${newRowName} for leaderboard ${leaderboardName} already exists.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Rows.getRow as SinonStub).restore();
 		});
@@ -121,13 +155,22 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const leaderboardName = "My Leaderboard";
 			const rowName = "A Row";
 			const newRowName = "A New Row";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [leaderboardName, rowName, newRowName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -143,6 +186,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 			const expectedResult = `Successfully updated row ${rowName}.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Rows.getRow as SinonStub).restore();
 			(Rows.updateRowName as SinonStub).restore();

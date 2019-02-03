@@ -4,6 +4,8 @@ import { commandHasCorrectArgumentLength } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { Values } from "../dao/values";
+import { getGuildId } from "../../../util/guilds";
+import logger from "../../../core/util/logger";
 
 export class DeleteColumnHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -18,8 +20,9 @@ export class DeleteColumnHandler implements IActionHandlerStrategy {
 			return "No leaderboard or column name was provided.";
 		}
 
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
+		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
@@ -32,6 +35,7 @@ export class DeleteColumnHandler implements IActionHandlerStrategy {
 
 		await Values.deleteValuesByColumn(column.id);
 		await Columns.deleteColumn(leaderboard.id, column.id);
+		logger.info(`Successfully deleted column ${columnName}`);
 		return `Succesfully removed column ${columnName}.`;
 	}
 }

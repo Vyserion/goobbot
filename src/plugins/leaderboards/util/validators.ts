@@ -11,8 +11,8 @@ export function commandHasCorrectArgumentLength(command: TCommand, min: number, 
 	}
 }
 
-export async function leaderboardExists(leaderboardName: string): Promise<boolean> {
-	const leaderboardExists = await Leaderboards.getLeaderboard(leaderboardName);
+export async function leaderboardExists(leaderboardName: string, guildId: number): Promise<boolean> {
+	const leaderboardExists = await Leaderboards.getLeaderboard(leaderboardName, guildId);
 	return !!leaderboardExists;
 }
 

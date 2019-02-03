@@ -22,7 +22,7 @@ export class CreateLeaderboardHandler implements IActionHandlerStrategy {
 
 		const name = this.command.arguments[0];
 
-		const exists = await leaderboardExists(name);
+		const exists = await leaderboardExists(name, guildId);
 		if (exists) {
 			return `A leaderboard with the name ${name} already exists.`;
 		}

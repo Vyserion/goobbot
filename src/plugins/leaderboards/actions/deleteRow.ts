@@ -4,6 +4,8 @@ import { commandHasCorrectArgumentLength } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import { Rows } from "../dao/rows";
 import { Values } from "../dao/values";
+import { getGuildId } from "../../../util/guilds";
+import logger from "../../../core/util/logger";
 
 export class DeleteRowHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -18,8 +20,9 @@ export class DeleteRowHandler implements IActionHandlerStrategy {
 			return "No leaderboard or row name was provided.";
 		}
 
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
+		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
@@ -32,6 +35,7 @@ export class DeleteRowHandler implements IActionHandlerStrategy {
 
 		await Values.deleteValuesByRow(row.id);
 		await Rows.deleteRow(row.id);
+		logger.info(`Successfully deleted row ${rowName}`);
 		return `Successfully removed row ${rowName}.`;
 	}
 }
