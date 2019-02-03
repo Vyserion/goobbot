@@ -7,6 +7,10 @@ import { CreateColumnHandler } from "./createColumn";
 import { Leaderboards } from "../dao/leaderboards";
 import { TLeaderboard, TColumn } from "../typings";
 import { Columns } from "../dao/columns";
+import { mock, when } from "ts-mockito";
+import { Message, Guild } from "discord.js";
+import { TGuild } from "../../../util/typings/guilds";
+import { UtilDao } from "../../../util/dao";
 
 describe("plugins/leaderboards/actions/createColumn", () => {
 	describe("handleAction()", () => {
@@ -40,13 +44,22 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 
 		it("should return an error if no leaderboard is found", async () => {
 			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, "A Column"],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			stub(Leaderboards, "getLeaderboard").resolves(null);
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -54,19 +67,29 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const expectedResult = `A leaderboard with the name ${leaderboardName} was not found.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
 
 		it("should return an error if a column with the same name is found", async () => {
 			const leaderboardName = "My Leaderboard";
 			const columnName = "A Column";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, columnName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -85,6 +108,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const expectedResult = `A column with the name ${columnName} already for exists for leaderboard ${leaderboardName}.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Columns.getColumn as SinonStub).restore();
 		});
@@ -93,13 +117,22 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const leaderboardName = "My Leaderboard";
 			const columnName = "A Column";
 			const columnType = "Unknown";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, columnName, columnType],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -114,6 +147,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const expectedResult = `The column type ${columnType.toUpperCase()} is invalid.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Columns.getColumn as SinonStub).restore();
 		});
@@ -121,13 +155,22 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 		it("should return a success message when the column is created", async () => {
 			const leaderboardName = "My Leaderboard";
 			const columnName = "A Column";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, columnName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -143,6 +186,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const expectedResult = `Successfully created leaderboard column ${columnName}.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Columns.getColumn as SinonStub).restore();
 			(Columns.createColumn as SinonStub).restore();
@@ -152,13 +196,22 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const leaderboardName = "My Leaderboard";
 			const columnName = "A Column";
 			const columnType = ColumnTypes.DATA;
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, columnName, columnType],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -174,6 +227,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 			const expectedResult = `Successfully created leaderboard column ${columnName}.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Columns.getColumn as SinonStub).restore();
 			(Columns.createColumn as SinonStub).restore();

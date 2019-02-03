@@ -3,6 +3,7 @@ import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, leaderboardExists } from "../util/validators";
 import { Leaderboards } from "../dao/leaderboards";
 import logger from "../../../core/util/logger";
+import { getGuildId } from "../../../util/guilds";
 
 export class UpdateLeaderboardHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -17,15 +18,16 @@ export class UpdateLeaderboardHandler implements IActionHandlerStrategy {
 			return "No names were provided for the leaderboard.";
 		}
 
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const name = this.command.arguments[0];
 		const newName = this.command.arguments[1];
 
-		const exists = await leaderboardExists(name);
+		const exists = await leaderboardExists(name, guildId);
 		if (!exists) {
 			return `A leaderboard with the name ${name} could not be found.`;
 		}
 
-		const replacementExists = await leaderboardExists(newName);
+		const replacementExists = await leaderboardExists(newName, guildId);
 		if (replacementExists) {
 			return `A leaderboard with the name ${newName} already exists.`;
 		}

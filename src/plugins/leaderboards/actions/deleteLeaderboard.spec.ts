@@ -9,6 +9,10 @@ import { TLeaderboard } from "../typings";
 import { Values } from "../dao/values";
 import { Rows } from "../dao/rows";
 import { Columns } from "../dao/columns";
+import { Message, Guild } from "discord.js";
+import { mock, when } from "ts-mockito";
+import { TGuild } from "../../../util/typings/guilds";
+import { UtilDao } from "../../../util/dao";
 
 describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 	describe("handleAction()", () => {
@@ -28,13 +32,22 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 
 		it("should return an error if no leaderboard is found", async () => {
 			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.deleteLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			stub(Leaderboards, "getLeaderboard").resolves(null);
 
 			const actionHandler = new DeleteLeaderboardHandler(command);
@@ -42,18 +55,28 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 			const expectedResult = `A leaderboard with the name ${leaderboardName} could not be found.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
 
 		it("should return a success message when the leaderboard is deleted", async () => {
 			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.deleteLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -71,6 +94,7 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 			const expectedResult = `Successfully deleted leaderboard ${leaderboardName}`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Values.deleteValuesByLeaderboard as SinonStub).restore();
 			(Rows.deleteRows as SinonStub).restore();

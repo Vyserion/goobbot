@@ -4,6 +4,7 @@ import { commandHasCorrectArgumentLength, columnExists } from "../util/validator
 import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import logger from "../../../core/util/logger";
+import { getGuildId } from "../../../util/guilds";
 
 export class CreateColumnHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -22,8 +23,9 @@ export class CreateColumnHandler implements IActionHandlerStrategy {
 			}
 		}
 
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
+		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}

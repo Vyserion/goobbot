@@ -70,7 +70,7 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
 				return new HelpHandler(this.command);
 
 			default:
-				return new GetLeaderboardsHandler();
+				return new GetLeaderboardsHandler(this.command);
 		}
 	}
 

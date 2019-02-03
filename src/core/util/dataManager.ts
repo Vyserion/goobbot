@@ -17,6 +17,8 @@ export async function init() {
 		logger.error("Unexpected error on idle client", err);
 		process.exit(-1);
 	});
+
+	logger.info("Database connection successful");
 }
 
 export async function execQuery(query: string, params?: any[]) {

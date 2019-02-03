@@ -9,6 +9,10 @@ import { TLeaderboard, TColumn, TRow, TValue } from "../typings";
 import { Columns } from "../dao/columns";
 import { Rows } from "../dao/rows";
 import { Values } from "../dao/values";
+import { Message, Guild } from "discord.js";
+import { mock, when } from "ts-mockito";
+import { TGuild } from "../../../util/typings/guilds";
+import { UtilDao } from "../../../util/dao";
 
 describe("plugins/leaderboards/actions/getLeaderboard", () => {
 	describe("handleAction()", () => {
@@ -28,13 +32,22 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 
 		it("should return an error if no leaderboard is found", async () => {
 			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			stub(Leaderboards, "getLeaderboard").resolves(null);
 
 			const actionHandler = new GetLeaderboardHandler(command);
@@ -42,6 +55,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 			const expectedResult = `A leaderboard with the name ${leaderboardName} was not found.`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
 
@@ -50,13 +64,22 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 			const columnName = "A Column";
 			const rowName = "A Row";
 			const value = "val";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
 			const command: TCommand = {
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: null
+				originalMessage: originalMessage
 			};
 
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
 			const leaderboard: TLeaderboard = {
 				name: leaderboardName,
 				columns: [],
@@ -98,6 +121,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 ${consoleStr}`;
 			expect(result).to.equal(expectedResult);
 
+			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Columns.getColumns as SinonStub).restore();
 			(Rows.getRows as SinonStub).restore();

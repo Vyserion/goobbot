@@ -7,6 +7,7 @@ import { Rows } from "../dao/rows";
 import { Values } from "../dao/values";
 import { TLeaderboard } from "../typings";
 import { prettyPrintLeaderboard } from "../util/format";
+import { getGuildId } from "../../../util/guilds";
 
 export class GetLeaderboardHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -21,8 +22,9 @@ export class GetLeaderboardHandler implements IActionHandlerStrategy {
 			return "No name was provided.";
 		}
 
+		const guild = await getGuildId(this.command.originalMessage.guild);
 		const name = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(name);
+		const leaderboard = await Leaderboards.getLeaderboard(name, guild);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${name} was not found.`;
 		}

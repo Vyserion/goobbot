@@ -4,6 +4,8 @@ import { commandHasCorrectArgumentLength, columnExists } from "../util/validator
 import { Leaderboards } from "../dao/leaderboards";
 import { Columns } from "../dao/columns";
 import { TColumn, TLeaderboard } from "../typings";
+import { getGuildId } from "../../../util/guilds";
+import logger from "../../../core/util/logger";
 
 export enum UpdateActions {
 	NAME = "NAME",
@@ -23,8 +25,9 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 			return `Not enough details - please check your command.`;
 		}
 
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName);
+		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
@@ -57,6 +60,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 		}
 
 		await Columns.updateColumnName(newName, column.id, leaderboard.id);
+		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name} to ${newName}`;
 	}
 
@@ -68,6 +72,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 		}
 
 		await Columns.updateColumnType(validColumnType, column.id, leaderboard.id);
+		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name}'s type to ${newType}`;
 	}
 }
