@@ -1,6 +1,14 @@
+-- Create required core tables
+CREATE TABLE IF NOT EXISTS GUILDS (
+    ID                  SERIAL  PRIMARY KEY NOT NULL,
+    DISCORD_ID          TEXT                NOT NULL,
+    NAME                TEXT                NOT NULL
+);
+
 -- Create required leaderboard tables
 CREATE TABLE IF NOT EXISTS LEADERBOARDS (
     ID                  SERIAL  PRIMARY KEY NOT NULL,
+    GUILD_ID            INT                 NOT NULL    REFERENCES GUILDS(ID),
     NAME                TEXT                NOT NULL
 );
 
