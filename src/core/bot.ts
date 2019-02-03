@@ -1,6 +1,7 @@
 import { Client, Message, TextChannel } from "discord.js";
 import { processMessage, isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
+import { init } from "./util/dataManager";
 
 let client: Client;
 
@@ -42,6 +43,7 @@ function onMessage(message: Message) {
 async function start() {
 	logger.info("Logging into Discord API...");
 	await client.login(process.env.APP_KEY);
+	await init();
 }
 
 async function printWelcomeMessage() {
