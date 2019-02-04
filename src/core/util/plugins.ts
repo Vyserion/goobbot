@@ -1,8 +1,9 @@
 import { Message } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, IPluginHandlerStrategy } from "../typings";
-import { LeaderboardHandler } from "../../plugins/leaderboards/handler";
 import { Plugins } from "../config";
+import { LeaderboardHandler } from "../../plugins/leaderboards/handler";
+import { MissingPluginHandler } from "../../plugins/missingPlugin/handler";
 
 export function isPluginMessage(message: string): boolean {
 	return message.startsWith(process.env.PREFIX) && message.length > 1;
@@ -21,6 +22,6 @@ function getPluginHandlerStrategy(command: TCommand): IPluginHandlerStrategy {
 			return new LeaderboardHandler(command);
 
 		default:
-			return;
+			return new MissingPluginHandler(command);
 	}
 }
