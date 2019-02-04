@@ -4,6 +4,7 @@ import { TCommand, IPluginHandlerStrategy } from "../typings";
 import { Plugins } from "../config";
 import { LeaderboardHandler } from "../../plugins/leaderboards/handler";
 import { MissingPluginHandler } from "../../plugins/missingPlugin/handler";
+import { ListsHandler } from "../../plugins/lists/handler";
 
 export function isPluginMessage(message: string): boolean {
 	return message.startsWith(process.env.PREFIX) && message.length > 1;
@@ -20,6 +21,9 @@ function getPluginHandlerStrategy(command: TCommand): IPluginHandlerStrategy {
 	switch (command.plugin) {
 		case Plugins.leaderboards:
 			return new LeaderboardHandler(command);
+
+		case Plugins.lists:
+			return new ListsHandler(command);
 
 		default:
 			return new MissingPluginHandler(command);
