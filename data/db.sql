@@ -32,3 +32,16 @@ CREATE TABLE IF NOT EXISTS LEADERBOARD_VALUES (
     VALUE               TEXT,
     UNIQUE(LEADERBOARD_COL_ID, LEADERBOARD_ROW_ID)
 );
+
+-- Create required lists tables
+CREATE TABLE IF NOT EXISTS LISTS (
+    ID                  SERIAL  PRIMARY KEY NOT NULL,
+    GUILD_ID            INT                 NOT NULL    REFERENCES GUILDS(ID),
+    NAME                TEXT                NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS LIST_VALUE (
+    ID                  SERIAL  PRIMARY KEY NOT NULL,
+    LIST_ID             INT                 NOT NULL    REFERENCES LISTS(ID),
+    VALUE               TEXT                NOT NULL
+);
