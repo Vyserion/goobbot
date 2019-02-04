@@ -58,6 +58,52 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
+		
+		it("should return only the leaderboard name if there is no content", async () => {
+			const leaderboardName = "My Leaderboard";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
+			const command: TCommand = {
+				plugin: "leaderboards",
+				action: Actions.getLeaderboard,
+				arguments: [leaderboardName],
+				originalMessage: originalMessage
+			};
+
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
+			const leaderboard: TLeaderboard = {
+				name: leaderboardName,
+				columns: [],
+				rows: [],
+				values: []
+			};
+			stub(Leaderboards, "getLeaderboard").resolves(leaderboard);
+			const columns: TColumn[] = [];
+			stub(Columns, "getColumns").resolves(columns);
+			const rows: TRow[] = [];
+			stub(Rows, "getRows").resolves(rows);
+			const values: TValue[] = [];
+			stub(Values, "getValues").resolves(values);
+
+			const actionHandler = new GetLeaderboardHandler(command);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `${leaderboardName} 
+
+This leaderboard has no content.`;
+			expect(result).to.equal(expectedResult);
+
+			(UtilDao.getGuild as SinonStub).restore();
+			(Leaderboards.getLeaderboard as SinonStub).restore();
+			(Columns.getColumns as SinonStub).restore();
+			(Rows.getRows as SinonStub).restore();
+			(Values.getValues as SinonStub).restore();
+		});
 
 		it("should return a leaderboard when successful", async () => {
 			const leaderboardName = "My Leaderboard";
@@ -114,8 +160,9 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 			const actionHandler = new GetLeaderboardHandler(command);
 			const result = await actionHandler.handleAction();
 			const consoleStr = "```";
-			const expectedResult = `${consoleStr}${leaderboardName} 
+			const expectedResult = `${leaderboardName} 
 
+${consoleStr}
 |       | A Column |
 | A Row | val      |
 ${consoleStr}`;

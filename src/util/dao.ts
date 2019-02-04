@@ -1,6 +1,5 @@
 import { TGuild } from "./typings/guilds";
 import { execQuery } from "../core/util/dataManager";
-import logger from "../core/util/logger";
 
 export namespace UtilDao {
     export async function getGuild(guildId: string): Promise<TGuild> {
@@ -8,7 +7,6 @@ export namespace UtilDao {
         const params = [ guildId ];
 
         const result: TGuild[] = await execQuery(query, params);
-        logger.info(`${result.length}`);
         if (result.length > 0) {
             return result[0];
         } else {

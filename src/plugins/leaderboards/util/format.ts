@@ -40,33 +40,43 @@ export function prettyPrintLeaderboard(leaderboard: TLeaderboard): string {
 	});
 
 	// 3. Build the output string
-	let output = codeMarker;
-	// 3.1 Add the name.
-	output += `${leaderboard.name} \n\n`;
-	leaderboard.rows.unshift({
-		name: "header placeholder"
-	});
-	leaderboard.rows.forEach((_, rowIndex) => {
-		columns.forEach((column, columnIndex) => {
-			// 3.2 Add the value.
-			const value = column[rowIndex];
+	let output = `${leaderboard.name} \n\n`;
 
-			let valueString = `| ${value}`;
-			// 3.3 Add spacers to make sure columns are the same width.
-			if (value.length < columnLengths[columnIndex]) {
-				const remainingSpace = columnLengths[columnIndex] - value.length;
-				new Array(remainingSpace).fill(spacer).forEach(space => {
-					valueString += space;
-				});
-			}
-			valueString += spacer;
+	if (leaderboard.rows.length === 0) {
+		output += "This leaderboard has no content.";
+	} else {
+		// 3.1 Add the name.
+		output += `${codeMarker}\n`;
 
-			output += valueString;
+		if (leaderboard.rows.length > 0) {
+			leaderboard.rows.unshift({
+				name: "header placeholder"
+			});
+		}
+
+		leaderboard.rows.forEach((_, rowIndex) => {
+			columns.forEach((column, columnIndex) => {
+				// 3.2 Add the value.
+				const value = column[rowIndex];
+
+				let valueString = `| ${value}`;
+				// 3.3 Add spacers to make sure columns are the same width.
+				if (value.length < columnLengths[columnIndex]) {
+					const remainingSpace = columnLengths[columnIndex] - value.length;
+					new Array(remainingSpace).fill(spacer).forEach(space => {
+						valueString += space;
+					});
+				}
+				valueString += spacer;
+
+				output += valueString;
+			});
+
+			output += `|\n`;
 		});
 
-		output += `|\n`;
-	});
-
-	output += codeMarker;
+		output += codeMarker;
+	}
+	
 	return output;
 }
