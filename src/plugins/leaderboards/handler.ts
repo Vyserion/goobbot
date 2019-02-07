@@ -75,7 +75,6 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
 	}
 
 	postMessage(originalMessage: Message, text: string) {
-		// TODO: Message embedding
 		originalMessage.channel.send(text);
 	}
 }
