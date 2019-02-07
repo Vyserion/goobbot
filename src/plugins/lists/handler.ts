@@ -1,4 +1,7 @@
 import { IPluginHandlerStrategy, TCommand } from "../../core/typings";
+import { IActionHandlerStrategy, Actions } from "./config/actions";
+import { CreateListHandler } from "./actions/createList";
+import { Message } from "discord.js";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -8,7 +11,23 @@ export class ListsHandler implements IPluginHandlerStrategy {
     }
 
     async handleMessage() {
-        const response = `lists module`;
-        this.command.originalMessage.channel.send(response);
+        const action: string = this.command.action ? this.command.action.toLowerCase() : "";
+        const actionHandler: IActionHandlerStrategy = this.getActionHandlerStrategy(action);
+        const text = await actionHandler.handleAction();
+        this.postMessage(this.command.originalMessage, text);
+    }
+
+    getActionHandlerStrategy(action: string): IActionHandlerStrategy {
+        switch (action) {
+            case Actions.createList:
+                return new CreateListHandler(this.command);
+
+            default:
+                return;
+        }
+    }
+
+    postMessage(originalMessage: Message, text: string) {
+        originalMessage.channel.send(text);
     }
 }
