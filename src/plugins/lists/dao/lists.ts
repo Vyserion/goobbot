@@ -2,12 +2,16 @@ import { TList } from "../typings/lists";
 import { execQuery } from "../../../core/util/dataManager";
 
 export namespace Lists { 
-    export async function getList(guildId: number, name: string): Promise<TList[]> {
+    export async function getList(guildId: number, name: string): Promise<TList> {
         const query = `SELECT id, name FROM lists WHERE guild_id = $1 AND name = $2`;
         const params = [ guildId, name ];
 
         const results = await execQuery(query, params);
-        return results;
+        if (results.length > 0) {
+            return results[0];
+        } else {
+            return null;
+        }
     }
 
     export async function createList(guildId: number, name: string): Promise<void> {
