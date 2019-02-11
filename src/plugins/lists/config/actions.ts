@@ -1,5 +1,6 @@
 export enum Actions {
-    createList = "new"
+    createList = "new",
+    renameList = "rename"
 }
 
 export interface IActionHandlerStrategy {
