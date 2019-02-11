@@ -20,4 +20,11 @@ export namespace Lists {
 
         await execQuery(query, params);
     }
+
+    export async function updateListName(guildId: number, name: string, newName: string): Promise<void> {
+        const query = `UPDATE lists SET name = ($1) WHERE name LIKE ($2) AND guild_id = $3`;
+        const params = [ newName, name, guildId ];
+
+        await execQuery(query, params);
+    }
 }

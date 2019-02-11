@@ -2,6 +2,7 @@ import { IPluginHandlerStrategy, TCommand } from "../../core/typings";
 import { IActionHandlerStrategy, Actions } from "./config/actions";
 import { CreateListHandler } from "./actions/createList";
 import { Message } from "discord.js";
+import { RenameListHandler } from "./actions/renameList";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -21,6 +22,9 @@ export class ListsHandler implements IPluginHandlerStrategy {
         switch (action) {
             case Actions.createList:
                 return new CreateListHandler(this.command);
+
+            case Actions.renameList:
+                return new RenameListHandler(this.command);
 
             default:
                 return;
