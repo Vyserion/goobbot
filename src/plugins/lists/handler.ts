@@ -3,6 +3,7 @@ import { IActionHandlerStrategy, Actions } from "./config/actions";
 import { CreateListHandler } from "./actions/createList";
 import { Message } from "discord.js";
 import { RenameListHandler } from "./actions/renameList";
+import { DeleteListHandler } from "./actions/deleteList";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -25,6 +26,9 @@ export class ListsHandler implements IPluginHandlerStrategy {
 
             case Actions.renameList:
                 return new RenameListHandler(this.command);
+
+            case Actions.deleteList:
+                return new DeleteListHandler(this.command);
 
             default:
                 return;
