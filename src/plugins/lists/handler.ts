@@ -4,6 +4,7 @@ import { CreateListHandler } from "./actions/createList";
 import { Message } from "discord.js";
 import { RenameListHandler } from "./actions/renameList";
 import { DeleteListHandler } from "./actions/deleteList";
+import { AddValueHandler } from "./actions/addValue";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -29,6 +30,9 @@ export class ListsHandler implements IPluginHandlerStrategy {
 
             case Actions.deleteList:
                 return new DeleteListHandler(this.command);
+
+            case Actions.addValue:
+                return new AddValueHandler(this.command);
 
             default:
                 return;
