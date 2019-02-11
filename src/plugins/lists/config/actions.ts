@@ -4,7 +4,9 @@ export enum Actions {
     deleteList = "delete",
 
     addValue = "add",
-    removeValue = "remove"
+    removeValue = "remove",
+
+    getList = "show"
 }
 
 export interface IActionHandlerStrategy {

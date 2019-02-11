@@ -2,7 +2,15 @@ import { execQuery } from "../../../core/util/dataManager";
 import { TValue } from "../typings/lists";
 
 export namespace Values {
-    export async function getValue(listId: number, value: string) : Promise<TValue> {
+    export async function getValues(listId: number): Promise<TValue[]> {
+        const query = `SELECT id, list_id, value FROM list_value WHERE list_id = $1`;
+        const params = [ listId ];
+
+        const result = await execQuery(query, params);
+        return result;
+    }
+
+    export async function getValue(listId: number, value: string): Promise<TValue> {
         const query = `SELECT id, list_id, value FROM list_value WHERE list_id = $1 AND value LIKE ($2)`;
         const params = [listId, value];
 
