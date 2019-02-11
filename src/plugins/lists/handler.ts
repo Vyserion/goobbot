@@ -2,10 +2,13 @@ import { IPluginHandlerStrategy, TCommand } from "../../core/typings";
 import { IActionHandlerStrategy, Actions } from "./config/actions";
 import { CreateListHandler } from "./actions/createList";
 import { Message } from "discord.js";
-import { RenameListHandler } from "./actions/renameList";
-import { DeleteListHandler } from "./actions/deleteList";
-import { AddValueHandler } from "./actions/addValue";
-import { RemoveValueHandler } from "./actions/removeValue";
+import { 
+    RenameListHandler,
+    DeleteListHandler,
+    AddValueHandler,
+    RemoveValueHandler
+ } from "./actions";
+import { GetListsHandler } from "./actions/getLists";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -39,7 +42,7 @@ export class ListsHandler implements IPluginHandlerStrategy {
                 return new RemoveValueHandler(this.command);
 
             default:
-                return;
+                return new GetListsHandler(this.command);
         }
     }
 
