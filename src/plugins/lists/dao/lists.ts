@@ -27,4 +27,11 @@ export namespace Lists {
 
         await execQuery(query, params);
     }
+
+    export async function deleteList(guildId: number, name: string): Promise<void> {
+        const query = `DELETE FROM lists WHERE guild_id = $1 AND name LIKE ($2)`;
+        const params = [ guildId, name ];
+
+        await execQuery(query, params);
+    }
 }
