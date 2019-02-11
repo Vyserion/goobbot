@@ -3,7 +3,8 @@ export enum Actions {
     renameList = "rename",
     deleteList = "delete",
 
-    addValue = "add"
+    addValue = "add",
+    removeValue = "remove"
 }
 
 export interface IActionHandlerStrategy {
