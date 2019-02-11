@@ -9,6 +9,7 @@ import {
     RemoveValueHandler
  } from "./actions";
 import { GetListsHandler } from "./actions/getLists";
+import { GetListHandler } from "./actions/getList";
 
 export class ListsHandler implements IPluginHandlerStrategy {
     private readonly command: TCommand
@@ -40,6 +41,9 @@ export class ListsHandler implements IPluginHandlerStrategy {
 
             case Actions.removeValue:
                 return new RemoveValueHandler(this.command);
+
+            case Actions.getList:
+                return new GetListHandler(this.command);
 
             default:
                 return new GetListsHandler(this.command);
