@@ -11,8 +11,8 @@ export namespace Leaderboards {
 	}
 
 	export async function getLeaderboard(name: string, guildId: number): Promise<TLeaderboard> {
-		const query = `SELECT * FROM leaderboards WHERE name = $1 AND guild_id = $2`;
-		const params = [ name, guildId ];
+		const query = `SELECT * FROM leaderboards WHERE guild_id = $1 AND name = $2`;
+		const params = [ guildId, name ];
 
 		const result: TLeaderboard[] = await execQuery(query, params);
 		if (result.length > 0) {
@@ -29,9 +29,9 @@ export namespace Leaderboards {
 		await execQuery(query, params);
 	}
 
-	export async function updateLeaderboard(name: string, newName: string): Promise<void> {
-		const query = `UPDATE leaderboards SET name = ($1) WHERE name LIKE ($2)`;
-		const params = [ newName, name ];
+	export async function updateLeaderboard(guildId: number, name: string, newName: string): Promise<void> {
+		const query = `UPDATE leaderboards SET name = ($1) WHERE guild_id = $2 AND name LIKE ($3)`;
+		const params = [ newName, guildId, name ];
 
 		await execQuery(query, params);
 	}

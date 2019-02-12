@@ -32,7 +32,7 @@ export class UpdateLeaderboardHandler implements IActionHandlerStrategy {
 			return `A leaderboard with the name ${newName} already exists.`;
 		}
 
-		await Leaderboards.updateLeaderboard(name, newName);
+		await Leaderboards.updateLeaderboard(guildId, name, newName);
 		logger.info(`Successfully updated leaderboard ${name} to ${newName}`);
 		return `Successfully updated leaderboard ${name}.`;
 	}
