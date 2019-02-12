@@ -154,8 +154,9 @@ describe("plugins/leaderboards/util/format", () => {
 
 			// Formatting here is important - it will add the tabs in.
 			const consoleStr = "```";
-			const expectedOutput = `${consoleStr}Test Leaderboard Name 
+			const expectedOutput = `Test Leaderboard Name 
 
+${consoleStr}
 |           | Column One | Column Two | Column Three |
 | Row One   | 4          | 7          | 3            |
 | Row Two   | 9          | 8          | 1            |

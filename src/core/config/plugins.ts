@@ -1,3 +1,4 @@
 export enum Plugins {
-	leaderboards = "leaderboards"
+	leaderboards = "leaderboards",
+	lists = "lists"
 }
