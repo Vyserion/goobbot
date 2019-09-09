@@ -28,7 +28,7 @@
     "dotenv": "^6.0.0",
     "erlpack": "github:discordapp/erlpack",
     "libsodium-wrappers": "^0.7.3",
-    "npm": "6.6.0-next.1",
+    "npm": "6.11.3",
     "pg": "^7.4.1",
     "rimraf": "^2.6.3",
     "uws": "99.0.0",
