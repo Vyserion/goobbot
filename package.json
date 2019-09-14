@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/Vyserion/vybot#readme",
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
     "bufferutil": "4.0.1",
     "discord.js": "11.5.1",
     "dotenv": "6.0.0",
