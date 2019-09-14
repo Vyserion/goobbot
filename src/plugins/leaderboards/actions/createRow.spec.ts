@@ -42,7 +42,6 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				originalMessage: originalMessage
 			};
 
-			
 			const guild: TGuild = {
 				discord_id: "1234",
 				name: "Test"

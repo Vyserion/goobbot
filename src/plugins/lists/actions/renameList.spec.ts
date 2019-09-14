@@ -12,129 +12,129 @@ import { Lists } from "../dao/lists";
 import { TList } from "../typings/lists";
 
 function getListStub(guildId: number, name: string): Promise<TList> {
-    const list: TList = {
-        guild_id: guildId,
-        name: name
-    };
+	const list: TList = {
+		guild_id: guildId,
+		name: name
+	};
 
-    return new Promise(resolve => {
-        if (name === "My List") {
-            resolve(list);
-        } else {
-            resolve(null);
-        }
-    });
+	return new Promise(resolve => {
+		if (name === "My List") {
+			resolve(list);
+		} else {
+			resolve(null);
+		}
+	});
 }
 
 describe("plugins/lists/actions/renameList", () => {
-    describe("handleAction()", () => {
-        it("should check for less than 2 arguments", async () => {
-            const command: TCommand = {
-                plugin: "lists",
-                action: Actions.renameList,
-                arguments: [],
-                originalMessage: null
-            };
+	describe("handleAction()", () => {
+		it("should check for less than 2 arguments", async () => {
+			const command: TCommand = {
+				plugin: "lists",
+				action: Actions.renameList,
+				arguments: [],
+				originalMessage: null
+			};
 
-            const actionHandler = new RenameListHandler(command);
-            const result = await actionHandler.handleAction();
-            const expectedResult = "No names were provided to rename the list";
-            expect(result).to.equal(expectedResult);
-        });
+			const actionHandler = new RenameListHandler(command);
+			const result = await actionHandler.handleAction();
+			const expectedResult = "No names were provided to rename the list";
+			expect(result).to.equal(expectedResult);
+		});
 
-        it("should return an error if a list does not exist", async () => {
-            const listName = "My List";
-            const newListName = "New List";
-            const originalMessage = mock(Message);
-            const mockedGuild = mock(Guild);
-            when(mockedGuild.id).thenReturn("1234");
-            when(originalMessage.guild).thenReturn(mockedGuild);
-            const command: TCommand = {
-                plugin: "lists",
-                action: Actions.renameList,
-                arguments: [ listName, newListName ],
-                originalMessage: originalMessage
-            };
+		it("should return an error if a list does not exist", async () => {
+			const listName = "My List";
+			const newListName = "New List";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
+			const command: TCommand = {
+				plugin: "lists",
+				action: Actions.renameList,
+				arguments: [listName, newListName],
+				originalMessage: originalMessage
+			};
 
-            const guild: TGuild = {
-                discord_id: "1234",
-                name: "Test"
-            };
-            stub(UtilDao, "getGuild").resolves(guild);
-            stub(Lists, "getList").resolves(null);
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
+			stub(Lists, "getList").resolves(null);
 
-            const actionHandler = new RenameListHandler(command);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `A list with the name ${listName} does not exist.`;
-            expect(result).to.equal(expectedResult);
+			const actionHandler = new RenameListHandler(command);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `A list with the name ${listName} does not exist.`;
+			expect(result).to.equal(expectedResult);
 
-            (UtilDao.getGuild as SinonStub).restore();
-            (Lists.getList as SinonStub).restore();
-        });
+			(UtilDao.getGuild as SinonStub).restore();
+			(Lists.getList as SinonStub).restore();
+		});
 
-        it("should return an error if a list with the same name is found", async () => {
-            const listName = "My List";
-            const newListName = "New List";
-            const originalMessage = mock(Message);
-            const mockedGuild = mock(Guild);
-            when(mockedGuild.id).thenReturn("1234");
-            when(originalMessage.guild).thenReturn(mockedGuild);
-            const command: TCommand = {
-                plugin: "lists",
-                action: Actions.renameList,
-                arguments: [ listName, newListName ],
-                originalMessage: originalMessage
-            };
+		it("should return an error if a list with the same name is found", async () => {
+			const listName = "My List";
+			const newListName = "New List";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
+			const command: TCommand = {
+				plugin: "lists",
+				action: Actions.renameList,
+				arguments: [listName, newListName],
+				originalMessage: originalMessage
+			};
 
-            const guild: TGuild = {
-                discord_id: "1234",
-                name: "Test"
-            };
-            stub(UtilDao, "getGuild").resolves(guild);
-            const list: TList = {
-                name: listName
-            };
-            stub(Lists, "getList").resolves(list);
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
+			const list: TList = {
+				name: listName
+			};
+			stub(Lists, "getList").resolves(list);
 
-            const actionHandler = new RenameListHandler(command);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `A list with the name ${newListName} already exists.`;
-            expect(result).to.equal(expectedResult);
+			const actionHandler = new RenameListHandler(command);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `A list with the name ${newListName} already exists.`;
+			expect(result).to.equal(expectedResult);
 
-            (UtilDao.getGuild as SinonStub).restore();
-            (Lists.getList as SinonStub).restore();
-        });
+			(UtilDao.getGuild as SinonStub).restore();
+			(Lists.getList as SinonStub).restore();
+		});
 
-        it("should return a success message when renaming the list", async () => {
-            const listName = "My List";
-            const newListName = "New List";
-            const originalMessage = mock(Message);
-            const mockedGuild = mock(Guild);
-            when(mockedGuild.id).thenReturn("1234");
-            when(originalMessage.guild).thenReturn(mockedGuild);
-            const command: TCommand = {
-                plugin: "lists",
-                action: Actions.renameList,
-                arguments: [ listName, newListName ],
-                originalMessage: originalMessage
-            };
+		it("should return a success message when renaming the list", async () => {
+			const listName = "My List";
+			const newListName = "New List";
+			const originalMessage = mock(Message);
+			const mockedGuild = mock(Guild);
+			when(mockedGuild.id).thenReturn("1234");
+			when(originalMessage.guild).thenReturn(mockedGuild);
+			const command: TCommand = {
+				plugin: "lists",
+				action: Actions.renameList,
+				arguments: [listName, newListName],
+				originalMessage: originalMessage
+			};
 
-            const guild: TGuild = {
-                discord_id: "1234",
-                name: "Test"
-            };
-            stub(UtilDao, "getGuild").resolves(guild);
-            stub(Lists, "getList").callsFake(getListStub);
-            stub(Lists, "updateListName");
+			const guild: TGuild = {
+				discord_id: "1234",
+				name: "Test"
+			};
+			stub(UtilDao, "getGuild").resolves(guild);
+			stub(Lists, "getList").callsFake(getListStub);
+			stub(Lists, "updateListName");
 
-            const actionHandler = new RenameListHandler(command);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `Successfully renamed ${listName} to ${newListName}.`;
-            expect(result).to.equal(expectedResult);
+			const actionHandler = new RenameListHandler(command);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `Successfully renamed ${listName} to ${newListName}.`;
+			expect(result).to.equal(expectedResult);
 
-            (UtilDao.getGuild as SinonStub).restore();
-            (Lists.getList as SinonStub).restore();
-            (Lists.updateListName as SinonStub).restore();
-        });
-    });
+			(UtilDao.getGuild as SinonStub).restore();
+			(Lists.getList as SinonStub).restore();
+			(Lists.updateListName as SinonStub).restore();
+		});
+	});
 });

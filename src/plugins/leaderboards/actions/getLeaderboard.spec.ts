@@ -58,7 +58,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 		});
-		
+
 		it("should return only the leaderboard name if there is no content", async () => {
 			const leaderboardName = "My Leaderboard";
 			const originalMessage = mock(Message);

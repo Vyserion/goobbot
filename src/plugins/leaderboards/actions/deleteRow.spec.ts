@@ -133,7 +133,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 			const result = await actionHandler.handleAction();
 			const expectedResult = `Successfully removed row ${rowName}.`;
 			expect(result).to.equal(expectedResult);
-			
+
 			(UtilDao.getGuild as SinonStub).restore();
 			(Leaderboards.getLeaderboard as SinonStub).restore();
 			(Rows.getRow as SinonStub).restore();

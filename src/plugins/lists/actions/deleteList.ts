@@ -6,28 +6,28 @@ import { Lists } from "../dao/lists";
 import logger from "../../../core/util/logger";
 
 export class DeleteListHandler implements IActionHandlerStrategy {
-    private readonly command: TCommand;
+	private readonly command: TCommand;
 
-    constructor(command: TCommand) {
-        this.command = command;
-    }
+	constructor(command: TCommand) {
+		this.command = command;
+	}
 
-    async handleAction(): Promise<string> {
-        if (this.command.arguments.length < 1) {
-            return "No names were provided for the list.";
-        }
+	async handleAction(): Promise<string> {
+		if (this.command.arguments.length < 1) {
+			return "No names were provided for the list.";
+		}
 
-        const guildId = await getGuildId(this.command.originalMessage.guild);
+		const guildId = await getGuildId(this.command.originalMessage.guild);
 
-        const name = this.command.arguments[0];
+		const name = this.command.arguments[0];
 
-        const exists = await listExists(name, guildId);
-        if (!exists) {
-            return `A list with the name ${name} does not exist.`;
-        }
+		const exists = await listExists(name, guildId);
+		if (!exists) {
+			return `A list with the name ${name} does not exist.`;
+		}
 
-        await Lists.deleteList(guildId, name);
-        logger.info(`Deleted list ${name}`);
-        return `Successfully delete list ${name}.`;
-    }
+		await Lists.deleteList(guildId, name);
+		logger.info(`Deleted list ${name}`);
+		return `Successfully delete list ${name}.`;
+	}
 }

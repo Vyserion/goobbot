@@ -47,7 +47,7 @@ async function start() {
 }
 
 async function printWelcomeMessage() {
-	logger.info('Printing welcome messages');
+	logger.info("Printing welcome messages");
 	client.guilds.forEach(guild => {
 		guild.channels.forEach(channel => {
 			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test

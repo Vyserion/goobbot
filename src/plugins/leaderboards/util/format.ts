@@ -77,6 +77,6 @@ export function prettyPrintLeaderboard(leaderboard: TLeaderboard): string {
 
 		output += codeMarker;
 	}
-	
+
 	return output;
 }
