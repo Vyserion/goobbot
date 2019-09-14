@@ -5,4 +5,15 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: echo "Hello World"
+      - run: 
+        name: update-npm
+        command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+        name: install
+        command: npm i
+      - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
