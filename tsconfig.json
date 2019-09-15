@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
-    "target": "ES6",
+    "esModuleInterop": true,
     "module": "commonjs",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "dist",
     "sourceMap": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "target": "ES6",
+    "skipLibCheck": true
   },
   "files": [
     "./node_modules/@types/node/index.d.ts"
