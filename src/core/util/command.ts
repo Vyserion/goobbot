@@ -1,6 +1,12 @@
 import { Message } from "discord.js";
 import { TCommand } from "../typings";
 
+/**
+ * Creates a command object from a provided message.
+ * @param message The discord message
+ * 
+ * @returns A formatted command object
+ */
 export function createCommand(message: Message): TCommand {
 	let input = stripPrefix(message.content);
 	let parts: string[] = input.split(" ");
@@ -23,10 +29,22 @@ export function createCommand(message: Message): TCommand {
 	return command;
 }
 
+/**
+ * Strips the prefix from a given string.
+ * @param message The content to strip the prefix from
+ * 
+ * @returns The stripped string
+ */
 function stripPrefix(message: string): string {
 	return message.substr(process.env.PREFIX.length);
 }
 
+/**
+ * Parses arguments and returns an array of arguments, depending if they are escaped or not.
+ * @param inputs An array of inputs
+ * 
+ * @returns An array of arguments
+ */
 function parseArguments(inputs: string[]): string[] {
 	let parsedArguments: string[] = [];
 
