@@ -8,10 +8,10 @@ import { execQuery } from "../util/dataManager";
  * @returns The guild if found, null otherwise
  */
 export async function getGuild(guildId: string): Promise<TGuild | null> {
-	const query = `SELECT * FROM guilds WHERE discord_id = $1`;
+	const query = `SELECT /* getGuild */ id, discord_id, name FROM guilds WHERE discord_id = $1`;
 	const params = [guildId];
 
-	const result: TGuild[] = await execQuery(query, params);
+	const result = await execQuery<TGuild>(query, params);
 	if (result.length > 0) {
 		return result[0];
 	} else {
@@ -27,7 +27,7 @@ export async function getGuild(guildId: string): Promise<TGuild | null> {
  * @returns the created guild
  */
 export async function createGuild(guildId: string, name: string): Promise<TGuild> {
-	const query = `INSERT INTO guilds(id, discord_id, name) VALUES (DEFAULT, $1, $2)`;
+	const query = `INSERT /* createGuild */ INTO guilds(id, discord_id, name) VALUES (DEFAULT, $1, $2)`;
 	const params = [guildId, name];
 
 	await execQuery(query, params);

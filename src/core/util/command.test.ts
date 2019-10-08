@@ -17,7 +17,7 @@ describe("core/util/command", () => {
 
 	describe("createCommand()", () => {
 
-		it("should map the plugin correctly.", () => {
+		it("should map the plugin correctly", () => {
 			const messageContent = createMockMessageContent(false, false);
 			const message = createMockMessage(messageContent);
 			const command = createCommand(message);
@@ -35,7 +35,7 @@ describe("core/util/command", () => {
 			expect(command.plugin).toEqual(PLUGIN_NAME);
 		});
 
-		it("should not map an action when one is not provided.", () => {
+		it("should not map an action when one is not provided", () => {
 			const messageContent = createMockMessageContent(false, false);
 			const message = createMockMessage(messageContent);
 			const command = createCommand(message);
@@ -44,7 +44,7 @@ describe("core/util/command", () => {
 			expect(command.action).toBeUndefined();
 		});
 
-		it("should map an action when one is provided.", () => {
+		it("should map an action when one is provided", () => {
 			const messageContent = createMockMessageContent(true, false);
 			const message = createMockMessage(messageContent);
 			const command = createCommand(message);
@@ -53,7 +53,7 @@ describe("core/util/command", () => {
 			expect(command.action).toEqual(ACTION);
 		});
 
-		it("should map no arguments when none are provided.", () => {
+		it("should map no arguments when none are provided", () => {
 			const messageContent = createMockMessageContent(true, true);
 
 			const message = createMockMessage(messageContent);
@@ -64,7 +64,7 @@ describe("core/util/command", () => {
 			expect(command.arguments).toHaveLength(0);
 		});
 
-		it("should map a single argument when one is provided.", () => {
+		it("should map a single argument when one is provided", () => {
 			const expectedArgument = "argumentOne";
 			const messageContent = createMockMessageContent(true, true, [expectedArgument]);
 
@@ -93,7 +93,7 @@ describe("core/util/command", () => {
 			expect(argument).toEqual(expectedArgument);
 		});
 
-		it("should map multiple arguments when multiple are provided.", () => {
+		it("should map multiple arguments when multiple are provided", () => {
 			const expectedFirstArgument = "argumentOne";
 			const expectedSecondArgument = "argumentTwo";
 			const messageContent = createMockMessageContent(true, true, [expectedFirstArgument, expectedSecondArgument]);
