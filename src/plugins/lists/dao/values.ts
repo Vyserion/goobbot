@@ -6,7 +6,7 @@ export namespace Values {
 		const query = `SELECT id, list_id, value FROM list_value WHERE list_id = $1`;
 		const params = [listId];
 
-		const result = await execQuery(query, params);
+		const result = await execQuery<TValue>(query, params);
 		return result;
 	}
 
@@ -14,7 +14,7 @@ export namespace Values {
 		const query = `SELECT id, list_id, value FROM list_value WHERE list_id = $1 AND value LIKE ($2)`;
 		const params = [listId, value];
 
-		const results = await execQuery(query, params);
+		const results = await execQuery<TValue>(query, params);
 		if (results.length > 0) {
 			return results[0];
 		} else {
