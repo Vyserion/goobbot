@@ -6,7 +6,7 @@ export namespace Lists {
 		const query = `SELECT id, guild_id, name FROM lists WHERE guild_id = $1`;
 		const params = [guildId];
 
-		const results = await execQuery(query, params);
+		const results = await execQuery<TList>(query, params);
 		return results;
 	}
 
@@ -14,7 +14,7 @@ export namespace Lists {
 		const query = `SELECT id, name FROM lists WHERE guild_id = $1 AND name = $2`;
 		const params = [guildId, name];
 
-		const results = await execQuery(query, params);
+		const results = await execQuery<TList>(query, params);
 		if (results.length > 0) {
 			return results[0];
 		} else {
