@@ -8,8 +8,8 @@
     "build:watch": "npm run clean && tsc --watch",
     "clean": "rimraf ./dist",
     "start": "node ./dist/app.js",
-    "test": "jest",
-    "test:watch": "jest -w",
+    "test": "jest --silent",
+    "test:watch": "jest -w --silent",
     "tidy": "npm run clean && prettier --write **/*.ts app.ts && npm run build"
   },
   "repository": {
@@ -46,5 +46,8 @@
     "sinon": "7.2.3",
     "ts-jest": "24.1.0",
     "typescript": "3.6.3"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>src/test/jest-config.js"
   }
 }

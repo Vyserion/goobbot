@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
-import { Lists } from "../dao/lists";
-import { Values } from "../dao/values";
+import { getGuildId } from "../../../core/guilds/guilds";
+import { getList } from "../dao/lists";
+import { addValue } from "../dao/values";
 import logger from "../../../core/util/logger";
 
 export class AddValueHandler implements IActionHandlerStrategy {
@@ -21,14 +21,14 @@ export class AddValueHandler implements IActionHandlerStrategy {
 
 		const listName = this.command.arguments[0];
 
-		const list = await Lists.getList(guildId, listName);
+		const list = await getList(guildId, listName);
 		if (!list) {
 			return `A list with the name ${listName} does not exist.`;
 		}
 
 		const value = this.command.arguments[1];
 
-		await Values.addValue(list.id, value);
+		await addValue(list.id, value);
 		logger.info(`Added new value ${value} to list ${listName}`);
 		return `Successfully added value ${value}.`;
 	}

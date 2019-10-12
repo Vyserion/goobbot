@@ -7,10 +7,13 @@ const vybotLogFormat = printf(info => {
 
 const logLevel = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : "info";
 
+const consoleTransport = new transports.Console();
+consoleTransport.silent = process.env.NODE_ENV === 'test';
+
 const logger = createLogger({
 	format: combine(timestamp(), vybotLogFormat),
 	level: logLevel,
-	transports: [new transports.Console()]
+	transports: [consoleTransport]
 });
 
 logger.debug("Logging set to " + logLevel);
