@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 import { listExists } from "../utils/validators";
-import { Lists } from "../dao/lists";
+import { updateListName } from "../dao/lists";
 import logger from "../../../core/util/logger";
 
 export class RenameListHandler implements IActionHandlerStrategy {
@@ -31,7 +31,7 @@ export class RenameListHandler implements IActionHandlerStrategy {
 			return `A list with the name ${newName} already exists.`;
 		}
 
-		await Lists.updateListName(guildId, name, newName);
+		await updateListName(guildId, name, newName);
 		logger.info(`Renamed list ${name} to ${newName}.`);
 		return `Successfully renamed ${name} to ${newName}.`;
 	}

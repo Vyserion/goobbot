@@ -1,7 +1,7 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
-import { Lists } from "../dao/lists";
+import { getGuildId } from "../../../core/guilds/guilds";
+import { getLists } from "../dao/lists";
 
 export class GetListsHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -12,7 +12,7 @@ export class GetListsHandler implements IActionHandlerStrategy {
 
 	async handleAction(): Promise<string> {
 		const guildId = await getGuildId(this.command.originalMessage.guild);
-		const lists = await Lists.getLists(guildId);
+		const lists = await getLists(guildId);
 
 		if (lists.length === 0) {
 			return `There are currently no lists`;

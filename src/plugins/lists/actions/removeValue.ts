@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
-import { Lists } from "../dao/lists";
-import { Values } from "../dao/values";
+import { getGuildId } from "../../../core/guilds/guilds";
+import { getList } from "../dao/lists";
+import { getValue, removeValue } from "../dao/values";
 import logger from "../../../core/util/logger";
 
 export class RemoveValueHandler implements IActionHandlerStrategy {
@@ -21,18 +21,18 @@ export class RemoveValueHandler implements IActionHandlerStrategy {
 
 		const listName = this.command.arguments[0];
 
-		const list = await Lists.getList(guildId, listName);
+		const list = await getList(guildId, listName);
 		if (!list) {
 			return `A list with the name ${listName} does not exist.`;
 		}
 
 		const valueText = this.command.arguments[1];
-		const value = await Values.getValue(list.id, valueText);
+		const value = await getValue(list.id, valueText);
 		if (!value) {
 			return `A value ${valueText} for list ${listName} does not exist.`;
 		}
 
-		await Values.removeValue(list.id, value.id);
+		await removeValue(list.id, value.id);
 		logger.info(`Successfully removed value ${valueText} from ${listName}`);
 		return `Successfully removed value ${valueText} from ${listName}.`;
 	}

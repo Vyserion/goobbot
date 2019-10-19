@@ -9,6 +9,7 @@
     "clean": "rimraf ./dist",
     "start": "node ./dist/app.js",
     "test": "jest --silent",
+    "test:log": "jest",
     "test:watch": "jest -w --silent",
     "tidy": "npm run clean && prettier --write **/*.ts app.ts && npm run build"
   },
