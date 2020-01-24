@@ -6,27 +6,6 @@ import * as Guilds from "../../../core/guilds/guilds";
 import * as Lists from "../dao/lists";
 import { TList } from "../typings/lists";
 
-// import { Guild, Message } from "discord.js";
-// import { TGuild } from "../../../util/typings/guilds";
-// import { UtilDao } from "../../../util/dao";
-// import { Lists } from "../dao/lists";
-// import { TList } from "../typings/lists";
-
-// function getListStub(guildId: number, name: string): Promise<TList> {
-// 	const list: TList = {
-// 		guild_id: guildId,
-// 		name: name
-// 	};
-
-// 	return new Promise(resolve => {
-// 		if (name === "My List") {
-// 			resolve(list);
-// 		} else {
-// 			resolve(null);
-// 		}
-// 	});
-// }
-
 describe("plugins/lists/actions/renameList", () => {
 
 	describe("handleAction()", () => {
