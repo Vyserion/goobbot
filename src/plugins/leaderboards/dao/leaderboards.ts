@@ -8,7 +8,7 @@ import { execQuery } from "../../../core/util/dataManager";
  * 
  * @returns The leaderboard, if one is found, or null otherwise
  */
-export async function getLeaderboard(name: string, guildId: number): Promise<TLeaderboard> {
+export async function getLeaderboard(name: string, guildId: number): Promise<TLeaderboard | null> {
 	const query = `SELECT * FROM leaderboards WHERE guild_id = $1 AND name = $2`;
 	const params = [guildId, name];
 
