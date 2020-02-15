@@ -1,7 +1,7 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
-import { Leaderboards } from "../dao/leaderboards";
-import { getGuildId } from "../../../util/guilds";
+import { getLeaderboards } from "../dao/leaderboards";
+import { getGuildId } from "../../../core/guilds/guilds";
 
 export class GetLeaderboardsHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -12,7 +12,7 @@ export class GetLeaderboardsHandler implements IActionHandlerStrategy {
 
 	async handleAction(): Promise<string> {
 		const guildId = await getGuildId(this.command.originalMessage.guild);
-		const leaderboards = await Leaderboards.getLeaderboards(guildId);
+		const leaderboards = await getLeaderboards(guildId);
 
 		if (leaderboards.length === 0) {
 			return `There are currently no leaderboards`;

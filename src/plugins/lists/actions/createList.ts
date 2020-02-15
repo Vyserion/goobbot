@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 import { listExists } from "../utils/validators";
-import { Lists } from "../dao/lists";
+import { createList } from "../dao/lists";
 import logger from "../../../core/util/logger";
 
 export class CreateListHandler implements IActionHandlerStrategy {
@@ -26,7 +26,7 @@ export class CreateListHandler implements IActionHandlerStrategy {
 			return `A list with the name ${name} already exists.`;
 		}
 
-		await Lists.createList(guildId, name);
+		await createList(guildId, name);
 		logger.info(`Created new list ${name}`);
 		return `Successfully created list ${name}`;
 	}

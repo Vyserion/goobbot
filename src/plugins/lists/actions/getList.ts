@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
-import { Lists } from "../dao/lists";
-import { Values } from "../dao/values";
+import { getGuildId } from "../../../core/guilds/guilds";
+import { getList } from "../dao/lists";
+import { getValues } from "../dao/values";
 import { prettyPrintList } from "../utils/format";
 
 export class GetListHandler implements IActionHandlerStrategy {
@@ -21,12 +21,12 @@ export class GetListHandler implements IActionHandlerStrategy {
 
 		const name = this.command.arguments[0];
 
-		let list = await Lists.getList(guildId, name);
+		let list = await getList(guildId, name);
 		if (!list) {
 			return `A list with the name ${name} does not exist.`;
 		}
 
-		const values = await Values.getValues(list.id);
+		const values = await getValues(list.id);
 		list.values = values;
 
 		return prettyPrintList(list);

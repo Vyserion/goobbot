@@ -1,10 +1,10 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, rowExists } from "../util/validators";
-import { Leaderboards } from "../dao/leaderboards";
-import { Rows } from "../dao/rows";
+import { getLeaderboard } from "../dao/leaderboards";
+import { createRow } from "../dao/rows";
 import logger from "../../../core/util/logger";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 
 export class CreateRowHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -21,7 +21,7 @@ export class CreateRowHandler implements IActionHandlerStrategy {
 
 		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
+		const leaderboard = await getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
@@ -32,7 +32,7 @@ export class CreateRowHandler implements IActionHandlerStrategy {
 			return `A row with the name ${rowName} already exists for leaderboard ${leaderboardName}.`;
 		}
 
-		await Rows.createRow(rowName, leaderboard.id);
+		await createRow(rowName, leaderboard.id);
 		logger.info(`Successfully created column ${rowName} in leaderboard ${leaderboardName}`);
 		return `Sucessfully created leaderboard row ${rowName}.`;
 	}

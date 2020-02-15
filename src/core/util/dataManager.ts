@@ -4,6 +4,9 @@ import logger from "./logger";
 const port: number = (process.env.POSTGRES_PORT as any) as number;
 let pool;
 
+/**
+ * Initialises the database connection pool.
+ */
 export async function init() {
 	pool = new Pool({
 		user: process.env.POSTGRES_USER,
@@ -21,16 +24,32 @@ export async function init() {
 	logger.info("Database connection successful");
 }
 
-export async function execQuery(query: string, params?: any[]) {
+/**
+ * Performs a single query against the database connection pool.
+ * @param query The query to execute
+ * @param params The parameters for the query
+ * 
+ * @returns The rows of the query response
+ */
+export async function execQuery<R extends {}>(query: string, params?: any[]): Promise<R[]> {
 	logger.debug("Running query:");
 	logger.debug(query);
 
-	const results = await doQuery(query, params);
+	const results = await doQuery<R>(query, params);
 	return results.rows;
 }
 
-async function doQuery(query: string, params?: any[]): Promise<QueryResult> {
-	let results: QueryResult;
+/**
+ * Performs a single query against the database connection pool.
+ * Contains the raw connection logic.
+ * 
+ * @param query The query to execute
+ * @param params The parameters for the query
+ * 
+ * @returns The QueryResult
+ */
+async function doQuery<R extends {}>(query: string, params?: any[]): Promise<QueryResult<R>> {
+	let results: QueryResult<R>;
 
 	try {
 		if (params) {

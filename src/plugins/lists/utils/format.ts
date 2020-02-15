@@ -1,5 +1,11 @@
 import { TList } from "../typings/lists";
 
+/**
+ * Converts a list into a pretty printed string.
+ * @param list The list to convert
+ * 
+ * @returns The list in string form
+ */
 export function prettyPrintList(list: TList): string {
 	let output = `${list.name} \n\n`;
 

@@ -1,8 +1,8 @@
 import { IActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 import { listExists } from "../utils/validators";
-import { Lists } from "../dao/lists";
+import { deleteList } from "../dao/lists";
 import logger from "../../../core/util/logger";
 
 export class DeleteListHandler implements IActionHandlerStrategy {
@@ -26,7 +26,7 @@ export class DeleteListHandler implements IActionHandlerStrategy {
 			return `A list with the name ${name} does not exist.`;
 		}
 
-		await Lists.deleteList(guildId, name);
+		await deleteList(guildId, name);
 		logger.info(`Deleted list ${name}`);
 		return `Successfully delete list ${name}.`;
 	}
