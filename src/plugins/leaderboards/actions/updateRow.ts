@@ -1,10 +1,10 @@
 import { IActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, rowExists } from "../util/validators";
-import { Leaderboards } from "../dao/leaderboards";
-import { Rows } from "../dao/rows";
+import { getLeaderboard } from "../dao/leaderboards";
+import { getRow, updateRowName } from "../dao/rows";
 import logger from "../../../core/util/logger";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 
 export class UpdateRowHandler implements IActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -21,13 +21,13 @@ export class UpdateRowHandler implements IActionHandlerStrategy {
 
 		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
+		const leaderboard = await getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
 
 		const rowName = this.command.arguments[1];
-		const row = await Rows.getRow(rowName, leaderboard.id);
+		const row = await getRow(rowName, leaderboard.id);
 		if (!row) {
 			return `A row with the name ${rowName} for leaderboard ${leaderboardName} was not found.`;
 		}
@@ -38,7 +38,7 @@ export class UpdateRowHandler implements IActionHandlerStrategy {
 			return `A row with the name ${newName} for leaderboard ${leaderboardName} already exists.`;
 		}
 
-		await Rows.updateRowName(row.id, newName);
+		await updateRowName(row.id, newName);
 		logger.info(`Successfully updated row ${rowName} to ${newName}`);
 		return `Successfully updated row ${rowName}.`;
 	}

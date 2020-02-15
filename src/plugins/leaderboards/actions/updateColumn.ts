@@ -1,10 +1,10 @@
 import { IActionHandlerStrategy, ColumnTypes } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, columnExists } from "../util/validators";
-import { Leaderboards } from "../dao/leaderboards";
-import { Columns } from "../dao/columns";
+import { getLeaderboard } from "../dao/leaderboards";
+import { getColumn, updateColumnName, updateColumnType } from "../dao/columns";
 import { TColumn, TLeaderboard } from "../typings";
-import { getGuildId } from "../../../util/guilds";
+import { getGuildId } from "../../../core/guilds/guilds";
 import logger from "../../../core/util/logger";
 
 export enum UpdateActions {
@@ -27,13 +27,13 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 
 		const guildId = await getGuildId(this.command.originalMessage.guild);
 		const leaderboardName = this.command.arguments[0];
-		const leaderboard = await Leaderboards.getLeaderboard(leaderboardName, guildId);
+		const leaderboard = await getLeaderboard(leaderboardName, guildId);
 		if (!leaderboard) {
 			return `A leaderboard with the name ${leaderboardName} was not found.`;
 		}
 
 		const columnName = this.command.arguments[1];
-		const column = await Columns.getColumn(columnName, leaderboard.id);
+		const column = await getColumn(columnName, leaderboard.id);
 		if (!column) {
 			return `A column with the name ${columnName} for leaderboard ${leaderboardName} was not found.`;
 		}
@@ -59,7 +59,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 			return `A column with the name ${newName} already exists for leaderboard ${leaderboard.name}`;
 		}
 
-		await Columns.updateColumnName(newName, column.id, leaderboard.id);
+		await updateColumnName(newName, column.id, leaderboard.id);
 		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name} to ${newName}`;
 	}
@@ -71,7 +71,7 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 			return `The column type ${newType} is invalid.`;
 		}
 
-		await Columns.updateColumnType(validColumnType, column.id, leaderboard.id);
+		await updateColumnType(validColumnType, column.id, leaderboard.id);
 		logger.info(`Successfully updated leaderboard column ${column.name}`);
 		return `Successfully changed column ${column.name}'s type to ${newType}`;
 	}

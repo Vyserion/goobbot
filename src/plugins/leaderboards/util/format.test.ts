@@ -1,5 +1,3 @@
-import "mocha";
-import { expect } from "chai";
 import { TLeaderboard, TColumn, TRow, TValue } from "../typings";
 import { prettyPrintLeaderboard } from "./format";
 import { ColumnTypes } from "../config";
@@ -167,7 +165,7 @@ ${consoleStr}`;
 
 			const output = prettyPrintLeaderboard(input);
 
-			expect(output).to.equal(expectedOutput);
+			expect(output).toEqual(expectedOutput);
 		});
 	});
 });
