@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy, ColumnTypes } from "../config";
+import { ActionHandlerStrategy, ColumnTypes } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, columnExists } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -6,7 +6,7 @@ import { createColumn } from "../dao/columns";
 import logger from "../../../core/util/logger";
 import { getGuildId } from "../../../core/guilds/guilds";
 
-export class CreateColumnHandler implements IActionHandlerStrategy {
+export class CreateColumnHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {
@@ -18,9 +18,8 @@ export class CreateColumnHandler implements IActionHandlerStrategy {
 		if (!correctArguments) {
 			if (this.command.arguments.length < 3) {
 				return "No leaderboard or column name was provided.";
-			} else {
-				return "Too many arguments provided.";
 			}
+			return "Too many arguments provided.";
 		}
 
 		const guildId = await getGuildId(this.command.originalMessage.guild);

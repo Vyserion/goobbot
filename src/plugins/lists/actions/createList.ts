@@ -1,11 +1,11 @@
-import { IActionHandlerStrategy } from "../config/actions";
+import { ActionHandlerStrategy } from "../config/actions";
 import { TCommand } from "../../../core/typings";
 import { getGuildId } from "../../../core/guilds/guilds";
 import { listExists } from "../utils/validators";
 import { createList } from "../dao/lists";
 import logger from "../../../core/util/logger";
 
-export class CreateListHandler implements IActionHandlerStrategy {
+export class CreateListHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

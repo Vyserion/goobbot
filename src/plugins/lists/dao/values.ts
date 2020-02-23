@@ -4,7 +4,7 @@ import { TValue } from "../typings/lists";
 /**
  * Gets a list of values for the given list.
  * @param listId The list to get the values of
- * 
+ *
  * @returns The list of values
  */
 export async function getValues(listId: number): Promise<TValue[]> {
@@ -19,7 +19,7 @@ export async function getValues(listId: number): Promise<TValue[]> {
  * Gets a single value from a given list, if it exists.
  * @param listId The list to check the value for
  * @param value The value to check
- * 
+ *
  * @returns The value if found, null otherwise
  */
 export async function getValue(listId: number, value: string): Promise<TValue> {
@@ -29,9 +29,8 @@ export async function getValue(listId: number, value: string): Promise<TValue> {
 	const results = await execQuery<TValue>(query, params);
 	if (results.length > 0) {
 		return results[0];
-	} else {
-		return null;
 	}
+	return null;
 }
 
 /**

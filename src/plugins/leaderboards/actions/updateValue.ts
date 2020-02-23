@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy } from "../config";
+import { ActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -8,7 +8,7 @@ import { upsertValue } from "../dao/values";
 import logger from "../../../core/util/logger";
 import { getGuildId } from "../../../core/guilds/guilds";
 
-export class UpdateValueHandler implements IActionHandlerStrategy {
+export class UpdateValueHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

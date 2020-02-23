@@ -19,11 +19,11 @@ export function prettyPrintLeaderboard(leaderboard: TLeaderboard): string {
 		strings.push(column.name);
 
 		leaderboard.rows.forEach(row => {
-			for (const val of leaderboard.values) {
+			leaderboard.values.forEach(val => {
 				if (val.rowid === row.id && val.columnid === column.id) {
 					strings.push(val.value);
 				}
-			}
+			});
 		});
 
 		columns.push(strings);

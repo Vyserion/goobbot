@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy } from "../config";
+import { ActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, rowExists } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -6,7 +6,7 @@ import { createRow } from "../dao/rows";
 import logger from "../../../core/util/logger";
 import { getGuildId } from "../../../core/guilds/guilds";
 
-export class CreateRowHandler implements IActionHandlerStrategy {
+export class CreateRowHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

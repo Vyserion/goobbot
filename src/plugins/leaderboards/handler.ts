@@ -1,5 +1,5 @@
-import { IPluginHandlerStrategy, TCommand } from "../../core/typings";
-import { Actions, IActionHandlerStrategy } from "./config";
+import { PluginHandlerStrategy, TCommand } from "../../core/typings";
+import { Actions, ActionHandlerStrategy } from "./config";
 import {
 	CreateLeaderboardHandler,
 	UpdateLeaderboardHandler,
@@ -15,23 +15,22 @@ import {
 	HelpHandler,
 	GetLeaderboardsHandler
 } from "./actions";
-import { Message } from "discord.js";
 
-export class LeaderboardHandler implements IPluginHandlerStrategy {
+export class LeaderboardHandler implements PluginHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {
 		this.command = command;
 	}
 
-	async handleMessage() {
+	async handleMessage(): Promise<void> {
 		const action: string = this.command.action ? this.command.action.toLowerCase() : "";
-		const actionHandler: IActionHandlerStrategy = this.getActionHandlerStrategy(action);
+		const actionHandler: ActionHandlerStrategy = this.getActionHandlerStrategy(action);
 		const text = await actionHandler.handleAction();
-		this.postMessage(this.command.originalMessage, text);
+		this.postMessage(text);
 	}
 
-	getActionHandlerStrategy(action: string): IActionHandlerStrategy {
+	getActionHandlerStrategy(action: string): ActionHandlerStrategy {
 		switch (action) {
 			case Actions.getLeaderboard:
 				return new GetLeaderboardHandler(this.command);
@@ -74,7 +73,7 @@ export class LeaderboardHandler implements IPluginHandlerStrategy {
 		}
 	}
 
-	postMessage(originalMessage: Message, text: string) {
-		originalMessage.channel.send(text);
+	postMessage(text: string): void {
+		this.command.originalMessage.channel.send(text);
 	}
 }

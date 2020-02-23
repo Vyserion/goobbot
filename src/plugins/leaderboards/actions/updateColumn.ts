@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy, ColumnTypes } from "../config";
+import { ActionHandlerStrategy, ColumnTypes } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, columnExists } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -12,7 +12,7 @@ export enum UpdateActions {
 	TYPE = "TYPE"
 }
 
-export class UpdateColumnHandler implements IActionHandlerStrategy {
+export class UpdateColumnHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {
@@ -45,10 +45,9 @@ export class UpdateColumnHandler implements IActionHandlerStrategy {
 		}
 
 		if (validAction === UpdateActions.NAME) {
-			return await this.changeName(column, leaderboard);
-		} else {
-			return await this.changeType(column, leaderboard);
+			return this.changeName(column, leaderboard);
 		}
+		return this.changeType(column, leaderboard);
 	}
 
 	async changeName(column: TColumn, leaderboard: TLeaderboard): Promise<string> {

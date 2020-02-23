@@ -7,90 +7,88 @@ import { TLeaderboard } from "../typings";
 import { createMockedMessage } from "../../../test";
 
 describe("plugin/leaderboards/actions/getLeaderboards", () => {
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
 
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
+	describe("handleAction()", () => {
+		it("should return an error if there are no leaderboards", async () => {
+			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
+			jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve([]));
 
-    describe("handleAction()", () => {
+			const mockedMessage = createMockedMessage();
+			const mockCommand: TCommand = {
+				plugin: "leaderboards",
+				action: Actions.getLeaderboard,
+				arguments: [],
+				originalMessage: mockedMessage
+			};
 
-        it("should return an error if there are no leaderboards", async () => {
-            jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
-            jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve([]));
+			const actionHandler = new GetLeaderboardsHandler(mockCommand);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `There are currently no leaderboards`;
+			expect(result).toEqual(expectedResult);
+		});
 
-            const mockedMessage = createMockedMessage();
-            const mockCommand: TCommand = {
-                plugin: "leaderboards",
-                action: Actions.getLeaderboard,
-                arguments: [],
-                originalMessage: mockedMessage
-            };
+		it("should return a leaderboard if one is found", async () => {
+			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
+			const leaderboardName = "Test leaderboard";
+			const mockLeaderboards: TLeaderboard[] = [
+				{
+					name: leaderboardName,
+					columns: [],
+					rows: [],
+					values: []
+				}
+			];
+			jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve(mockLeaderboards));
 
-            const actionHandler = new GetLeaderboardsHandler(mockCommand);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `There are currently no leaderboards`;
-            expect(result).toEqual(expectedResult);
-        });
-        
-        it("should return a leaderboard if one is found", async () => {
-            jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
-            const leaderboardName = "Test leaderboard";
-            const mockLeaderboards: TLeaderboard[] =  [
-                {
-                    name: leaderboardName,
-                    columns: [],
-                    rows: [],
-                    values: []
-                }
-            ];
-            jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve(mockLeaderboards));
-        
-            const mockedMessage = createMockedMessage();
-            const mockCommand: TCommand = {
-                plugin: "leaderboards",
-                action: Actions.getLeaderboard,
-                arguments: [],
-                originalMessage: mockedMessage
-            };
+			const mockedMessage = createMockedMessage();
+			const mockCommand: TCommand = {
+				plugin: "leaderboards",
+				action: Actions.getLeaderboard,
+				arguments: [],
+				originalMessage: mockedMessage
+			};
 
-            const actionHandler = new GetLeaderboardsHandler(mockCommand);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `${leaderboardName}\n`;
-            expect(result).toEqual(expectedResult);
-        });
+			const actionHandler = new GetLeaderboardsHandler(mockCommand);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `${leaderboardName}\n`;
+			expect(result).toEqual(expectedResult);
+		});
 
-        it("should return all leaderboards if some are found", async () => {
-            jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
-            const leaderboardName = "Test leaderboard";
-            const secondLeaderboardName = "Second Test";
-            const mockLeaderboards: TLeaderboard[] =  [
-                {
-                    name: leaderboardName,
-                    columns: [],
-                    rows: [],
-                    values: []
-                },
-                {
-                    name: secondLeaderboardName,
-                    columns: [],
-                    rows: [],
-                    values: []
-                }
-            ];
-            jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve(mockLeaderboards));
-        
-            const mockedMessage = createMockedMessage();
-            const mockCommand: TCommand = {
-                plugin: "leaderboards",
-                action: Actions.getLeaderboard,
-                arguments: [],
-                originalMessage: mockedMessage
-            };
+		it("should return all leaderboards if some are found", async () => {
+			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
+			const leaderboardName = "Test leaderboard";
+			const secondLeaderboardName = "Second Test";
+			const mockLeaderboards: TLeaderboard[] = [
+				{
+					name: leaderboardName,
+					columns: [],
+					rows: [],
+					values: []
+				},
+				{
+					name: secondLeaderboardName,
+					columns: [],
+					rows: [],
+					values: []
+				}
+			];
+			jest.spyOn(Leaderboards, "getLeaderboards").mockReturnValueOnce(Promise.resolve(mockLeaderboards));
 
-            const actionHandler = new GetLeaderboardsHandler(mockCommand);
-            const result = await actionHandler.handleAction();
-            const expectedResult = `${leaderboardName}\n${secondLeaderboardName}\n`;
-            expect(result).toEqual(expectedResult);
-        });
-    });
+			const mockedMessage = createMockedMessage();
+			const mockCommand: TCommand = {
+				plugin: "leaderboards",
+				action: Actions.getLeaderboard,
+				arguments: [],
+				originalMessage: mockedMessage
+			};
+
+			const actionHandler = new GetLeaderboardsHandler(mockCommand);
+			const result = await actionHandler.handleAction();
+			const expectedResult = `${leaderboardName}\n${secondLeaderboardName}\n`;
+			expect(result).toEqual(expectedResult);
+		});
+	});
 });

@@ -5,7 +5,7 @@ import { TColumn } from "../typings";
  * Retrieves a single column for a leaderboard.
  * @param columnName The name of the column
  * @param leaderboardId The leaderboard id
- * 
+ *
  * @returns The column if found, null otherwise
  */
 export async function getColumn(columnName: string, leaderboardId: number): Promise<TColumn | null> {
@@ -15,15 +15,14 @@ export async function getColumn(columnName: string, leaderboardId: number): Prom
 	const result: TColumn[] = await execQuery(query, params);
 	if (result.length > 0) {
 		return result[0];
-	} else {
-		return null;
 	}
+	return null;
 }
 
 /**
  * Retrieves the full list of columns for a given leaderboard.
  * @param leaderboardId The leaderboard id
- * 
+ *
  * @returns An array of columns for the leaderboard
  */
 export async function getColumns(leaderboardId: number): Promise<TColumn[]> {

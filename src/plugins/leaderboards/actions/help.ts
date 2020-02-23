@@ -1,5 +1,5 @@
 import {
-	IActionHandlerStrategy,
+	ActionHandlerStrategy,
 	Actions,
 	createLeaderboardMessage,
 	updateLeaderboardMessage,
@@ -12,12 +12,12 @@ import {
 	deleteRowMessage,
 	getLeaderboardMessage,
 	getLeaderboardsMessage,
-	upsertValueMessage
+	upsertValueMessage,
+	showCommandMessage
 } from "../config";
 import { TCommand } from "../../../core/typings";
-import { showCommandMessage } from "../config";
 
-export class HelpHandler implements IActionHandlerStrategy {
+export class HelpHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

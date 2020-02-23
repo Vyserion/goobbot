@@ -5,7 +5,7 @@ import { TRow } from "../typings";
  * Retrieves a single row for a given leaderboard.
  * @param rowName The name of the row to return
  * @param leaderboardId The leaderboard id
- * 
+ *
  * @returns The row, if one is found, or null otherwise
  */
 export async function getRow(rowName: string, leaderboardId: number): Promise<TRow | null> {
@@ -15,15 +15,14 @@ export async function getRow(rowName: string, leaderboardId: number): Promise<TR
 	const result: TRow[] = await execQuery(query, params);
 	if (result.length > 0) {
 		return result[0];
-	} else {
-		return null;
 	}
+	return null;
 }
 
 /**
  * Retrieves a set of rows for a given leaderboard.
  * @param leaderboardId The leaderboard id
- * 
+ *
  * @returns An array of rows for the leaderboard
  */
 export async function getRows(leaderboardId: number): Promise<TRow[]> {

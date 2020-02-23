@@ -1,4 +1,5 @@
 import { createLogger, format, transports } from "winston";
+
 const { combine, timestamp, printf } = format;
 
 const vybotLogFormat = printf(info => {
@@ -8,7 +9,7 @@ const vybotLogFormat = printf(info => {
 const logLevel = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : "info";
 
 const consoleTransport = new transports.Console();
-consoleTransport.silent = process.env.NODE_ENV === 'test';
+consoleTransport.silent = process.env.NODE_ENV === "test";
 
 const logger = createLogger({
 	format: combine(timestamp(), vybotLogFormat),
@@ -16,6 +17,6 @@ const logger = createLogger({
 	transports: [consoleTransport]
 });
 
-logger.debug("Logging set to " + logLevel);
+logger.debug(`Logging set to ${logLevel}`);
 
 export default logger;

@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy } from "../config";
+import { ActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -9,7 +9,7 @@ import { TLeaderboard } from "../typings";
 import { prettyPrintLeaderboard } from "../util/format";
 import { getGuildId } from "../../../core/guilds/guilds";
 
-export class GetLeaderboardHandler implements IActionHandlerStrategy {
+export class GetLeaderboardHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {
@@ -35,9 +35,9 @@ export class GetLeaderboardHandler implements IActionHandlerStrategy {
 
 		const filledLeaderboard: TLeaderboard = {
 			name: leaderboard.name,
-			rows: rows,
-			columns: columns,
-			values: values
+			rows,
+			columns,
+			values
 		};
 
 		return prettyPrintLeaderboard(filledLeaderboard);

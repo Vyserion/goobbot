@@ -4,7 +4,6 @@ import { execQuery } from "../../../core/util/dataManager";
 /**
  * Retrieves a set of lists for a guild.
  * @param guildId The guild id
- * 
  * @returns A list of all lists for the guild
  */
 export async function getLists(guildId: number): Promise<TList[]> {
@@ -19,7 +18,6 @@ export async function getLists(guildId: number): Promise<TList[]> {
  * Gets a single list for a guild.
  * @param guildId The guild the list belongs to
  * @param name The list to find
- * 
  * @returns The list if found, null otherwise
  */
 export async function getList(guildId: number, name: string): Promise<TList> {
@@ -29,9 +27,8 @@ export async function getList(guildId: number, name: string): Promise<TList> {
 	const results = await execQuery<TList>(query, params);
 	if (results.length > 0) {
 		return results[0];
-	} else {
-		return null;
 	}
+	return null;
 }
 
 /**

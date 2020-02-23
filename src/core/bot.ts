@@ -6,24 +6,29 @@ import { init } from "./util/dataManager";
 let client: Client;
 
 /**
- * Starts up the discord bot.
- * External function containing all startup logic.
+ * Starts up the internals of the bot once ready.
+ * Logs in to discord, and connects to the database pool.
  */
-export async function startup(): Promise<void> {
-	client = new Client();
-
-	await registerActions();
-	await start();
+async function start(): Promise<void> {
+	logger.info("Logging into Discord API...");
+	await client.login(process.env.APP_KEY);
+	await init();
 }
 
 /**
- * Registers discord actions against the created client.
+ * Prints the bot welcome message to any available guilds.
  */
-async function registerActions(): Promise<void> {
-	logger.info("Registering Discord API actions...");
-
-	await client.on("ready", onReady);
-	await client.on("message", onMessage);
+async function printWelcomeMessage(): Promise<void> {
+	logger.info("Printing welcome messages");
+	client.guilds.forEach(guild => {
+		guild.channels.forEach(channel => {
+			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test
+			if (channel.name === "bot_test") {
+				const chan: TextChannel = client.channels.get(channel.id) as TextChannel;
+				chan.send(`Hello, ${guild.name}!`);
+			}
+		});
+	});
 }
 
 /**
@@ -49,34 +54,29 @@ function onReady(): void {
 function onMessage(message: Message): void {
 	if (isPluginMessage(message.content)) {
 		logger.debug("Command recieved: ");
-		logger.debug("                 " + message.content);
+		logger.debug(`                 ${message.content}`);
 
 		processMessage(message);
 	}
 }
 
 /**
- * Starts up the internals of the bot once ready.
- * Logs in to discord, and connects to the database pool.
+ * Registers discord actions against the created client.
  */
-async function start() {
-	logger.info("Logging into Discord API...");
-	await client.login(process.env.APP_KEY);
-	await init();
+async function registerActions(): Promise<void> {
+	logger.info("Registering Discord API actions...");
+
+	await client.on("ready", onReady);
+	await client.on("message", onMessage);
 }
 
 /**
- * Prints the bot welcome message to any available guilds.
+ * Starts up the discord bot.
+ * External function containing all startup logic.
  */
-async function printWelcomeMessage() {
-	logger.info("Printing welcome messages");
-	client.guilds.forEach(guild => {
-		guild.channels.forEach(channel => {
-			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test
-			if (channel.name === "bot_test") {
-				let chan: TextChannel = <TextChannel>client.channels.get(channel.id);
-				chan.send("Hello, " + guild.name + "!");
-			}
-		});
-	});
+export async function startup(): Promise<void> {
+	client = new Client();
+
+	await registerActions();
+	await start();
 }

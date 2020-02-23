@@ -18,6 +18,6 @@ export enum Actions {
 	help = "help"
 }
 
-export interface IActionHandlerStrategy {
+export interface ActionHandlerStrategy {
 	handleAction(): Promise<string>;
 }
