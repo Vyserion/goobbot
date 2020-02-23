@@ -9,6 +9,7 @@
     "clean": "rimraf ./dist",
     "start": "node ./dist/app.js",
     "test": "jest --silent",
+    "test:ci": "jest --silent --maxWorkers=2",
     "test:log": "jest",
     "test:watch": "jest -w --silent",
     "lint": "eslint . --ext ts --ext js",
