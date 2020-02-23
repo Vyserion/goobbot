@@ -1,19 +1,19 @@
 import { Pool, QueryResult } from "pg";
 import logger from "./logger";
 
-const port: number = (process.env.POSTGRES_PORT as any) as number;
-let pool;
+const port: number = (process.env.POSTGRES_PORT as unknown) as number;
+let pool: Pool;
 
 /**
  * Initialises the database connection pool.
  */
-export async function init() {
+export async function init(): Promise<void> {
 	pool = new Pool({
 		user: process.env.POSTGRES_USER,
 		host: process.env.POSTGRES_HOST,
 		database: process.env.POSTGRES_DATABASE,
 		password: process.env.POSTGRES_PASSWORD,
-		port: port
+		port
 	});
 
 	pool.on("error", err => {
@@ -26,29 +26,12 @@ export async function init() {
 
 /**
  * Performs a single query against the database connection pool.
- * @param query The query to execute
- * @param params The parameters for the query
- * 
- * @returns The rows of the query response
- */
-export async function execQuery<R extends {}>(query: string, params?: any[]): Promise<R[]> {
-	logger.debug("Running query:");
-	logger.debug(query);
-
-	const results = await doQuery<R>(query, params);
-	return results.rows;
-}
-
-/**
- * Performs a single query against the database connection pool.
  * Contains the raw connection logic.
- * 
  * @param query The query to execute
  * @param params The parameters for the query
- * 
  * @returns The QueryResult
  */
-async function doQuery<R extends {}>(query: string, params?: any[]): Promise<QueryResult<R>> {
+async function doQuery<R extends {}>(query: string, params?: unknown[]): Promise<QueryResult<R>> {
 	let results: QueryResult<R>;
 
 	try {
@@ -60,8 +43,8 @@ async function doQuery<R extends {}>(query: string, params?: any[]): Promise<Que
 
 		return results;
 	} catch (e) {
-		logger.error("Error running query: " + query);
-		logger.error("Error code: " + e.code);
+		logger.error(`Error running query: ${query}`);
+		logger.error(`Error code: ${e.code}`);
 
 		return {
 			command: query,
@@ -71,4 +54,18 @@ async function doQuery<R extends {}>(query: string, params?: any[]): Promise<Que
 			fields: []
 		};
 	}
+}
+
+/**
+ * Performs a single query against the database connection pool.
+ * @param query The query to execute
+ * @param params The parameters for the query
+ * @returns The rows of the query response
+ */
+export async function execQuery<R extends {}>(query: string, params?: unknown[]): Promise<R[]> {
+	logger.debug("Running query:");
+	logger.debug(query);
+
+	const results = await doQuery<R>(query, params);
+	return results.rows;
 }

@@ -1,11 +1,11 @@
-import { IActionHandlerStrategy } from "../config";
+import { ActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength, leaderboardExists } from "../util/validators";
 import { updateLeaderboard } from "../dao/leaderboards";
 import logger from "../../../core/util/logger";
 import { getGuildId } from "../../../core/guilds/guilds";
 
-export class UpdateLeaderboardHandler implements IActionHandlerStrategy {
+export class UpdateLeaderboardHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

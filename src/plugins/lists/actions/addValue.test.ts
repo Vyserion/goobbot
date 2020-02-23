@@ -8,13 +8,11 @@ import * as Lists from "../dao/lists";
 import * as Values from "../dao/values";
 
 describe("plugins/lists/actions/addValue", () => {
-
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
 
 	describe("handleAction()", () => {
-        
 		it("should check for less than 2 arguments", async () => {
 			const command: TCommand = {
 				plugin: "lists",
@@ -70,10 +68,7 @@ describe("plugins/lists/actions/addValue", () => {
 			const expectedResult = `Successfully added value ${value}.`;
 			expect(result).toEqual(expectedResult);
 			expect(querySpy).toHaveBeenCalledTimes(1);
-			expect(querySpy).toHaveBeenCalledWith(
-				mockedList.id,
-				value
-			);
+			expect(querySpy).toHaveBeenCalledWith(mockedList.id, value);
 		});
 	});
 });

@@ -5,7 +5,7 @@ import { execQuery } from "../../../core/util/dataManager";
  * Retrieves a single leaderbaord.
  * @param name The name of the leaderboard
  * @param guildId The guild id
- * 
+ *
  * @returns The leaderboard, if one is found, or null otherwise
  */
 export async function getLeaderboard(name: string, guildId: number): Promise<TLeaderboard | null> {
@@ -15,15 +15,14 @@ export async function getLeaderboard(name: string, guildId: number): Promise<TLe
 	const result: TLeaderboard[] = await execQuery(query, params);
 	if (result.length > 0) {
 		return result[0];
-	} else {
-		return null;
 	}
+	return null;
 }
 
 /**
  * Retrieves the full list of leaderboards for a given guild.
  * @param guildId The guild id
- * 
+ *
  * @returns An array of leaderboards for the guild
  */
 export async function getLeaderboards(guildId: number): Promise<TLeaderboard[]> {

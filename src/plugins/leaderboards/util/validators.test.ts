@@ -7,13 +7,11 @@ import { TLeaderboard, TColumn, TRow } from "../typings";
 import { ColumnTypes } from "../config";
 
 describe("plugins/leaderboards/util/validators", () => {
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
 
 	describe("commandHasCorrectArgumentLength", () => {
-
 		it("should return true when the command has the minimum amount of arguments", () => {
 			const command: TCommand = {
 				plugin: "string",
@@ -103,11 +101,10 @@ describe("plugins/leaderboards/util/validators", () => {
 			const result = commandHasCorrectArgumentLength(command, 1, 3);
 			expect(result).toBeTruthy();
 		});
-    });
-    
-    describe("leaderboardExists()", () => {
+	});
 
-        it("should return true when the leaderboard exists", async () => {
+	describe("leaderboardExists()", () => {
+		it("should return true when the leaderboard exists", async () => {
 			const mockLeaderboard: TLeaderboard = {
 				name: "test",
 				columns: [],
@@ -115,11 +112,11 @@ describe("plugins/leaderboards/util/validators", () => {
 				values: []
 			};
 			jest.spyOn(LeaderboardsDao, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
-			
+
 			const result = await leaderboardExists("test", 1);
 			expect(result).toBeTruthy();
 		});
-		
+
 		it("should return false when the leaderboard does not exist", async () => {
 			jest.spyOn(LeaderboardsDao, "getLeaderboard").mockReturnValueOnce(Promise.resolve(null));
 
@@ -127,9 +124,8 @@ describe("plugins/leaderboards/util/validators", () => {
 			expect(result).toBeFalsy();
 		});
 	});
-	
-	describe("columnExists()", () => {
 
+	describe("columnExists()", () => {
 		it("should return true when the column exists", async () => {
 			const mockColumn: TColumn = {
 				name: "test",
@@ -150,7 +146,6 @@ describe("plugins/leaderboards/util/validators", () => {
 	});
 
 	describe("rowExists()", () => {
-
 		it("should return true when the row exists", async () => {
 			const mockRow: TRow = {
 				name: "test"
@@ -165,7 +160,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			jest.spyOn(RowsDao, "getRow").mockReturnValueOnce(Promise.resolve(null));
 
 			const result = await rowExists("test", 1);
-			expect(result).toBeFalsy
+			expect(result).toBeFalsy();
 		});
 	});
 });

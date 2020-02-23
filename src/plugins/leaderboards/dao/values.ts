@@ -4,7 +4,7 @@ import { TValue } from "../typings";
 /**
  * Retreives a set of values for a given leaderboard.
  * @param leaderboardId The leaderboard id
- * 
+ *
  * @returns An array of values for the leaderboard
  */
 export async function getValues(leaderboardId: number): Promise<TValue[]> {

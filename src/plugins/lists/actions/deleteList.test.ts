@@ -7,9 +7,7 @@ import * as Lists from "../dao/lists";
 import { TList } from "../typings/lists";
 
 describe("plugins/lists/actions/deleteList", () => {
-
 	describe("handleAction()", () => {
-
 		it("should check for less than 1 argument", async () => {
 			const command: TCommand = {
 				plugin: "lists",
@@ -64,9 +62,7 @@ describe("plugins/lists/actions/deleteList", () => {
 			const expectedResult = `Successfully delete list ${listName}.`;
 			expect(result).toEqual(expectedResult);
 			expect(querySpy).toHaveBeenCalledTimes(1);
-			expect(querySpy).toHaveBeenCalledWith(
-				guildId, listName
-			);
+			expect(querySpy).toHaveBeenCalledWith(guildId, listName);
 		});
 	});
 });

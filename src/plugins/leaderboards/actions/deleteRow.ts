@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy } from "../config";
+import { ActionHandlerStrategy } from "../config";
 import { TCommand } from "../../../core/typings";
 import { commandHasCorrectArgumentLength } from "../util/validators";
 import { getLeaderboard } from "../dao/leaderboards";
@@ -7,7 +7,7 @@ import { deleteValuesByRow } from "../dao/values";
 import { getGuildId } from "../../../core/guilds/guilds";
 import logger from "../../../core/util/logger";
 
-export class DeleteRowHandler implements IActionHandlerStrategy {
+export class DeleteRowHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

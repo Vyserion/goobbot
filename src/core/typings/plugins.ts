@@ -1,3 +1,3 @@
-export interface IPluginHandlerStrategy {
+export interface PluginHandlerStrategy {
 	handleMessage(): Promise<void>;
 }

@@ -8,9 +8,7 @@ import * as Values from "../dao/values";
 import { TList, TValue } from "../typings/lists";
 
 describe("plugins/lists/actions/getList", () => {
-
 	describe("handleAction()", () => {
-
 		it("should check for less than 1 argument", async () => {
 			const command: TCommand = {
 				plugin: "lists",
@@ -83,10 +81,12 @@ This list has no content.`;
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 			const values: TValue[] = [
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 1,
 					value: "one"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 2,
 					value: "two"
 				}

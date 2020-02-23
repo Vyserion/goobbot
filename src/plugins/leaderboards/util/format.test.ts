@@ -49,30 +49,35 @@ describe("plugins/leaderboards/util/format", () => {
 			const values: TValue[] = [
 				// Column One
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 1,
 					rowid: 1,
 					value: "4"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 1,
 					rowid: 2,
 					value: "9"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 1,
 					rowid: 3,
 					value: "1"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 1,
 					rowid: 4,
 					value: "12"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 1,
 					rowid: 5,
@@ -80,30 +85,35 @@ describe("plugins/leaderboards/util/format", () => {
 				},
 				// Column Two
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 2,
 					rowid: 1,
 					value: "7"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 2,
 					rowid: 2,
 					value: "8"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 2,
 					rowid: 3,
 					value: "5"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 2,
 					rowid: 4,
 					value: "1"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 2,
 					rowid: 5,
@@ -111,30 +121,35 @@ describe("plugins/leaderboards/util/format", () => {
 				},
 				// Column Three
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 3,
 					rowid: 1,
 					value: "3"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 3,
 					rowid: 2,
 					value: "1"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 3,
 					rowid: 3,
 					value: "6"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 3,
 					rowid: 4,
 					value: "1"
 				},
 				{
+					// eslint-disable-next-line @typescript-eslint/camelcase
 					leaderboard_id: 1,
 					columnid: 3,
 					rowid: 5,
@@ -146,8 +161,8 @@ describe("plugins/leaderboards/util/format", () => {
 				id: 1,
 				name: "Test Leaderboard Name",
 				columns: cols,
-				rows: rows,
-				values: values
+				rows,
+				values
 			};
 
 			// Formatting here is important - it will add the tabs in.

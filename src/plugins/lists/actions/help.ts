@@ -1,4 +1,4 @@
-import { IActionHandlerStrategy, Actions } from "../config/actions";
+import { ActionHandlerStrategy, Actions } from "../config/actions";
 import { TCommand } from "../../../core/typings";
 import {
 	showCommandMessage,
@@ -11,7 +11,7 @@ import {
 	getListsMessage
 } from "../config/helpMessages";
 
-export class HelpHandler implements IActionHandlerStrategy {
+export class HelpHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
 
 	constructor(command: TCommand) {

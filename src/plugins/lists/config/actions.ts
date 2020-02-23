@@ -9,6 +9,6 @@ export enum Actions {
 	getList = "show"
 }
 
-export interface IActionHandlerStrategy {
+export interface ActionHandlerStrategy {
 	handleAction(): Promise<string>;
 }

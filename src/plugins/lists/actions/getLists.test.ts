@@ -7,9 +7,7 @@ import * as Lists from "../dao/lists";
 import { TList } from "../typings/lists";
 
 describe("plugins/lists/actions/getLists", () => {
-
 	describe("handleAction()", () => {
-
 		it("should return a message when there are no lists", async () => {
 			const mockedMessage = createMockedMessage();
 			const command: TCommand = {
@@ -17,9 +15,9 @@ describe("plugins/lists/actions/getLists", () => {
 				action: Actions.addValue,
 				arguments: [],
 				originalMessage: mockedMessage
-            };
-            jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
-            jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve([]));
+			};
+			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
+			jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve([]));
 
 			const actionHandler = new GetListsHandler(command);
 			const result = await actionHandler.handleAction();
@@ -44,7 +42,7 @@ describe("plugins/lists/actions/getLists", () => {
 					name: "List Two"
 				}
 			];
-            jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve(lists));
+			jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve(lists));
 
 			const actionHandler = new GetListsHandler(command);
 			const result = await actionHandler.handleAction();
