@@ -60,10 +60,10 @@ jobs:
           at: /home/circleci
       - add_ssh_keys
       - run: chown -R $USER:$USER /home/circleci/*/*
-      - run: scp -R /home/circleci/project/bin deployment@134.122.106.23:/home/deployment/vybot
-      - run: scp -R /home/circleci/project/data deployment@134.122.106.23:/home/deployment/vybot
-      - run: scp -R /home/circleci/project/dist deployment@134.122.106.23:/home/deployment/vybot
-      - run: scp -R /home/circleci/project/docker-compose.yml deployment@134.122.106.23:/home/deployment/vybot
-      - run: scp -R /home/circleci/project/package.json deployment@134.122.106.23:/home/deployment/vybot
+      - run: scp -r /home/circleci/project/bin deployment@134.122.106.23:/home/deployment/vybot
+      - run: scp -r /home/circleci/project/data deployment@134.122.106.23:/home/deployment/vybot
+      - run: scp -r /home/circleci/project/dist deployment@134.122.106.23:/home/deployment/vybot
+      - run: scp -r /home/circleci/project/docker-compose.yml deployment@134.122.106.23:/home/deployment/vybot
+      - run: scp -r /home/circleci/project/package.json deployment@134.122.106.23:/home/deployment/vybot
       - run: ssh deployment@134.122.106.23 "cd vybot; npm install --only=prod; npm run deploy";.ssh -p 54782 35.237.3.80
       
