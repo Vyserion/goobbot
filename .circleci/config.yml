@@ -3,13 +3,13 @@ workflows:
   main:
     jobs:
       - build:
-          filters:
-            branches:
-              only: master
+        filters:
+          branches:
+            only: master
       - deploy:
-          filters:
-            branches:
-              only: master
+        filters:
+          branches:
+            only: master
 
 version: 2
 jobs:
@@ -53,7 +53,7 @@ jobs:
   deploy:
     steps:
       - attach_workspace:
-        at: /home/circleci
+          at: /home/circleci
       - add_ssh_keys
       - run: scp -r /home/circleci deployment@134.122.106.23:/home/vybot/vybot
       - run: npm run deploy
