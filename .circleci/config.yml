@@ -60,6 +60,6 @@ jobs:
       - attach_workspace:
           at: /home/circleci
       - add_ssh_keys
-      - run: scp -r /home/circleci deployment@134.122.106.23:/home/vybot/vybot
+      - run: scp -r /home/circleci/*/* deployment@134.122.106.23:/home/vybot/vybot
       - run: npm run deploy
       
