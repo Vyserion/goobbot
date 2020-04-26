@@ -3,20 +3,13 @@ const fs = require("fs");
 const path = require("path");
 
 const database = "vybot";
-// const database = process.env.POSTGRES_DATABASE;
-// const databaseConfig = {
-// 	user: process.env.POSTGRES_USER,
-// 	host: process.env.POSTGRES_HOST,
-// 	password: process.env.POSTGRES_PASSWORD,
-// 	port: process.env.POSTGRES_PORT,
-//  database
-// };
+const database = process.env.POSTGRES_DATABASE;
 const databaseConfig = {
-	user: "vybot",
-	host: "127.0.0.1",
-	password: "vybot",
-	port: 5432,
-	database
+	user: process.env.POSTGRES_USER,
+	host: process.env.POSTGRES_HOST,
+	password: process.env.POSTGRES_PASSWORD,
+	port: process.env.POSTGRES_PORT,
+ database
 };
 
 async function createDB(client) {
