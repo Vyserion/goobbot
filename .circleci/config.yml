@@ -6,6 +6,10 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy:
+          filters:
+            branches:
+              only: master
 
 version: 2
 jobs:
@@ -14,6 +18,8 @@ jobs:
       - image: circleci/node:9.9.0
     steps:
       - checkout
+      - attach_workspace:
+          at: /home/circleci
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -32,3 +38,23 @@ jobs:
       - run:
           name: test
           command: npm run test:ci
+      - run:
+          name: clean
+          command: npm prune --production
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - ./bin
+            - ./data
+            - ./dist
+            - ./docker-compose.yml
+            - ./package.json
+
+  deploy:
+    steps:
+      - attach_workspace:
+        at: /home/circleci
+      - add_ssh_keys
+      - run: scp -r /home/circleci deployment@134.122.106.23:/home/vybot/vybot
+      - run: npm run deploy
+      

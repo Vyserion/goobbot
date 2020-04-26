@@ -8,6 +8,7 @@
     "build:watch": "npm run clean && tsc --watch",
     "clean": "rimraf ./dist",
     "database:setup": "node ./data/setup.js",
+    "deploy": "sh ./bin/deploy.sh",
     "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose down",
     "start": "node ./dist/app.js",
