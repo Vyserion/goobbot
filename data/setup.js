@@ -2,7 +2,6 @@ const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
 
-const database = "vybot";
 const database = process.env.POSTGRES_DATABASE;
 const databaseConfig = {
 	user: process.env.POSTGRES_USER,
