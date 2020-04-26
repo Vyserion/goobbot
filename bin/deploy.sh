@@ -23,11 +23,6 @@ echo Database setup complete.
 echo Stopping running services...
 pm2 kill;
 
-echo Building...
-npm i;
-npm run build;
-npm prune --production;
-
 pm2 start ./dist/app.js
 
 echo Setup complete!
