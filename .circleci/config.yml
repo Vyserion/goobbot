@@ -21,7 +21,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /home/circleci
+          at: /home/circleci/project
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -44,12 +44,13 @@ jobs:
           name: clean
           command: npm prune --production
       - persist_to_workspace:
-          root: /home/circleci
+          root: /home/circleci/project
           paths:
             - ./bin
             - ./data
             - ./dist
             - ./docker-compose.yml
+            - ./node_modules
             - ./package.json
 
   deploy:
