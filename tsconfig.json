@@ -2,18 +2,19 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist",
     "sourceMap": true,
-    "target": "ES6",
+    "target": "es2017",
     "skipLibCheck": true
   },
   "files": [
     "./node_modules/@types/node/index.d.ts"
   ],
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts", "data/setup.ts"
   ],
   "exclude": [
     "node_modules"

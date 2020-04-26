@@ -1,7 +1,12 @@
 version: "3"
 services:
   postgres:
-    image: "postgres:10.4"
+    container_name: "vybot_database"
+    image: "postgres:12"
+    environment:
+      - POSTGRES_USER=vybot
+      - POSTGRES_PASSWORD=vybot
+      - POSTGRES_DB=vybot
     ports:
       - "5432:5432"
     labels:
