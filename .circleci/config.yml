@@ -51,6 +51,8 @@ jobs:
             - ./package.json
 
   deploy:
+    machine:
+      enabled: true
     steps:
       - attach_workspace:
           at: /home/circleci
