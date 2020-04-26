@@ -61,6 +61,6 @@ jobs:
           at: /home/circleci
       - add_ssh_keys
       - run: chown -R $USER:$USER /home/circleci/*/*
-      - run: scp -r /home/circleci/*/* deployment@134.122.106.23:/home/vybot/vybot
+      - run: scp -r /home/circleci/*/* deployment@134.122.106.23:/home/deployment/vybot
       - run: ssh deployment@134.122.106.23 "cd vybot; npm run deploy";.
       
