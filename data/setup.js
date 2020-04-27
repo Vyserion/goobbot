@@ -1,6 +1,8 @@
 const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
+const { config } = require("dotenv");
+config();
 
 console.log("details", process.env.POSTGRES_USER, "from", process.env);
 const databaseConfig = {
