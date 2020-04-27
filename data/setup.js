@@ -2,13 +2,13 @@ const { Pool } = require("pg");
 const fs = require("fs");
 const path = require("path");
 
-const database = process.env.POSTGRES_DATABASE;
+console.log("details", process.env.POSTGRES_USER, "from", process.env);
 const databaseConfig = {
 	user: process.env.POSTGRES_USER,
 	host: process.env.POSTGRES_HOST,
+	database: process.env.POSTGRES_DB,
 	password: process.env.POSTGRES_PASSWORD,
 	port: process.env.POSTGRES_PORT,
- database
 };
 
 async function createDB(client) {
