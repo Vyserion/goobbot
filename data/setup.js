@@ -3,13 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const database = process.env.POSTGRES_DB;
-const databaseConfig = {
-	user: process.env.POSTGRES_USER,
-	host: process.env.POSTGRES_HOST,
-	password: process.env.POSTGRES_PASSWORD,
-	port: process.env.POSTGRES_PORT,
-	database,
-};
 
 async function createDB(client) {
 	console.error("Creating schema...");
@@ -30,7 +23,14 @@ async function upgradeDB(client) {
  */
 async function run() {
 	try {
-		const client = new Pool(databaseConfig);
+		console.log("Connecting with user", process.env.POSTGRES_USER);
+		const client = new Pool({
+			user: process.env.POSTGRES_USER,
+			host: process.env.POSTGRES_HOST,
+			password: process.env.POSTGRES_PASSWORD,
+			port: process.env.POSTGRES_PORT,
+			database,
+		});
 
 		console.log("Checking for vybot database...");
 		const databaseQuery = `SELECT EXISTS(
