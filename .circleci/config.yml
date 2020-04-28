@@ -65,5 +65,5 @@ jobs:
       - run: scp -r /home/circleci/dist deployment@134.122.106.23:/home/deployment/vybot
       - run: scp /home/circleci/docker-compose.yml deployment@134.122.106.23:/home/deployment/vybot
       - run: scp /home/circleci/package.json deployment@134.122.106.23:/home/deployment/vybot
-      - run: ssh deployment@134.122.106.23 "cd vybot; npm install --only=prod; npm run deploy";.ssh -p 54782 35.237.3.80
+      - run: ssh deployment@134.122.106.23 "cd vybot; npm install --only=prod; npm run deploy";
       

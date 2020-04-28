@@ -23,7 +23,6 @@ async function upgradeDB(client) {
  */
 async function run() {
 	try {
-		console.log("Connecting with user", process.env.POSTGRES_USER);
 		const client = new Pool({
 			user: process.env.POSTGRES_USER,
 			host: process.env.POSTGRES_HOST,
