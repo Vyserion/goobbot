@@ -1,3 +1,5 @@
+printenv | grep POSTGRES_USER;
+
 CONTAINER=vybot_database;
 
 # Checking the database container is running
