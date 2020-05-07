@@ -2,9 +2,7 @@ import { Message } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
 import { Plugins } from "../config";
-import { LeaderboardHandler } from "../../plugins/leaderboards/handler";
-import { MissingPluginHandler } from "../../plugins/missingPlugin/handler";
-import { ListsHandler } from "../../plugins/lists/handler";
+import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } from "../../plugins";
 
 /**
  * Determines if a message is for a plugin.
@@ -27,6 +25,9 @@ function getPluginHandlerStrategy(command: TCommand): PluginHandlerStrategy {
 
 		case Plugins.lists:
 			return new ListsHandler(command);
+
+		case Plugins.ff:
+			return new FFHandler(command);
 
 		default:
 			return new MissingPluginHandler(command);
