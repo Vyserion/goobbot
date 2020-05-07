@@ -23,6 +23,6 @@ echo Database setup complete.
 echo Stopping running services...
 pm2 kill;
 
-pm2 start ./dist/app.js
+pm2 start ./dist/app.js --interpreter=~/.nvm/versions/node/v13.9.0/bin/node
 
 echo Setup complete!
