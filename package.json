@@ -1,6 +1,6 @@
 {
   "name": "vybot",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "This project contains all of the code required to run an instance of VyBot.",
   "main": "./dist/app.js",
   "scripts": {
