@@ -3,19 +3,19 @@ import { isPluginMessage } from "./plugins";
 describe("core/util/plugins", () => {
 	beforeEach(() => {
 		process.env = {
-			PREFIX: "!"
+			BOTPREFIX: "!"
 		};
 	});
 
 	describe("isPluginMessage()", () => {
 		it("should return true when the prefix and a length is found.", () => {
-			const input = `${process.env.PREFIX}message`;
+			const input = `${process.env.BOTPREFIX}message`;
 			const result: boolean = isPluginMessage(input);
 			expect(result).toBeTruthy();
 		});
 
 		it("should return false when just the prefix is provided.", () => {
-			const input: string = process.env.PREFIX;
+			const input: string = process.env.BOTPREFIX;
 			const result: boolean = isPluginMessage(input);
 			expect(result).toBeFalsy();
 		});

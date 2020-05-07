@@ -10,7 +10,7 @@ import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } fro
  * @returns if the message is for a plugin.
  */
 export function isPluginMessage(message: string): boolean {
-	return message.startsWith(process.env.PREFIX) && message.length > 1;
+	return message.startsWith(process.env.BOTPREFIX) && message.length > 1;
 }
 
 /**

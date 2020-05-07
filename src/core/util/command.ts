@@ -7,7 +7,7 @@ import { TCommand } from "../typings";
  * @returns The stripped string.
  */
 function stripPrefix(message: string): string {
-	return message.substr(process.env.PREFIX.length);
+	return message.substr(process.env.BOTPREFIX.length);
 }
 
 /**

@@ -12,7 +12,7 @@ const ACTION = "action";
  * @returns The content string.
  */
 function createMockMessageContent(addAction: boolean, addArguments: boolean, argumentsToAdd?: string[]): string {
-	let content = `${process.env.PREFIX}${PLUGIN_NAME}`;
+	let content = `${process.env.BOTPREFIX}${PLUGIN_NAME}`;
 
 	if (addAction) {
 		content += ` ${ACTION}`;
@@ -32,7 +32,7 @@ function createMockMessageContent(addAction: boolean, addArguments: boolean, arg
 describe("core/util/command", () => {
 	beforeEach(() => {
 		process.env = {
-			PREFIX: "!"
+			BOTPREFIX: "!"
 		};
 	});
 
@@ -46,7 +46,7 @@ describe("core/util/command", () => {
 		});
 
 		it("should map the plugin correctly with a longer prefix", () => {
-			process.env.PREFIX = "Vybot, ";
+			process.env.BOTPREFIX = "Vybot, ";
 
 			const messageContent = createMockMessageContent(false, false);
 			const message = createMockedMessage(messageContent);
