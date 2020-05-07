@@ -17,7 +17,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:9.9.0
+      - image: circleci/node:12.9.1-buster
     steps:
       - checkout
       - attach_workspace:
