@@ -3,6 +3,7 @@ import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
 import { Plugins } from "../config";
 import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } from "../../plugins";
+import { AdminHandler } from "../../plugins/admin/handler";
 
 /**
  * Determines if a message is for a plugin.
@@ -20,6 +21,9 @@ export function isPluginMessage(message: string): boolean {
  */
 function getPluginHandlerStrategy(command: TCommand): PluginHandlerStrategy {
 	switch (command.plugin) {
+		case Plugins.admin:
+			return new AdminHandler(command);
+
 		case Plugins.leaderboards:
 			return new LeaderboardHandler(command);
 
