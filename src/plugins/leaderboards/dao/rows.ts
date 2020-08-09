@@ -9,7 +9,7 @@ import { TRow } from "../typings";
  * @returns The row, if one is found, or null otherwise
  */
 export async function getRow(rowName: string, leaderboardId: number): Promise<TRow | null> {
-	const query = `SELECT * FROM rows WHERE name = $1 and leaderboard_id = $2`;
+	const query = `SELECT * FROM leaderboard_rows WHERE name = $1 and leaderboard_id = $2`;
 	const params = [rowName, leaderboardId];
 
 	const result: TRow[] = await execQuery(query, params);
