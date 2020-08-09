@@ -9,7 +9,7 @@ import { TColumn } from "../typings";
  * @returns The column if found, null otherwise
  */
 export async function getColumn(columnName: string, leaderboardId: number): Promise<TColumn | null> {
-	const query = `SELECT * FROM columns WHERE name = $1 AND leaderboard_id = $2;`;
+	const query = `SELECT * FROM leaderboard_columns WHERE name = $1 AND leaderboard_id = $2;`;
 	const params = [columnName, leaderboardId];
 
 	const result: TColumn[] = await execQuery(query, params);
