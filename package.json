@@ -32,7 +32,6 @@
   "dependencies": {
     "discord.js": "12.2.0",
     "dotenv": "8.2.0",
-    "npm": "6.13.7",
     "pg": "7.18.2",
     "winston": "3.2.1",
     "zlib-sync": "0.1.6"
@@ -51,12 +50,12 @@
     "eslint-plugin-import": "2.20.1",
     "eslint-plugin-prettier": "3.1.2",
     "husky": "^4.2.3",
-    "jest": "25.1.0",
+    "jest": "^26.2.0",
     "lint-staged": "^10.0.7",
     "prettier": "1.19.1",
     "rimraf": "3.0.2",
-    "ts-jest": "25.2.1",
-    "typescript": "3.8.2"
+    "ts-jest": "^26.1.4",
+    "typescript": "3.9.7"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>src/test/jest-config.js"
