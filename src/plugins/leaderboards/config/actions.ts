@@ -11,7 +11,7 @@ export enum Actions {
 	updateRow = "updaterow",
 	deleteRow = "deleterow",
 
-	upsertValue = "update",
+	upsertValue = "changeval",
 
 	getLeaderboard = "show",
 
