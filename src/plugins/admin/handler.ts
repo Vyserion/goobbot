@@ -1,6 +1,7 @@
 import { PluginHandlerStrategy, TCommand } from "../../core/typings";
 import { ActionHandlerStrategy, Actions } from "./config/actions";
 import { ToggleMuteHandler } from "./actions/toggleMute";
+import { ShowCode } from "./actions/showCode";
 
 /**
  * The Admin Plugin Handler, handles interactions with admin commands within the bot.
@@ -38,6 +39,9 @@ export class AdminHandler implements PluginHandlerStrategy {
 			case Actions.muteAll:
 			case Actions.unmuteAll:
 				return new ToggleMuteHandler(this.command);
+
+			case "code":
+				return new ShowCode(this.command);
 
 			default:
 				throw new Error("unknown plugin");
