@@ -1,4 +1,5 @@
 import { PluginHandlerStrategy, TCommand } from "../../core/typings";
+import { HelpHandler } from "./actions";
 import { Actions, ActionHandlerStrategy } from "./config/actions";
 import { FishingHandler } from "./fishing";
 
@@ -28,6 +29,8 @@ export class FFHandler implements PluginHandlerStrategy {
 		switch (action) {
 			case Actions.fishing:
 				return new FishingHandler(this.command);
+			case Actions.help:
+				return new HelpHandler(this.command);
 			default:
 				throw new Error("unknown plugin");
 		}

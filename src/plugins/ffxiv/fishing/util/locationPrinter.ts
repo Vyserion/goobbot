@@ -1,12 +1,18 @@
 import { MessageEmbed } from "discord.js";
-import { FishingLocations, FishingLocation, LocationName } from "../config/routeInfo";
+import { FishingLocation } from "../../typings";
+import { FishingLocations } from "../config/routeInfo";
 
+/**
+ * Returns the embed for the given fishing location.
+ * @param location The fishing location to build the embed for
+ * @returns The embed for the fishing location
+ * @throws An error if the location is invalid
+ */
 export const embedPrintLocation = (location: string): MessageEmbed => {
-	if (!Object.keys(LocationName).includes(location)) {
-		throw new Error("Unknown fishing location");
-	}
-
 	const info: FishingLocation = FishingLocations[location];
+	if (!info) {
+		throw new Error(`Unknown fishing location ${location}`);
+	}
 
 	const spectralBaitValue = `Use: **${info.spectralBait}**\nCatches: ${info.spectralTriggerFish}`;
 
