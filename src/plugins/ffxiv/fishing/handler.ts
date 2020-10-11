@@ -3,6 +3,8 @@ import { TCommand } from "../../../core/typings";
 import { FishingActions, FishingActionHandler } from "./config/actions";
 import { ShowAllRoutesHandler } from "./actions/showAll";
 import { RouteHandler } from "./actions/route";
+import { SpotHandler } from "./actions/spot";
+import { HelpHandler } from "./actions/help";
 
 export class FishingHandler implements ActionHandlerStrategy {
 	private readonly command: TCommand;
@@ -24,6 +26,12 @@ export class FishingHandler implements ActionHandlerStrategy {
 				break;
 			case FishingActions.route:
 				actionHandler = new RouteHandler(this.command);
+				break;
+			case FishingActions.spot:
+				actionHandler = new SpotHandler(this.command);
+				break;
+			case FishingActions.help:
+				actionHandler = new HelpHandler(this.command);
 				break;
 			default:
 				this.postMessage(`The fishing command ${fishingAction} wasn't found.`);

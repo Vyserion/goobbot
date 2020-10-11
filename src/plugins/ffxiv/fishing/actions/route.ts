@@ -1,6 +1,6 @@
 import { FishingActionHandler } from "../config/actions";
 import { TCommand } from "../../../../core/typings";
-import { isALocation } from "../config/routeInfo";
+import { getLocationKeyFromInput, isALocation } from "../config/routeInfo";
 import { embedPrintLocation } from "../util";
 import logger from "../../../../core/util/logger";
 
@@ -41,7 +41,8 @@ export class RouteHandler implements FishingActionHandler {
 
 		locations.forEach(locationName => {
 			try {
-				const details = embedPrintLocation(locationName);
+				const locationKey = getLocationKeyFromInput(locationName);
+				const details = embedPrintLocation(locationKey);
 				this.command.originalMessage.channel.send(details);
 			} catch (error) {
 				logger.error("Could not parse fishing location", locationName);

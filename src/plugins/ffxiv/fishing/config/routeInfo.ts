@@ -1,45 +1,71 @@
-export enum OceanBait {
-	"Krill" = "Krill  <:krill:707934351467348019>",
-	"Ragworm" = "Ragworm <:ragworm:707934377753051156>",
-	"PlumpWorm" = "Plump Worm <:plumpworm:707934387483836428>"
-}
+import { FishingLocation, OceanBait, SpectralTriggerBait } from "../../typings";
 
-export enum SpectralTriggerBait {
-	"RatTail" = "Rat Tail",
-	"HeavySteelJig" = "Heavy Steel Jig",
-	"ShrimpCageFeeder" = "Shrimp Cage Feeder",
-	"Glowworm" = "Glowworm"
-}
+export const GaladionBayCode = "GaladionBay";
+export const GaladionBayAliases = [GaladionBayCode, "GB", "Galadion"];
 
-export enum LocationName {
-	"GaladionBay",
-	"NorthernStrait",
-	"SouthernStrait",
-	"RhontanoSea"
-}
+export const NorthernStraitCode = "NorthernStrait";
+export const NorthernStraitAliases = [NorthernStraitCode, "NS", "Northern"];
 
+export const SouthernStraitCode = "SouthernStrait";
+export const SouthernStraitAliases = [SouthernStraitCode, "SS", "Southern"];
+
+export const RhotanoSeaCode = "RhotanoSea";
+export const RhotanoSeaAliases = [RhotanoSeaCode, "RS", "Rhotano"];
+
+export const LocationNames = [
+	...GaladionBayAliases,
+	...NorthernStraitAliases,
+	...SouthernStraitAliases,
+	...RhotanoSeaAliases
+];
+
+/**
+ * Return all location keys.
+ * @returns an array of all location keys
+ */
 export const getAllLocations = (): string[] => {
-	return Object.keys(LocationName).filter(key => {
-		return Number.isNaN(parseInt(key, 10));
-	});
+	return [GaladionBayCode, NorthernStraitCode, SouthernStraitCode, RhotanoSeaCode];
 };
 
+/**
+ * Confirms whether the input is a valid fishing location.
+ * @param input The input to parse
+ * @returns True if a valid location, false otherwise
+ */
 export const isALocation = (input: string): boolean => {
-	return Object.values(LocationName).includes(input);
+	return LocationNames.includes(input);
 };
 
-export interface FishingLocation {
-	name: string;
-	intuitionTriggers: string[];
-	intuitionBait: OceanBait;
-	intuitionFish: string;
-	spectralBait: OceanBait;
-	spectralTriggerFish: string;
-	spectralIntuitionTriggers: string[];
-	spectralIntuitionBait: SpectralTriggerBait;
-	spectralIntuitionFish: string;
-}
+/**
+ * Get the matching key from the given input.
+ * isALocation should be used to validate input before calling this.
+ * @param input The input to get the code from
+ * @returns The code for the location
+ * @throws An error if the input is unknown
+ */
+export const getLocationKeyFromInput = (input: string): string => {
+	if (GaladionBayAliases.includes(input)) {
+		return GaladionBayCode;
+	}
 
+	if (NorthernStraitAliases.includes(input)) {
+		return NorthernStraitCode;
+	}
+
+	if (SouthernStraitAliases.includes(input)) {
+		return SouthernStraitCode;
+	}
+
+	if (RhotanoSeaAliases.includes(input)) {
+		return RhotanoSeaCode;
+	}
+
+	throw new Error(`Unknown location key ${input}, unable to parse`);
+};
+
+/**
+ * Configuration object containing all of the information on each fishing location.
+ */
 export const FishingLocations: Record<string, FishingLocation> = {
 	GaladionBay: {
 		name: "Galadion Bay",
@@ -82,8 +108,8 @@ export const FishingLocations: Record<string, FishingLocation> = {
 		spectralIntuitionBait: SpectralTriggerBait.ShrimpCageFeeder,
 		spectralIntuitionFish: "Coral Manta"
 	},
-	RhontanoSea: {
-		name: "Rhontano Sea",
+	RhotanoSea: {
+		name: "Rhotano Sea",
 		intuitionTriggers: [`Crimson Monkfish|${OceanBait.PlumpWorm}`, `Crimson Monkfish|${OceanBait.PlumpWorm}`],
 		intuitionBait: OceanBait.Krill,
 		intuitionFish: "Sabaton",
