@@ -2,5 +2,5 @@ export enum Plugins {
 	leaderboards = "leaderboards",
 	lists = "lists",
 	ff = "ff",
-	admin = "admin"
+	admin = "admin",
 }

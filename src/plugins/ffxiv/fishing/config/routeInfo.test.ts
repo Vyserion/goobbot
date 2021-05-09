@@ -5,7 +5,7 @@ import {
 	isALocation,
 	NorthernStraitCode,
 	RhotanoSeaCode,
-	SouthernStraitCode
+	SouthernStraitCode,
 } from "./routeInfo";
 
 describe("plugins/ffxiv/fishing/config/routeInfo", () => {

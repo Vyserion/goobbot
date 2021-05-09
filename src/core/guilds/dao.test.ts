@@ -19,10 +19,9 @@ describe("core/guilds/dao", () => {
 			const queryResult: TGuild[] = [
 				{
 					id: 1,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					discord_id: "my guild",
-					name: "My Guild"
-				}
+					name: "My Guild",
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(queryResult));
 
@@ -35,9 +34,8 @@ describe("core/guilds/dao", () => {
 		it("should create the guild when called", async () => {
 			const expectedGuild: TGuild = {
 				id: 1,
-				// eslint-disable-next-line @typescript-eslint/camelcase
 				discord_id: "my guild",
-				name: "My Guild"
+				name: "My Guild",
 			};
 			const querySpy = jest
 				.spyOn(DataManager, "execQuery")

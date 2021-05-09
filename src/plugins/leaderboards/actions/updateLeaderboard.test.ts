@@ -17,7 +17,7 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.updateLeaderboard,
 				arguments: ["not enough arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new UpdateLeaderboardHandler(mockCommand);
@@ -36,7 +36,7 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.updateLeaderboard,
 				arguments: [leaderboardName, "Test Leaderboard"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateLeaderboardHandler(mockCommand);
@@ -52,13 +52,13 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			const mockNewLeaderboard: TLeaderboard = {
 				name: "New Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard")
 				.mockReturnValueOnce(Promise.resolve(mockLeaderboard))
@@ -69,7 +69,7 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.updateLeaderboard,
 				arguments: [mockLeaderboard.name, mockNewLeaderboard.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateLeaderboardHandler(mockCommand);
@@ -84,7 +84,7 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard")
 				.mockReturnValueOnce(Promise.resolve(mockLeaderboard))
@@ -96,7 +96,7 @@ describe("plugin/leaderboards/actions/updateLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.updateLeaderboard,
 				arguments: [mockLeaderboard.name, newLeaderboardName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateLeaderboardHandler(mockCommand);

@@ -15,7 +15,7 @@ export enum Actions {
 
 	getLeaderboard = "show",
 
-	help = "help"
+	help = "help",
 }
 
 export interface ActionHandlerStrategy {

@@ -13,7 +13,7 @@ export class ShowAllRoutesHandler implements FishingActionHandler {
 
 	async handleAction(): Promise<void> {
 		const allLocations = getAllLocations();
-		allLocations.forEach(locationName => {
+		allLocations.forEach((locationName) => {
 			try {
 				const details = embedPrintLocation(locationName);
 				this.command.originalMessage.channel.send(details);

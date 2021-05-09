@@ -37,7 +37,7 @@ export class GetLeaderboardHandler implements ActionHandlerStrategy {
 			name: leaderboard.name,
 			rows,
 			columns,
-			values
+			values,
 		};
 
 		return prettyPrintLeaderboard(filledLeaderboard);

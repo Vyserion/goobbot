@@ -1,7 +1,7 @@
 {
     "root": true,
     "extends": [
-        "airbnb-base",
+        "airbnb-typescript/base",
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
@@ -23,6 +23,11 @@
         }
     },
     "rules": {
+        // Remove camelcase as it is not included in the latest airbnb release
+        "@typescript-eslint/camelcase": "off",
+        // Remove no-shadow as it incorrectly reports enums
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
         "import/prefer-default-export": [0],
         "import/extensions": [
             "error",
@@ -34,6 +39,10 @@
         ]
     },
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "createDefaultProgram": true,
+        "project": "./tsconfig.json"
+    },
     "plugins": [
         "@typescript-eslint",
         "prettier"

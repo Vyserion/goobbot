@@ -13,13 +13,13 @@ describe("plugins/leaderboards/dao/values", () => {
 				{
 					rowid: 1,
 					columnid: 1,
-					value: "one"
+					value: "one",
 				},
 				{
 					rowid: 2,
 					columnid: 1,
-					value: "two"
-				}
+					value: "two",
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedValues));
 

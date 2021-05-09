@@ -5,7 +5,7 @@ import {
 	getLeaderboards,
 	createLeaderboard,
 	updateLeaderboard,
-	deleteLeaderboard
+	deleteLeaderboard,
 } from "./leaderboards";
 
 describe("plugins/leaderboards/dao/leaderboards", () => {
@@ -19,7 +19,7 @@ describe("plugins/leaderboards/dao/leaderboards", () => {
 				name: "one",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve([expectedLeaderboard]));
 
@@ -43,14 +43,14 @@ describe("plugins/leaderboards/dao/leaderboards", () => {
 					name: "leaderboard one",
 					columns: [],
 					rows: [],
-					values: []
+					values: [],
 				},
 				{
 					name: "leaderboard two",
 					columns: [],
 					rows: [],
-					values: []
-				}
+					values: [],
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedLeaderboards));
 
@@ -89,7 +89,7 @@ describe("plugins/leaderboards/dao/leaderboards", () => {
 			).toHaveBeenCalledWith(`UPDATE leaderboards SET name = ($1) WHERE guild_id = $2 AND name LIKE ($3)`, [
 				"newtest",
 				1,
-				"test"
+				"test",
 			]);
 		});
 	});

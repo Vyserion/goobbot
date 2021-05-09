@@ -18,7 +18,7 @@ describe("plugins/lists/actions/addValue", () => {
 				plugin: "lists",
 				action: Actions.addValue,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new AddValueHandler(command);
@@ -34,7 +34,7 @@ describe("plugins/lists/actions/addValue", () => {
 				plugin: "lists",
 				action: Actions.addValue,
 				arguments: [listName, "value"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));
@@ -53,12 +53,12 @@ describe("plugins/lists/actions/addValue", () => {
 				plugin: "lists",
 				action: Actions.addValue,
 				arguments: [listName, value],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const mockedList: TList = {
 				id: 1,
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 			const querySpy = jest.spyOn(Values, "addValue").mockReturnValueOnce(Promise.resolve());

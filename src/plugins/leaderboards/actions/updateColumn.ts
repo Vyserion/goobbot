@@ -9,7 +9,7 @@ import logger from "../../../core/util/logger";
 
 export enum UpdateActions {
 	NAME = "NAME",
-	TYPE = "TYPE"
+	TYPE = "TYPE",
 }
 
 export class UpdateColumnHandler implements ActionHandlerStrategy {

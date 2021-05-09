@@ -12,16 +12,14 @@ describe("plugins/lists/dao/values", () => {
 			const expectedValues: TValue[] = [
 				{
 					id: 1,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 1,
-					value: "val1"
+					value: "val1",
 				},
 				{
 					id: 2,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 1,
-					value: "val2"
-				}
+					value: "val2",
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedValues));
 
@@ -44,10 +42,9 @@ describe("plugins/lists/dao/values", () => {
 			const expectedValues: TValue[] = [
 				{
 					id: 1,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 1,
-					value: "val1"
-				}
+					value: "val1",
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedValues));
 

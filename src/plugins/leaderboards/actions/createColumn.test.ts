@@ -18,7 +18,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: ["not enough arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -32,7 +32,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: ["too", "many", "arguments", "given"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -51,7 +51,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboardName, "A Column"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -66,12 +66,12 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const column: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(column));
 
@@ -80,7 +80,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboard.name, column.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -95,7 +95,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(null));
@@ -107,7 +107,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboard.name, columnName, unknownType],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -123,7 +123,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(null));
@@ -135,7 +135,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboard.name, columnName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);
@@ -153,7 +153,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(null));
@@ -166,7 +166,7 @@ describe("plugins/leaderboards/actions/createColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.createColumn,
 				arguments: [leaderboard.name, columnName, columnType],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateColumnHandler(command);

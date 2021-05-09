@@ -15,7 +15,7 @@ describe("plugins/lists/actions/removeValue", () => {
 				plugin: "lists",
 				action: Actions.removeValue,
 				arguments: [],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new RemoveValueHandler(command);
@@ -31,7 +31,7 @@ describe("plugins/lists/actions/removeValue", () => {
 				plugin: "lists",
 				action: Actions.removeValue,
 				arguments: [listName, "values"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));
@@ -50,11 +50,11 @@ describe("plugins/lists/actions/removeValue", () => {
 				plugin: "lists",
 				action: Actions.removeValue,
 				arguments: [listName, value],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const list: TList = {
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(list));
 			jest.spyOn(Values, "getValue").mockReturnValueOnce(Promise.resolve(null));
@@ -73,19 +73,18 @@ describe("plugins/lists/actions/removeValue", () => {
 				plugin: "lists",
 				action: Actions.removeValue,
 				arguments: [listName, valueText],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const list: TList = {
 				id: 1,
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(list));
 			const value: TValue = {
 				id: 1,
-				// eslint-disable-next-line @typescript-eslint/camelcase
 				list_id: 1,
-				value: valueText
+				value: valueText,
 			};
 			jest.spyOn(Values, "getValue").mockReturnValueOnce(Promise.resolve(value));
 			const querySpy = jest.spyOn(Values, "removeValue");

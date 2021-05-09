@@ -8,7 +8,7 @@ import {
 	RhotanoSeaAliases,
 	RhotanoSeaCode,
 	SouthernStraitAliases,
-	SouthernStraitCode
+	SouthernStraitCode,
 } from "./routeInfo";
 
 const showAlLCommandMessage = `List all of the fishing locations.
@@ -36,27 +36,24 @@ const locationsMessage = `- ${GaladionBayAliases.join(", ")}
  * @returns The message embed for fishing commands
  */
 export const getHelpMessage = (): MessageEmbed => {
-	const embed = new MessageEmbed()
-		.setColor("GREEN")
-		.setTitle("FF Fishing Plugin")
-		.addFields(
-			{
-				name: "Show All Fishing Spots",
-				value: showAlLCommandMessage
-			},
-			{
-				name: "Show a Route of Fishing Spots",
-				value: routeCommandMessage
-			},
-			{
-				name: "Show a Fishing Spot",
-				value: spotCommandMessage
-			},
-			{
-				name: "Available Locations & Aliases",
-				value: locationsMessage
-			}
-		);
+	const embed = new MessageEmbed().setColor("GREEN").setTitle("FF Fishing Plugin").addFields(
+		{
+			name: "Show All Fishing Spots",
+			value: showAlLCommandMessage,
+		},
+		{
+			name: "Show a Route of Fishing Spots",
+			value: routeCommandMessage,
+		},
+		{
+			name: "Show a Fishing Spot",
+			value: spotCommandMessage,
+		},
+		{
+			name: "Available Locations & Aliases",
+			value: locationsMessage,
+		}
+	);
 
 	return embed;
 };

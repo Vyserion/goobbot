@@ -20,7 +20,7 @@ export class GetListsHandler implements ActionHandlerStrategy {
 
 		let response = ``;
 
-		lists.forEach(l => {
+		lists.forEach((l) => {
 			response += l.name;
 			response += `\n`;
 		});

@@ -14,7 +14,7 @@ describe("plugins/lists/actions/getList", () => {
 				plugin: "lists",
 				action: Actions.getList,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new GetListHandler(command);
@@ -30,7 +30,7 @@ describe("plugins/lists/actions/getList", () => {
 				plugin: "lists",
 				action: Actions.getList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));
@@ -48,11 +48,11 @@ describe("plugins/lists/actions/getList", () => {
 				plugin: "lists",
 				action: Actions.getList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const mockedList: TList = {
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 			jest.spyOn(Values, "getValues").mockReturnValueOnce(Promise.resolve([]));
@@ -72,24 +72,22 @@ This list has no content.`;
 				plugin: "lists",
 				action: Actions.getList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const mockedList: TList = {
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 			const values: TValue[] = [
 				{
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 1,
-					value: "one"
+					value: "one",
 				},
 				{
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					list_id: 2,
-					value: "two"
-				}
+					value: "two",
+				},
 			];
 			jest.spyOn(Values, "getValues").mockReturnValueOnce(Promise.resolve(values));
 

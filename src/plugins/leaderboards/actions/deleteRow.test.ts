@@ -19,7 +19,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteRow,
 				arguments: ["not enough arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new DeleteRowHandler(command);
@@ -38,7 +38,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteRow,
 				arguments: [leaderboardName, "A Row"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteRowHandler(command);
@@ -53,7 +53,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Rows, "getRow").mockReturnValueOnce(Promise.resolve(null));
@@ -64,7 +64,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteRow,
 				arguments: [leaderboard.name, rowName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteRowHandler(command);
@@ -79,12 +79,12 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const row: TRow = {
 				id: 30,
-				name: "Test Row"
+				name: "Test Row",
 			};
 			jest.spyOn(Rows, "getRow").mockReturnValueOnce(Promise.resolve(row));
 			const deleteValuesSpy = jest.spyOn(Values, "deleteValuesByRow");
@@ -95,7 +95,7 @@ describe("plugins/leaderboards/actions/deleteRow", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteRow,
 				arguments: [leaderboard.name, row.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteRowHandler(command);

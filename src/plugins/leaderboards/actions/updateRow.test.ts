@@ -18,7 +18,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: ["few", "arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new UpdateRowHandler(mockCommand);
@@ -37,7 +37,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [leaderboardName, "Test Row", "Test Row"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateRowHandler(mockCommand);
@@ -52,7 +52,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			jest.spyOn(Rows, "getRow").mockReturnValueOnce(Promise.resolve(null));
@@ -63,7 +63,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [mockLeaderboard.name, rowName, "Test Row"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateRowHandler(mockCommand);
@@ -78,14 +78,14 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockRow: TRow = {
-				name: "Test Row"
+				name: "Test Row",
 			};
 			const mockNewRow: TRow = {
-				name: "New Test Row"
+				name: "New Test Row",
 			};
 			jest.spyOn(Rows, "getRow")
 				.mockReturnValueOnce(Promise.resolve(mockRow))
@@ -96,7 +96,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [mockLeaderboard.name, mockRow.name, mockNewRow.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateRowHandler(mockCommand);
@@ -111,11 +111,11 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockRow: TRow = {
-				name: "Test Row"
+				name: "Test Row",
 			};
 			jest.spyOn(Rows, "getRow")
 				.mockReturnValueOnce(Promise.resolve(mockRow))
@@ -126,7 +126,7 @@ describe("plugins/leaderboards/actions/updateRow", () => {
 				plugin: "leaderboards",
 				action: Actions.updateRow,
 				arguments: [mockLeaderboard.name, mockRow.name, "New Row"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateRowHandler(mockCommand);

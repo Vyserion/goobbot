@@ -18,7 +18,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: ["not", "enough", "arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -37,7 +37,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [leaderboardName, "", "", ""],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -52,7 +52,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(null));
@@ -63,7 +63,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, columnName, "", ""],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -78,12 +78,12 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockColumn: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(mockColumn));
 
@@ -93,7 +93,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, mockColumn.name, action, ""],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -108,16 +108,16 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockColumn: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			const mockNewColumn: TColumn = {
 				name: "New Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn")
 				.mockReturnValueOnce(Promise.resolve(mockColumn))
@@ -128,7 +128,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, mockColumn.name, UpdateActions.NAME, mockNewColumn.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -143,12 +143,12 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockColumn: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn")
 				.mockReturnValueOnce(Promise.resolve(mockColumn))
@@ -160,7 +160,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, mockColumn.name, UpdateActions.NAME, newColumnName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -175,12 +175,12 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockColumn: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(mockColumn));
 
@@ -190,7 +190,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, mockColumn.name, UpdateActions.TYPE, invalidColumnType],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);
@@ -205,12 +205,12 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 			const mockColumn: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(mockColumn));
 
@@ -220,7 +220,7 @@ describe("plugin/leaderboards/actions/updateColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.updateColumn,
 				arguments: [mockLeaderboard.name, mockColumn.name, UpdateActions.TYPE, columnType],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateColumnHandler(mockCommand);

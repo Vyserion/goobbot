@@ -1,6 +1,6 @@
 export enum Actions {
 	muteAll = "muteall",
-	unmuteAll = "unmuteall"
+	unmuteAll = "unmuteall",
 }
 
 export interface ActionHandlerStrategy {

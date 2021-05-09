@@ -20,7 +20,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				plugin: "leaderboards",
 				action: Actions.upsertValue,
 				arguments: ["not", "enough", "arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new UpdateValueHandler(mockCommand);
@@ -39,7 +39,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				plugin: "leaderboards",
 				action: Actions.upsertValue,
 				arguments: [leaderboardName, "Column", "Row", "1"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateValueHandler(mockCommand);
@@ -54,7 +54,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 
@@ -64,7 +64,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				plugin: "leaderboards",
 				action: Actions.upsertValue,
 				arguments: [leaderboard.name, columnName, "Row", "1"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateValueHandler(mockCommand);
@@ -79,12 +79,12 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const column: TColumn = {
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(column));
 
@@ -94,7 +94,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				plugin: "leaderboards",
 				action: Actions.upsertValue,
 				arguments: [leaderboard.name, column.name, rowName, "1"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateValueHandler(mockCommand);
@@ -109,18 +109,18 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const column: TColumn = {
 				id: 123,
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(column));
 			const row: TRow = {
 				id: 456,
-				name: "Test Row"
+				name: "Test Row",
 			};
 			jest.spyOn(Rows, "getRow").mockReturnValueOnce(Promise.resolve(row));
 			const valueDaoSpy = jest.spyOn(Values, "upsertValue");
@@ -131,7 +131,7 @@ describe("plugins/leaderboards/actions/updateValue", () => {
 				plugin: "leaderboards",
 				action: Actions.upsertValue,
 				arguments: [leaderboard.name, column.name, row.name, testUpdateValue],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new UpdateValueHandler(mockCommand);

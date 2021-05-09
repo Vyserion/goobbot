@@ -20,7 +20,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new GetLeaderboardHandler(command);
@@ -39,7 +39,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new GetLeaderboardHandler(command);
@@ -54,7 +54,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Columns, "getColumns").mockReturnValueOnce(Promise.resolve([]));
@@ -66,7 +66,7 @@ describe("plugins/leaderboards/actions/getLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [leaderboard.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new GetLeaderboardHandler(command);
@@ -83,22 +83,22 @@ This leaderboard has no content.`;
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const mockColumns: TColumn[] = [
 				{
 					id: 1,
 					name: "Test Column",
-					type: ColumnTypes.DATA
-				}
+					type: ColumnTypes.DATA,
+				},
 			];
 			jest.spyOn(Columns, "getColumns").mockReturnValueOnce(Promise.resolve(mockColumns));
 			const mockRows: TRow[] = [
 				{
 					id: 1,
-					name: "Test Row"
-				}
+					name: "Test Row",
+				},
 			];
 			const clonedMockRows = JSON.parse(JSON.stringify(mockRows));
 			jest.spyOn(Rows, "getRows").mockReturnValueOnce(Promise.resolve(mockRows));
@@ -106,8 +106,8 @@ This leaderboard has no content.`;
 				{
 					rowid: 1,
 					columnid: 1,
-					value: "10"
-				}
+					value: "10",
+				},
 			];
 			jest.spyOn(Values, "getValues").mockReturnValueOnce(Promise.resolve(mockValues));
 
@@ -116,7 +116,7 @@ This leaderboard has no content.`;
 				plugin: "leaderboards",
 				action: Actions.getLeaderboard,
 				arguments: [leaderboard.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new GetLeaderboardHandler(command);

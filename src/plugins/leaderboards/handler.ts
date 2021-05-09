@@ -13,7 +13,7 @@ import {
 	DeleteRowHandler,
 	UpdateValueHandler,
 	HelpHandler,
-	GetLeaderboardsHandler
+	GetLeaderboardsHandler,
 } from "./actions";
 
 export class LeaderboardHandler implements PluginHandlerStrategy {

@@ -2,7 +2,7 @@ export enum FishingActions {
 	showAll = "showall",
 	route = "route",
 	spot = "spot",
-	help = "help"
+	help = "help",
 }
 
 export interface FishingActionHandler {

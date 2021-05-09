@@ -10,7 +10,7 @@ describe("plugins/leaderboards/dao/rows", () => {
 	describe("getRow()", () => {
 		it("should return the row that is found", async () => {
 			const expectedRow: TRow = {
-				name: "test row"
+				name: "test row",
 			};
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve([expectedRow]));
 
@@ -31,11 +31,11 @@ describe("plugins/leaderboards/dao/rows", () => {
 		it("should return the rows that are found", async () => {
 			const expectedRows: TRow[] = [
 				{
-					name: "row one"
+					name: "row one",
 				},
 				{
-					name: "row two"
-				}
+					name: "row two",
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedRows));
 
@@ -61,7 +61,7 @@ describe("plugins/leaderboards/dao/rows", () => {
 			expect(querySpy).toHaveBeenCalledTimes(1);
 			expect(querySpy).toHaveBeenCalledWith(`INSERT INTO leaderboard_rows VALUES (DEFAULT, $1, $2)`, [
 				1,
-				"test row"
+				"test row",
 			]);
 		});
 	});
@@ -74,7 +74,7 @@ describe("plugins/leaderboards/dao/rows", () => {
 			expect(querySpy).toHaveBeenCalledTimes(1);
 			expect(querySpy).toHaveBeenCalledWith(`UPDATE leaderboard_rows SET name = ($2) WHERE ID = ($1)`, [
 				1,
-				"new row name"
+				"new row name",
 			]);
 		});
 	});
