@@ -20,7 +20,7 @@ export class GetLeaderboardsHandler implements ActionHandlerStrategy {
 
 		let response = ``;
 
-		leaderboards.forEach(l => {
+		leaderboards.forEach((l) => {
 			response += l.name;
 			response += `\n`;
 		});

@@ -13,7 +13,7 @@ describe("plugins/lists/actions/deleteList", () => {
 				plugin: "lists",
 				action: Actions.deleteList,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new DeleteListHandler(command);
@@ -29,7 +29,7 @@ describe("plugins/lists/actions/deleteList", () => {
 				plugin: "lists",
 				action: Actions.deleteList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));
@@ -48,11 +48,11 @@ describe("plugins/lists/actions/deleteList", () => {
 				plugin: "lists",
 				action: Actions.deleteList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(guildId));
 			const mockedList: TList = {
-				name: listName
+				name: listName,
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 			const querySpy = jest.spyOn(Lists, "deleteList").mockReturnValueOnce(Promise.resolve());

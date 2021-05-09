@@ -19,7 +19,7 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteColumn,
 				arguments: ["not enough arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new DeleteColumnHandler(command);
@@ -38,7 +38,7 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteColumn,
 				arguments: [leaderboardName, "A Column"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteColumnHandler(command);
@@ -53,7 +53,7 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(null));
@@ -64,7 +64,7 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteColumn,
 				arguments: [leaderboard.name, columnName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteColumnHandler(command);
@@ -80,13 +80,13 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const column: TColumn = {
 				id: 15,
 				name: "Test Column",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(Columns, "getColumn").mockReturnValueOnce(Promise.resolve(column));
 			const deleteValuesSpy = jest.spyOn(Values, "deleteValuesByColumn");
@@ -97,7 +97,7 @@ describe("plugins/leaderboards/actions/deleteColumn", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteColumn,
 				arguments: [leaderboard.name, column.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteColumnHandler(command);

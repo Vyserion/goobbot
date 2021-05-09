@@ -20,7 +20,7 @@ function parseArguments(inputs: string[]): string[] {
 
 	let buffer = "";
 
-	inputs.forEach(input => {
+	inputs.forEach((input) => {
 		if (input.startsWith("'")) {
 			const temp: string = input.substring(1, input.length);
 			buffer = temp;
@@ -58,7 +58,7 @@ export function createCommand(message: Message): TCommand {
 		plugin: parts[0],
 		originalMessage: message,
 		arguments: args,
-		action: parts[1] || undefined
+		action: parts[1] || undefined,
 	};
 
 	if (parts.length >= 3) {

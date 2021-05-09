@@ -20,7 +20,7 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteLeaderboard,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new DeleteLeaderboardHandler(command);
@@ -39,7 +39,7 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteLeaderboardHandler(command);
@@ -55,7 +55,7 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const deleteValuesSpy = jest.spyOn(Values, "deleteValuesByLeaderboard");
@@ -68,7 +68,7 @@ describe("plugins/leaderboards/actions/deleteLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.deleteLeaderboard,
 				arguments: [leaderboard.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new DeleteLeaderboardHandler(command);

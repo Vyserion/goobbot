@@ -13,7 +13,7 @@ import {
 	getLeaderboardMessage,
 	getLeaderboardsMessage,
 	upsertValueMessage,
-	showCommandMessage
+	showCommandMessage,
 } from "../config";
 import { TCommand } from "../../../core/typings";
 

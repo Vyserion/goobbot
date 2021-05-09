@@ -14,7 +14,7 @@ describe("plugins/lists/actions/renameList", () => {
 				plugin: "lists",
 				action: Actions.renameList,
 				arguments: [],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new RenameListHandler(command);
@@ -31,7 +31,7 @@ describe("plugins/lists/actions/renameList", () => {
 				plugin: "lists",
 				action: Actions.renameList,
 				arguments: [listName, newListName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));
@@ -50,13 +50,13 @@ describe("plugins/lists/actions/renameList", () => {
 				plugin: "lists",
 				action: Actions.renameList,
 				arguments: [listName, newListName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockImplementation(
 				(_guildId: number, name: string): Promise<TList> => {
 					return Promise.resolve({
-						name: name === listName ? listName : newListName
+						name: name === listName ? listName : newListName,
 					});
 				}
 			);
@@ -75,14 +75,14 @@ describe("plugins/lists/actions/renameList", () => {
 				plugin: "lists",
 				action: Actions.renameList,
 				arguments: [listName, newListName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getList").mockImplementation(
 				(_guildId: number, name: string): Promise<TList> => {
 					if (name === listName) {
 						return Promise.resolve({
-							name: listName
+							name: listName,
 						});
 					}
 					return Promise.resolve(null);

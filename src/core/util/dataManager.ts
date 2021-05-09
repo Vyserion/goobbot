@@ -13,10 +13,10 @@ export async function init(): Promise<void> {
 		host: process.env.POSTGRES_HOST,
 		database: process.env.POSTGRES_DB,
 		password: process.env.POSTGRES_PASSWORD,
-		port
+		port,
 	});
 
-	pool.on("error", err => {
+	pool.on("error", (err) => {
 		logger.error("Unexpected error on idle client", err);
 		process.exit(-1);
 	});
@@ -31,7 +31,7 @@ export async function init(): Promise<void> {
  * @param params The parameters for the query
  * @returns The QueryResult
  */
-async function doQuery<R extends {}>(query: string, params?: unknown[]): Promise<QueryResult<R>> {
+async function doQuery<R extends Record<string, unknown>>(query: string, params?: unknown[]): Promise<QueryResult<R>> {
 	let results: QueryResult<R>;
 
 	try {
@@ -51,7 +51,7 @@ async function doQuery<R extends {}>(query: string, params?: unknown[]): Promise
 			rowCount: 0,
 			oid: 0,
 			rows: [],
-			fields: []
+			fields: [],
 		};
 	}
 }
@@ -62,7 +62,7 @@ async function doQuery<R extends {}>(query: string, params?: unknown[]): Promise
  * @param params The parameters for the query
  * @returns The rows of the query response
  */
-export async function execQuery<R extends {}>(query: string, params?: unknown[]): Promise<R[]> {
+export async function execQuery<R extends Record<string, unknown>>(query: string, params?: unknown[]): Promise<R[]> {
 	logger.debug("Running query:");
 	logger.debug(query);
 

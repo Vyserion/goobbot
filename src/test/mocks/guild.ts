@@ -8,7 +8,7 @@ import { Guild } from "discord.js";
 export function createMockedGuild(id: string): Guild {
 	const mockedGuild = {} as Guild;
 
-	Object.keys(mockedGuild).forEach(key => {
+	Object.keys(mockedGuild).forEach((key) => {
 		mockedGuild[key] = undefined;
 	});
 

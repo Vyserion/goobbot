@@ -17,7 +17,7 @@ describe("plugins/leaderboards/actions/createLeaderboard", () => {
 				plugin: "leaderboards",
 				action: Actions.createLeaderboard,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new CreateLeaderboardHandler(command);
@@ -32,7 +32,7 @@ describe("plugins/leaderboards/actions/createLeaderboard", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 
@@ -41,7 +41,7 @@ describe("plugins/leaderboards/actions/createLeaderboard", () => {
 				plugin: "leadeboards",
 				action: Actions.createLeaderboard,
 				arguments: [leaderboard.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateLeaderboardHandler(command);
@@ -61,7 +61,7 @@ describe("plugins/leaderboards/actions/createLeaderboard", () => {
 				plugin: "leadeboards",
 				action: Actions.createLeaderboard,
 				arguments: [leaderboardName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateLeaderboardHandler(command);

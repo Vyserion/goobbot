@@ -8,7 +8,7 @@ import {
 	updateColumnName,
 	updateColumnType,
 	deleteColumn,
-	deleteColumns
+	deleteColumns,
 } from "./columns";
 
 describe("plugins/leaderboards/dao/columns", () => {
@@ -20,7 +20,7 @@ describe("plugins/leaderboards/dao/columns", () => {
 		it("should return the columns that are found", async () => {
 			const expectedColumn: TColumn = {
 				name: "test",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve([expectedColumn]));
 
@@ -42,12 +42,12 @@ describe("plugins/leaderboards/dao/columns", () => {
 			const expectedColumns: TColumn[] = [
 				{
 					name: "test one",
-					type: ColumnTypes.DATA
+					type: ColumnTypes.DATA,
 				},
 				{
 					name: "test two",
-					type: ColumnTypes.DATA
-				}
+					type: ColumnTypes.DATA,
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedColumns));
 
@@ -74,7 +74,7 @@ describe("plugins/leaderboards/dao/columns", () => {
 			expect(querySpy).toHaveBeenCalledWith(`INSERT INTO leaderboard_columns VALUES (DEFAULT, $1, $2, $3)`, [
 				1,
 				"test",
-				ColumnTypes.DATA
+				ColumnTypes.DATA,
 			]);
 		});
 	});

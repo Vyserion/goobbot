@@ -18,7 +18,7 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				plugin: "leaderboards",
 				action: Actions.createRow,
 				arguments: ["not enough arguments"],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new CreateRowHandler(command);
@@ -37,7 +37,7 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				plugin: "leaderboards",
 				action: Actions.createRow,
 				arguments: [leaderboardName, "A Row"],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateRowHandler(command);
@@ -52,11 +52,11 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			const row: TRow = {
-				name: "Test Row"
+				name: "Test Row",
 			};
 			jest.spyOn(Rows, "getRow").mockReturnValue(Promise.resolve(row));
 
@@ -65,7 +65,7 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				plugin: "leaderboards",
 				action: Actions.createRow,
 				arguments: [leaderboard.name, row.name],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateRowHandler(command);
@@ -81,7 +81,7 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				name: "Test Leaderboard",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(Leaderboards, "getLeaderboard").mockReturnValueOnce(Promise.resolve(leaderboard));
 			jest.spyOn(Rows, "getRow").mockReturnValue(Promise.resolve(null));
@@ -93,7 +93,7 @@ describe("plugins/leaderboards/actions/createRow", () => {
 				plugin: "leaderboards",
 				action: Actions.createRow,
 				arguments: [leaderboard.name, rowName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 
 			const actionHandler = new CreateRowHandler(command);

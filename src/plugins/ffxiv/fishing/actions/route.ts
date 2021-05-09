@@ -22,7 +22,7 @@ export class RouteHandler implements FishingActionHandler {
 
 		let isValid = true;
 		const invalidLocations: string[] = [];
-		locations.forEach(location => {
+		locations.forEach((location) => {
 			const validLocation = isALocation(location);
 			if (!validLocation) {
 				isValid = false;
@@ -39,7 +39,7 @@ export class RouteHandler implements FishingActionHandler {
 			return;
 		}
 
-		locations.forEach(locationName => {
+		locations.forEach((locationName) => {
 			try {
 				const locationKey = getLocationKeyFromInput(locationName);
 				const details = embedPrintLocation(locationKey);

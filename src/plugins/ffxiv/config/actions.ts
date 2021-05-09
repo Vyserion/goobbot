@@ -1,6 +1,6 @@
 export enum Actions {
 	fishing = "fishing",
-	help = "help"
+	help = "help",
 }
 
 export interface ActionHandlerStrategy {

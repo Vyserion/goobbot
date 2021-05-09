@@ -13,7 +13,7 @@ describe("plugins/lists/actions/createList", () => {
 				plugin: "lists",
 				action: Actions.createList,
 				arguments: [],
-				originalMessage: null
+				originalMessage: null,
 			};
 
 			const actionHandler = new CreateListHandler(command);
@@ -29,11 +29,11 @@ describe("plugins/lists/actions/createList", () => {
 				plugin: "lists",
 				action: Actions.createList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const mockedList: TList = {
-				name: "list"
+				name: "list",
 			};
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 
@@ -51,7 +51,7 @@ describe("plugins/lists/actions/createList", () => {
 				plugin: "lists",
 				action: Actions.createList,
 				arguments: [listName],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(guildId));
 			jest.spyOn(Lists, "getList").mockReturnValueOnce(Promise.resolve(null));

@@ -14,7 +14,7 @@ describe("plugins/lists/actions/getLists", () => {
 				plugin: "lists",
 				action: Actions.addValue,
 				arguments: [],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve([]));
@@ -31,16 +31,16 @@ describe("plugins/lists/actions/getLists", () => {
 				plugin: "lists",
 				action: Actions.addValue,
 				arguments: [],
-				originalMessage: mockedMessage
+				originalMessage: mockedMessage,
 			};
 			jest.spyOn(Guilds, "getGuildId").mockReturnValueOnce(Promise.resolve(1));
 			const lists: TList[] = [
 				{
-					name: "My List"
+					name: "My List",
 				},
 				{
-					name: "List Two"
-				}
+					name: "List Two",
+				},
 			];
 			jest.spyOn(Lists, "getLists").mockReturnValueOnce(Promise.resolve(lists));
 

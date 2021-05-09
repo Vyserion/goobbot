@@ -40,25 +40,22 @@ export const embedPrintLocation = (location: string): MessageEmbed => {
 		.join("\n");
 	const spectralIntuitionValue = `Bait: ${info.spectralIntuitionBait}\nIntuition Fish: ${info.spectralIntuitionFish}\nTriggers:\n${spectralIntuitionTriggers}`;
 
-	const embed = new MessageEmbed()
-		.setColor("AQUA")
-		.setTitle(info.name)
-		.addFields(
-			{
-				name: "Spectral Bait",
-				value: spectralBaitValue
-			},
-			{
-				name: "Fisherman's Intuition",
-				value: intuitionValue,
-				inline: true
-			},
-			{
-				name: "Spectral Intuition",
-				value: spectralIntuitionValue,
-				inline: true
-			}
-		);
+	const embed = new MessageEmbed().setColor("AQUA").setTitle(info.name).addFields(
+		{
+			name: "Spectral Bait",
+			value: spectralBaitValue,
+		},
+		{
+			name: "Fisherman's Intuition",
+			value: intuitionValue,
+			inline: true,
+		},
+		{
+			name: "Spectral Intuition",
+			value: spectralIntuitionValue,
+			inline: true,
+		}
+	);
 
 	return embed;
 };

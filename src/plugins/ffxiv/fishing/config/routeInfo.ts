@@ -16,7 +16,7 @@ export const LocationNames = [
 	...GaladionBayAliases,
 	...NorthernStraitAliases,
 	...SouthernStraitAliases,
-	...RhotanoSeaAliases
+	...RhotanoSeaAliases,
 ];
 
 /**
@@ -77,10 +77,10 @@ export const FishingLocations: Record<string, FishingLocation> = {
 		spectralIntuitionTriggers: [
 			`Heavenskey|${OceanBait.Ragworm}`,
 			"Heavenskey",
-			`Navigator's Print|${OceanBait.Krill}`
+			`Navigator's Print|${OceanBait.Krill}`,
 		],
 		spectralIntuitionBait: SpectralTriggerBait.Glowworm,
-		spectralIntuitionFish: "Shooting Star"
+		spectralIntuitionFish: "Shooting Star",
 	},
 	NorthernStrait: {
 		name: "The Northern Strait of Merlthor",
@@ -91,7 +91,7 @@ export const FishingLocations: Record<string, FishingLocation> = {
 		spectralTriggerFish: "Spectral Sea Bo",
 		spectralIntuitionTriggers: [`Gugrusaurus|${OceanBait.PlumpWorm}`, `Gugrusaurus|${OceanBait.PlumpWorm}`],
 		spectralIntuitionBait: SpectralTriggerBait.HeavySteelJig,
-		spectralIntuitionFish: "Elasmosaurus"
+		spectralIntuitionFish: "Elasmosaurus",
 	},
 	SouthernStrait: {
 		name: "The Southern Strait of Merlthor",
@@ -103,10 +103,10 @@ export const FishingLocations: Record<string, FishingLocation> = {
 		spectralIntuitionTriggers: [
 			`Hi-Aetherlouse|${OceanBait.Ragworm}`,
 			"Great Grandmarlin (Mooched)",
-			"Great Grandmarlin"
+			"Great Grandmarlin",
 		],
 		spectralIntuitionBait: SpectralTriggerBait.ShrimpCageFeeder,
-		spectralIntuitionFish: "Coral Manta"
+		spectralIntuitionFish: "Coral Manta",
 	},
 	RhotanoSea: {
 		name: "Rhotano Sea",
@@ -117,6 +117,6 @@ export const FishingLocations: Record<string, FishingLocation> = {
 		spectralTriggerFish: "Spectral Bass",
 		spectralIntuitionTriggers: [`Silencer|${OceanBait.PlumpWorm}`, `Crimson Monkfish|${OceanBait.PlumpWorm}`],
 		spectralIntuitionBait: SpectralTriggerBait.RatTail,
-		spectralIntuitionFish: "Stonescale"
-	}
+		spectralIntuitionFish: "Stonescale",
+	},
 };

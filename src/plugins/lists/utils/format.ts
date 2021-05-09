@@ -11,7 +11,7 @@ export function prettyPrintList(list: TList): string {
 	if (list.values.length === 0) {
 		output += "This list has no content.";
 	} else {
-		list.values.forEach(v => {
+		list.values.forEach((v) => {
 			output += `${v.value}\n`;
 		});
 	}

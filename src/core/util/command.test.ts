@@ -20,7 +20,7 @@ function createMockMessageContent(addAction: boolean, addArguments: boolean, arg
 
 	if (addArguments) {
 		if (argumentsToAdd !== undefined) {
-			argumentsToAdd.forEach(argument => {
+			argumentsToAdd.forEach((argument) => {
 				content += ` ${argument}`;
 			});
 		}
@@ -32,7 +32,7 @@ function createMockMessageContent(addAction: boolean, addArguments: boolean, arg
 describe("core/util/command", () => {
 	beforeEach(() => {
 		process.env = {
-			BOTPREFIX: "!"
+			BOTPREFIX: "!",
 		};
 	});
 
@@ -118,7 +118,7 @@ describe("core/util/command", () => {
 			const expectedSecondArgument = "argumentTwo";
 			const messageContent = createMockMessageContent(true, true, [
 				expectedFirstArgument,
-				expectedSecondArgument
+				expectedSecondArgument,
 			]);
 
 			const message = createMockedMessage(messageContent);
@@ -141,7 +141,7 @@ describe("core/util/command", () => {
 			const messageContent = createMockMessageContent(true, true, [
 				expectedFirstArgument,
 				escapedSecondArgument,
-				expectedThirdArgument
+				expectedThirdArgument,
 			]);
 
 			const message = createMockedMessage(messageContent);

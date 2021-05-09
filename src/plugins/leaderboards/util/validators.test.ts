@@ -16,7 +16,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 2);
 			expect(result).toBeTruthy();
@@ -26,7 +26,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two", "three"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 2);
 			expect(result).toBeTruthy();
@@ -36,7 +36,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 2);
 			expect(result).toBeFalsy();
@@ -46,7 +46,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 1, 3);
 			expect(result).toBeTruthy();
@@ -56,7 +56,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 2, 3);
 			expect(result).toBeFalsy();
@@ -66,7 +66,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 2, 3);
 			expect(result).toBeFalsy();
@@ -76,7 +76,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two", "three", "four"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 1, 3);
 			expect(result).toBeFalsy();
@@ -86,7 +86,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two", "three", "four"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 1, 3);
 			expect(result).toBeFalsy();
@@ -96,7 +96,7 @@ describe("plugins/leaderboards/util/validators", () => {
 			const command: TCommand = {
 				plugin: "string",
 				arguments: ["one", "two", "three"],
-				originalMessage: null
+				originalMessage: null,
 			};
 			const result = commandHasCorrectArgumentLength(command, 1, 3);
 			expect(result).toBeTruthy();
@@ -109,7 +109,7 @@ describe("plugins/leaderboards/util/validators", () => {
 				name: "test",
 				columns: [],
 				rows: [],
-				values: []
+				values: [],
 			};
 			jest.spyOn(LeaderboardsDao, "getLeaderboard").mockReturnValueOnce(Promise.resolve(mockLeaderboard));
 
@@ -129,7 +129,7 @@ describe("plugins/leaderboards/util/validators", () => {
 		it("should return true when the column exists", async () => {
 			const mockColumn: TColumn = {
 				name: "test",
-				type: ColumnTypes.DATA
+				type: ColumnTypes.DATA,
 			};
 			jest.spyOn(ColumnsDao, "getColumn").mockReturnValueOnce(Promise.resolve(mockColumn));
 
@@ -148,7 +148,7 @@ describe("plugins/leaderboards/util/validators", () => {
 	describe("rowExists()", () => {
 		it("should return true when the row exists", async () => {
 			const mockRow: TRow = {
-				name: "test"
+				name: "test",
 			};
 			jest.spyOn(RowsDao, "getRow").mockReturnValueOnce(Promise.resolve(mockRow));
 

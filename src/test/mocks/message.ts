@@ -8,7 +8,7 @@ import { Message } from "discord.js";
 export function createMockedMessage(content?: string): Message {
 	const mockedMessage = {} as Message;
 
-	Object.keys(mockedMessage).forEach(key => {
+	Object.keys(mockedMessage).forEach((key) => {
 		mockedMessage[key] = undefined;
 	});
 

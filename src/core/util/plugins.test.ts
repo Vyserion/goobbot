@@ -3,7 +3,7 @@ import { isPluginMessage } from "./plugins";
 describe("core/util/plugins", () => {
 	beforeEach(() => {
 		process.env = {
-			BOTPREFIX: "!"
+			BOTPREFIX: "!",
 		};
 	});
 

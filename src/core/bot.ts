@@ -20,8 +20,8 @@ async function start(): Promise<void> {
  */
 async function printWelcomeMessage(): Promise<void> {
 	logger.info("Printing welcome messages");
-	client.guilds.cache.forEach(guild => {
-		guild.channels.cache.forEach(channel => {
+	client.guilds.cache.forEach((guild) => {
+		guild.channels.cache.forEach((channel) => {
 			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test
 			if (channel.name === "bot_test") {
 				const chan: TextChannel = client.channels.cache.get(channel.id) as TextChannel;

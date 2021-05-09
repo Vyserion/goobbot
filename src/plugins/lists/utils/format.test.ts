@@ -22,7 +22,7 @@ describe("plugins/lists/utils/format", () => {
 		it("should format the output correctly with no values", () => {
 			const list: TList = {
 				name: "My List",
-				values: []
+				values: [],
 			};
 			const output = prettyPrintList(list);
 			expect(output).toEqual(expectedEmptyList);
@@ -33,16 +33,14 @@ describe("plugins/lists/utils/format", () => {
 				name: "My List",
 				values: [
 					{
-						// eslint-disable-next-line @typescript-eslint/camelcase
 						list_id: 1,
-						value: "one"
+						value: "one",
 					},
 					{
-						// eslint-disable-next-line @typescript-eslint/camelcase
 						list_id: 2,
-						value: "two"
-					}
-				]
+						value: "two",
+					},
+				],
 			};
 			const output = prettyPrintList(list);
 			expect(output).toEqual(expectedFilledList);

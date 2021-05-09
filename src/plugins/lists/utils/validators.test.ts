@@ -18,10 +18,9 @@ describe("plugins/lists/utils/validators", () => {
 		it("should return true when the list exists", async () => {
 			const mockedList: TList = {
 				id: 1,
-				// eslint-disable-next-line @typescript-eslint/camelcase
 				guild_id: 1,
 				name: "mock list",
-				values: []
+				values: [],
 			};
 			jest.spyOn(ListsDAO, "getList").mockReturnValueOnce(Promise.resolve(mockedList));
 

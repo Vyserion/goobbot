@@ -6,7 +6,7 @@ export enum Actions {
 	addValue = "add",
 	removeValue = "remove",
 
-	getList = "show"
+	getList = "show",
 }
 
 export interface ActionHandlerStrategy {

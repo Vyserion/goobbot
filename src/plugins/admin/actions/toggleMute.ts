@@ -22,7 +22,7 @@ export class ToggleMuteHandler implements ActionHandlerStrategy {
 
 		const state = this.command.action === Actions.muteAll;
 
-		channel.members.forEach(activeUser => {
+		channel.members.forEach((activeUser) => {
 			const { voice } = activeUser;
 			voice.setMute(state);
 		});

@@ -8,7 +8,7 @@ import {
 	addValueMessage,
 	removeValueMessage,
 	getListMessage,
-	getListsMessage
+	getListsMessage,
 } from "../config/helpMessages";
 
 export class HelpHandler implements ActionHandlerStrategy {

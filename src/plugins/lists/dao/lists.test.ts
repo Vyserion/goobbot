@@ -12,18 +12,16 @@ describe("plugins/lists/dao/lists", () => {
 			const expectedLists: TList[] = [
 				{
 					id: 1,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					guild_id: 1,
 					name: "list1",
-					values: []
+					values: [],
 				},
 				{
 					id: 2,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					guild_id: 1,
 					name: "list2",
-					values: []
-				}
+					values: [],
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedLists));
 
@@ -46,11 +44,10 @@ describe("plugins/lists/dao/lists", () => {
 			const expectedLists: TList[] = [
 				{
 					id: 1,
-					// eslint-disable-next-line @typescript-eslint/camelcase
 					guild_id: 1,
 					name: "list1",
-					values: []
-				}
+					values: [],
+				},
 			];
 			jest.spyOn(DataManager, "execQuery").mockReturnValueOnce(Promise.resolve(expectedLists));
 
@@ -98,7 +95,7 @@ describe("plugins/lists/dao/lists", () => {
 			expect(querySpy).toHaveBeenCalledTimes(1);
 			expect(querySpy).toHaveBeenCalledWith(`DELETE FROM lists WHERE guild_id = $1 AND name LIKE ($2)`, [
 				1,
-				"test"
+				"test",
 			]);
 		});
 	});

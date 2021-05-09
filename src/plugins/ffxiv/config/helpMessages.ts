@@ -8,13 +8,10 @@ ${process.env.BOTPREFIX}ff fishing`;
  * @returns A help embed for the ff plugins
  */
 export const getPluginHelpMessage = (): MessageEmbed => {
-	const embed = new MessageEmbed()
-		.setColor("GREEN")
-		.setTitle("FF Plugin")
-		.addFields({
-			name: "Fishing",
-			value: fishingPluginMessage
-		});
+	const embed = new MessageEmbed().setColor("GREEN").setTitle("FF Plugin").addFields({
+		name: "Fishing",
+		value: fishingPluginMessage,
+	});
 
 	return embed;
 };
