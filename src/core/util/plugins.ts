@@ -1,9 +1,10 @@
-import { Message } from "discord.js";
+import { Message, MessageReaction, TextChannel, User } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
 import { Plugins } from "../config";
 import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } from "../../plugins";
 import { AdminHandler } from "../../plugins/admin/handler";
+import { assignRoles as assignFFXIVRoles } from "../../plugins/ffxiv/roleAssigner";
 
 /**
  * Determines if a message is for a plugin.
@@ -47,4 +48,18 @@ export async function processMessage(message: Message): Promise<void> {
 
 	const pluginHandler: PluginHandlerStrategy = getPluginHandlerStrategy(command);
 	await pluginHandler.handleMessage();
+}
+
+const FFXIV_CATGEGORY_ID = "791000730378436648";
+
+export async function processMessageReaction(
+	message: Message,
+	reaction: MessageReaction,
+	user: User,
+	isAdd: boolean
+): Promise<void> {
+	const channelParentId = (message.channel as TextChannel).parentID;
+	if (channelParentId === FFXIV_CATGEGORY_ID) {
+		assignFFXIVRoles(message, reaction, user, isAdd);
+	}
 }

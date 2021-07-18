@@ -19,7 +19,8 @@
     "pre-commit": "lint-staged",
     "lint": "eslint . --ext ts --ext js",
     "lint-fix": "eslint . --ext ts --ext js --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier": "prettier -w ./src/**/*.ts"
   },
   "repository": {
     "type": "git",
