@@ -1,5 +1,5 @@
-import { Client, Message, TextChannel } from "discord.js";
-import { processMessage, isPluginMessage } from "./util/plugins";
+import { Client, Message, MessageReaction, TextChannel, User } from "discord.js";
+import { processMessage, isPluginMessage, processMessageReaction } from "./util/plugins";
 import logger from "./util/logger";
 import { init } from "./util/dataManager";
 
@@ -61,6 +61,34 @@ function onMessage(message: Message): void {
 }
 
 /**
+ * Response to a reaction being added to a message.
+ * @param reaction The reaction being added
+ * @param user The user adding the reaction
+ */
+async function onMessageReactionAdd(reaction: MessageReaction, user: User): Promise<void> {
+	let { message } = reaction;
+	if (reaction.message.partial) {
+		message = await reaction.message.fetch();
+	}
+
+	processMessageReaction(message, reaction, user, true);
+}
+
+/**
+ * Responde to a reaction being removed from a message.
+ * @param reaction The reaction being removed
+ * @param user The user removing the reaction
+ */
+async function onMessageReactionRemove(reaction: MessageReaction, user: User): Promise<void> {
+	let { message } = reaction;
+	if (reaction.message.partial) {
+		message = await reaction.message.fetch();
+	}
+
+	processMessageReaction(message, reaction, user, false);
+}
+
+/**
  * Registers discord actions against the created client.
  */
 async function registerActions(): Promise<void> {
@@ -68,6 +96,8 @@ async function registerActions(): Promise<void> {
 
 	await client.on("ready", onReady);
 	await client.on("message", onMessage);
+	await client.on("messageReactionAdd", onMessageReactionAdd);
+	await client.on("messageReactionRemove", onMessageReactionRemove);
 }
 
 /**
@@ -75,7 +105,9 @@ async function registerActions(): Promise<void> {
  * External function containing all startup logic.
  */
 export async function startup(): Promise<void> {
-	client = new Client();
+	client = new Client({
+		partials: ["MESSAGE", "CHANNEL", "REACTION"],
+	});
 
 	await registerActions();
 	await start();
