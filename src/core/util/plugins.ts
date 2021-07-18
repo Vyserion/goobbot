@@ -60,6 +60,6 @@ export async function processMessageReaction(
 ): Promise<void> {
 	const channelParentId = (message.channel as TextChannel).parentID;
 	if (channelParentId === FFXIV_CATGEGORY_ID) {
-		assignFFXIVRoles(message, reaction, user, isAdd);
+		await assignFFXIVRoles(message, reaction, user, isAdd);
 	}
 }
