@@ -1,4 +1,4 @@
-import { Message, MessageReaction, TextChannel, User } from "discord.js";
+import { Message, MessageReaction, User } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
 import { Plugins } from "../config";
