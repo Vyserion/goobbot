@@ -16,10 +16,8 @@
     "test:ci": "jest --silent --maxWorkers=2",
     "test:log": "jest",
     "test:watch": "jest -w --silent",
-    "pre-commit": "lint-staged",
     "lint": "eslint . --ext ts --ext js",
     "lint-fix": "eslint . --ext ts --ext js --fix",
-    "prepare": "husky install",
     "prettier": "prettier -w ./src/**/*.ts"
   },
   "repository": {
@@ -54,7 +52,6 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.4.0",
-    "husky": "6.0.0",
     "jest": "26.6.3",
     "lint-staged": "11.0.0",
     "prettier": "2.2.1",
