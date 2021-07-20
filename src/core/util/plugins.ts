@@ -50,16 +50,18 @@ export async function processMessage(message: Message): Promise<void> {
 	await pluginHandler.handleMessage();
 }
 
-const FFXIV_CATGEGORY_ID = "791000730378436648";
-
+/**
+ * Processes a given message reaction by passing it to plugins.
+ * @param message The message to pass
+ * @param reaction The reaction to the message
+ * @param user The user
+ * @param isAdd Flag to add or remove
+ */
 export async function processMessageReaction(
 	message: Message,
 	reaction: MessageReaction,
 	user: User,
 	isAdd: boolean
 ): Promise<void> {
-	const channelParentId = (message.channel as TextChannel).parentID;
-	if (channelParentId === FFXIV_CATGEGORY_ID) {
-		await assignFFXIVRoles(message, reaction, user, isAdd);
-	}
+	await assignFFXIVRoles(message, reaction, user, isAdd);
 }
