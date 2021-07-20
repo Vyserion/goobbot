@@ -3,6 +3,7 @@ import logger from "../../core/util/logger";
 
 const ROLE_MESSAGE_ID = "866370250244227122";
 
+const FF_ROLE_ID = "700396763009515560";
 const SPROUT_ROLE_ID = "866364336607985705";
 const RAIDER_ROLE_ID = "866370413554434088";
 const CRAFTER_ROLE_ID = "866370418508038154";
@@ -34,10 +35,12 @@ export async function assignRoles(
 			roleId = CRAFTER_ROLE_ID;
 		}
 
+		const ffRoleToApply = message.guild.roles.cache.find((role) => role.id === FF_ROLE_ID);
 		const roleToApply = message.guild.roles.cache.find((role) => role.id === roleId);
 		const guildMember = message.guild.members.cache.find((member) => member.id === user.id);
-		if (roleToApply && guildMember) {
+		if (ffRoleToApply && roleToApply && guildMember) {
 			try {
+				await guildMember.roles.add(ffRoleToApply);
 				if (isAdd) {
 					await guildMember.roles.add(roleToApply);
 				} else {
