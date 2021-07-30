@@ -12,7 +12,8 @@ export class ShowCode implements ActionHandlerStrategy {
 	async handleAction(): Promise<boolean> {
 		const code = this.command.arguments[0];
 		const embed = new MessageEmbed().setColor("AQUA").setTitle("Among Us Lobby").addField("Code", code);
-		this.command.originalMessage.channel.send(embed);
+		// TODO: FIX THIS
+		this.command.originalMessage.channel.send(embed.toString());
 		return true;
 	}
 }
