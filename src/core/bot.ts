@@ -1,8 +1,9 @@
-import { Client, Message, TextChannel } from "discord.js";
+import { Client, Message } from "discord.js";
 import { processMessage, isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
 import { init } from "./util/dataManager";
 import { intents, partials } from "./config";
+import { onGuildMemberAdd, onInteraction, onReady } from "./events";
 
 let client: Client;
 
@@ -14,38 +15,6 @@ async function start(): Promise<void> {
 	logger.info("Logging into Discord API...");
 	await client.login(process.env.APP_KEY);
 	await init();
-}
-
-/**
- * Prints the bot welcome message to any available guilds.
- */
-async function printWelcomeMessage(): Promise<void> {
-	logger.info("Printing welcome messages");
-	client.guilds.cache.forEach((guild) => {
-		guild.channels.cache.forEach((channel) => {
-			// TODO: Some setup here for known 'welcome' channels, currently only connects to bot test
-			if (channel.name === "bot_test") {
-				const chan: TextChannel = client.channels.cache.get(channel.id) as TextChannel;
-				chan.send(`Hello, ${guild.name}!`);
-			}
-		});
-	});
-}
-
-/**
- * Contains a set of instructions to perform when the discord connection is ready.
- * Optionally prints the welcome message.
- */
-function onReady(): void {
-	const showWelcomeMessage = process.env.SEND_WELCOME_MESSAGE === "true";
-
-	if (showWelcomeMessage) {
-		printWelcomeMessage();
-	} else {
-		logger.debug("Bypassing channel welcome messages");
-	}
-
-	logger.info("VyBot is ready!");
 }
 
 /**
@@ -62,43 +31,16 @@ function onMessage(message: Message): void {
 }
 
 /**
- * Response to a reaction being added to a message.
- * @param reaction The reaction being added
- * @param user The user adding the reaction
- */
-// async function onMessageReactionAdd(reaction: MessageReaction, user: User): Promise<void> {
-// 	let { message } = reaction;
-// 	if (reaction.message.partial) {
-// 		message = await reaction.message.fetch();
-// 	}
-
-// processMessageReaction(message, reaction, user, true);
-// }
-
-/**
- * Responde to a reaction being removed from a message.
- * @param reaction The reaction being removed
- * @param user The user removing the reaction
- */
-// async function onMessageReactionRemove(reaction: MessageReaction, user: User): Promise<void> {
-// let { message } = reaction;
-// if (reaction.message.partial) {
-// 	message = await reaction.message.fetch();
-// }
-
-// processMessageReaction(message, reaction, user, false);
-// }
-
-/**
- * Registers discord actions against the created client.
+ * Registers discord events against the created client.
  */
 async function registerActions(): Promise<void> {
 	logger.info("Registering Discord API actions...");
-
+	// Legacy
+	await client.on("messageCreate", onMessage);
+	// New
+	await client.on("guildMemberAdd", onGuildMemberAdd);
+	await client.on("interactionCreate", onInteraction);
 	await client.on("ready", onReady);
-	await client.on("message", onMessage);
-	// await client.on("messageReactionAdd", onMessageReactionAdd);
-	// await client.on("messageReactionRemove", onMessageReactionRemove);
 }
 
 /**

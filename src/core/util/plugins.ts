@@ -1,10 +1,9 @@
-import { Message, MessageReaction, User } from "discord.js";
+import { ApplicationCommandData, Client, Message } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
-import { Plugins } from "../config";
+import { activeSlashCommandPlugins, GUILD_ID, Plugins } from "../config";
 import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } from "../../plugins";
 import { AdminHandler } from "../../plugins/admin/handler";
-import { assignRoles as assignFFXIVRoles } from "../../plugins/ffxiv/roleAssigner";
 
 /**
  * Determines if a message is for a plugin.
@@ -51,17 +50,36 @@ export async function processMessage(message: Message): Promise<void> {
 }
 
 /**
- * Processes a given message reaction by passing it to plugins.
- * @param message The message to pass
- * @param reaction The reaction to the message
- * @param user The user
- * @param isAdd Flag to add or remove
+ * Load the list of commands from a specific slash command plugin.
+ * This will look for a file names slashCommands within the folderName provided.
+ * @param folderName The name of the plugin folder
+ * @returns The list of commands from the plugin
  */
-export async function processMessageReaction(
-	message: Message,
-	reaction: MessageReaction,
-	user: User,
-	isAdd: boolean
-): Promise<void> {
-	await assignFFXIVRoles(message, reaction, user, isAdd);
+function loadPluginCommands(folderName: string): ApplicationCommandData[] {
+	// eslint-disable-next-line global-require, @typescript-eslint/no-var-requires, import/no-dynamic-require
+	const file = require(`../../plugins/${folderName}/slashCommands.js`);
+	return file.slashCommands as ApplicationCommandData[];
+}
+
+/**
+ * Register all slash commands for all activated plugins.
+ * If debug is enabled, will enable them for the current guild. If not, will set them server-wide.
+ * @param client The client to register the commands against
+ */
+export async function registerSlashCommands(client: Client): Promise<void> {
+	await client.application?.fetch();
+
+	let allCommands: ApplicationCommandData[] = [];
+	activeSlashCommandPlugins.forEach(async (pluginFolderName: string) => {
+		const pluginCommandsFile = loadPluginCommands(pluginFolderName);
+		allCommands = allCommands.concat(pluginCommandsFile);
+	});
+
+	if (process.env.DEBUG) {
+		await client.guilds.cache.get(GUILD_ID)?.commands.set([]);
+		await client.guilds.cache.get(GUILD_ID)?.commands.set(allCommands);
+	} else {
+		await client.application?.commands.set([]);
+		await client.application?.commands.set(allCommands);
+	}
 }

@@ -5,4 +5,4 @@ import { BitFieldResolvable, IntentsString } from "discord.js";
  * The full list of intents can be found at:
  * https://discord.com/developers/docs/topics/gateway#list-of-intents
  */
-export const intents: BitFieldResolvable<IntentsString, number> = ["GUILDS", "GUILD_MESSAGES"];
+export const intents: BitFieldResolvable<IntentsString, number> = ["GUILDS", "GUILD_MEMBERS", "GUILD_MESSAGES"];

@@ -4,3 +4,5 @@ export enum Plugins {
 	ff = "ff",
 	admin = "admin",
 }
+
+export const activeSlashCommandPlugins: string[] = ["role-assigner"];
