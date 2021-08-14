@@ -18,9 +18,19 @@ export const rulesList = `1. Repect everyone in this server, don't cause problem
 /**
  * Message used for selecting a role.
  */
-export const roleSelectMessage = "Pick a role or two from the buttons below.";
+export const giveRoleSelectMessage = "Pick a role or two from the buttons below.";
 
 /**
  * Message used for when a user has selected a role.
  */
-export const roleSelectedMessage = "All done! You can add more roles if you like.";
+export const giveRoleSelectedMessage = "All done! You can add more roles if you like.";
+
+/**
+ * Message used for selecting a role to remove.
+ */
+export const removeRoleSelectMessage = "Pick a role to remove from the buttons below.";
+
+/**
+ * Message used for when a user has removed a role.
+ */
+export const removeRoleSelectedMessage = "All done! Role removed.";

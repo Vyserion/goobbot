@@ -6,13 +6,13 @@ import {
 	MessageActionRow,
 	MessageButton,
 } from "discord.js";
-import { CrafterRole, RaiderRole, roleSelectedMessage, roleSelectMessage } from "../config";
+import { CrafterRole, RaiderRole, giveRoleSelectedMessage, giveRoleSelectMessage } from "../config";
 import { DiscordRole } from "../typings";
 
 /**
  * The role command key.
  */
-export const roleCommand = "role";
+export const giveRoleCommand = "giverole";
 
 /**
  * Gather the buttons for each of the available roles
@@ -56,17 +56,17 @@ const applyRoles = async (interaction: ButtonInteraction): Promise<void> => {
 		guildMember.roles.add(serverRole.id);
 	}
 
-	await interaction.update({ content: roleSelectedMessage });
+	await interaction.update({ content: giveRoleSelectedMessage });
 };
 
 /**
  * Handle role slash commands, assigning the given role to the user if it does not exist.
  * @param interaction The user interaction from the slash command
  */
-export const handleRoleCommand = async (interaction: CommandInteraction): Promise<void> => {
+export const handleGiveRoleCommand = async (interaction: CommandInteraction): Promise<void> => {
 	const messageAction = new MessageActionRow().addComponents(getRoleButtons());
 	const messageOptions: InteractionReplyOptions = {
-		content: roleSelectMessage,
+		content: giveRoleSelectMessage,
 		ephemeral: true,
 		components: [messageAction],
 	};
