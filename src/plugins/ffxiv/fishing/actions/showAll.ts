@@ -16,7 +16,8 @@ export class ShowAllRoutesHandler implements FishingActionHandler {
 		allLocations.forEach((locationName) => {
 			try {
 				const details = embedPrintLocation(locationName);
-				this.command.originalMessage.channel.send(details);
+				// TODO: FIX THIS
+				this.command.originalMessage.channel.send(details.toString());
 			} catch (error) {
 				logger.error("Could not parse fishing location", locationName);
 			}

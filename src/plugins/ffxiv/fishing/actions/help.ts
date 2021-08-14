@@ -20,6 +20,7 @@ export class HelpHandler implements ActionHandlerStrategy {
 	 * @param text The text to send.
 	 */
 	postMessage(text: MessageEmbed): void {
-		this.command.originalMessage.channel.send(text);
+		// TODO: Fix this
+		this.command.originalMessage.channel.send(text.toString());
 	}
 }

@@ -29,7 +29,8 @@ export class SpotHandler implements FishingActionHandler {
 		try {
 			const locationKey = getLocationKeyFromInput(locationArgs[0]);
 			const details = embedPrintLocation(locationKey);
-			this.command.originalMessage.channel.send(details);
+			// TODO: Fix this
+			this.command.originalMessage.channel.send(details.toString());
 		} catch (error) {
 			logger.error("Could not parse fishing location", locationArgs[0]);
 		}

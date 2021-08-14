@@ -43,7 +43,8 @@ export class RouteHandler implements FishingActionHandler {
 			try {
 				const locationKey = getLocationKeyFromInput(locationName);
 				const details = embedPrintLocation(locationKey);
-				this.command.originalMessage.channel.send(details);
+				// TODO: FIX THIS
+				this.command.originalMessage.channel.send(details.toString());
 			} catch (error) {
 				logger.error("Could not parse fishing location", locationName);
 			}
