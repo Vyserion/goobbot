@@ -12,7 +12,7 @@ describe("core/guilds/guilds", () => {
 		it("should return the guild id when the guild exists", async () => {
 			const expectedGuild: TGuild = {
 				id: 1,
-				discord_id: "expected_guild",
+				discord_id: "102840519905804288",
 				name: "Expected Guild",
 			};
 			jest.spyOn(DAO, "getGuild").mockReturnValueOnce(Promise.resolve(expectedGuild));
@@ -25,7 +25,7 @@ describe("core/guilds/guilds", () => {
 		it("should return the guild id when the guild does not exist and is created", async () => {
 			const expectedGuild: TGuild = {
 				id: 1,
-				discord_id: "expected_guild",
+				discord_id: "102840519905804288",
 				name: "Expected Guild",
 			};
 			jest.spyOn(DAO, "getGuild").mockReturnValueOnce(Promise.resolve(null));
