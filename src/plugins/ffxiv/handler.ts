@@ -1,7 +1,6 @@
 import { PluginHandlerStrategy, TCommand } from "../../core/typings";
 import { HelpHandler } from "./actions";
 import { Actions, ActionHandlerStrategy } from "./config/actions";
-import { FishingHandler } from "./fishing";
 
 export class FFHandler implements PluginHandlerStrategy {
 	private readonly command: TCommand;
@@ -27,8 +26,6 @@ export class FFHandler implements PluginHandlerStrategy {
 	 */
 	getActionHandlerStrategy(action: string): ActionHandlerStrategy {
 		switch (action) {
-			case Actions.fishing:
-				return new FishingHandler(this.command);
 			case Actions.help:
 				return new HelpHandler(this.command);
 			default:
