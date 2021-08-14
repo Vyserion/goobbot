@@ -30,7 +30,7 @@
     "url": "https://github.com/Vyserion/vybot/issues"
   },
   "engines": {
-    "node": "16.6.1"
+    "node": "16.6.2"
   },
   "homepage": "https://github.com/Vyserion/vybot#readme",
   "dependencies": {
