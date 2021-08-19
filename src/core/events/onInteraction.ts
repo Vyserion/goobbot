@@ -1,7 +1,15 @@
 import { Interaction } from "discord.js";
-import { handleSlashCommands as handleRoleAssignmentSlashCommands, slashCommands } from "../../plugins/role-assigner";
+import {
+	handleSlashCommands as handleRoleAssignmentSlashCommands,
+	slashCommands as roleAssignmentCommandData,
+} from "../../plugins/role-assigner";
+import {
+	handleSlashCommands as handleRaidPlannerSlashCommands,
+	slashCommands as raidPlannerCommandData,
+} from "../../plugins/raid-planner";
 
-const roleAssignerCommands = slashCommands.map((cmd) => cmd.name);
+const roleAssignmentCommands = roleAssignmentCommandData.map((cmd) => cmd.name);
+const raidPlannerCommands = raidPlannerCommandData.map((cmd) => cmd.name);
 
 /**
  * Handler function for interactions with the bot.
@@ -12,7 +20,10 @@ export async function onInteraction(interaction: Interaction): Promise<void> {
 		return;
 	}
 
-	if (roleAssignerCommands.includes(interaction.commandName)) {
+	if (roleAssignmentCommands.includes(interaction.commandName)) {
 		await handleRoleAssignmentSlashCommands(interaction);
+	}
+	if (raidPlannerCommands.includes(interaction.commandName)) {
+		await handleRaidPlannerSlashCommands(interaction);
 	}
 }
