@@ -1,6 +1,6 @@
 # Lists Plugin
 
-This plugin is designed to handle the storage and management of simple lists within VyBot.
+This plugin is designed to handle the storage and management of simple lists within Goobbot.
 
 ----------
 
