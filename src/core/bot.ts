@@ -1,9 +1,10 @@
 import { Client, Message } from "discord.js";
 import { processMessage, isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
-import { init } from "./util/dataManager";
+import { initialiseDatabaseConnection } from "./database";
 import { intents, partials } from "./config";
 import { onGuildMemberAdd, onInteraction, onReady } from "./events";
+import { setupDb } from "./database/setupDb";
 
 let client: Client;
 
@@ -14,7 +15,14 @@ let client: Client;
 async function start(): Promise<void> {
 	logger.info("Logging into Discord API...");
 	await client.login(process.env.APP_KEY);
-	await init();
+}
+
+/**
+ * Setup the database, checking initial scripts and migrations.
+ */
+async function setupDatabase(): Promise<void> {
+	await initialiseDatabaseConnection();
+	await setupDb();
 }
 
 /**
@@ -53,6 +61,7 @@ export async function startup(): Promise<void> {
 		partials,
 	});
 
+	await setupDatabase();
 	await registerActions();
 	await start();
 }

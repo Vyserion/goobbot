@@ -1,4 +1,4 @@
-import { execQuery } from "../../../core/util/dataManager";
+import { execQuery } from "../../../core/database";
 import { TColumn } from "../typings";
 
 /**

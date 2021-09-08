@@ -1,4 +1,4 @@
-import * as DataManager from "../../../core/util/dataManager";
+import * as DataManager from "../../../core/database";
 import { TValue } from "../typings/lists";
 import { getValues, getValue, addValue, removeValue } from "./values";
 

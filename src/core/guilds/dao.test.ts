@@ -1,5 +1,5 @@
 import { getGuild, createGuild } from "./dao";
-import * as DataManager from "../util/dataManager";
+import * as DataManager from "../database";
 import { TGuild } from "./typings/guild";
 
 describe("core/guilds/dao", () => {

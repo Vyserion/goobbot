@@ -1,4 +1,4 @@
-import * as DataManager from "../../../core/util/dataManager";
+import * as DataManager from "../../../core/database";
 import { TColumn } from "../typings";
 import { ColumnTypes } from "../config";
 import {

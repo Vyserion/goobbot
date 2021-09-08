@@ -1,5 +1,5 @@
 import { TGuild } from "./typings/guild";
-import { execQuery } from "../util/dataManager";
+import { execQuery } from "../database";
 
 /**
  * Gets a given guild from the database.

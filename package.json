@@ -4,12 +4,15 @@
   "description": "This project contains all of the code required to run an instance of VyBot.",
   "main": "./dist/app.js",
   "scripts": {
+    "docker-start": "docker compose up -d",
+    "docker-stop": "docker compose down",
+    "docker-remove": "docker compose down -v",
+
     "build": "npm run clean && tsc",
     "build:watch": "npm run clean && tsc --watch",
     "clean": "rimraf ./dist",
     "database:setup": "node ./data/setup.js",
     "deploy": "sh ./bin/deploy.sh",
-    "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose down",
     "start": "node ./dist/app.js",
     "test": "jest --silent",
@@ -30,15 +33,14 @@
     "url": "https://github.com/Vyserion/vybot/issues"
   },
   "engines": {
-    "node": "16.6.2"
+    "node": "16.7.0"
   },
   "homepage": "https://github.com/Vyserion/vybot#readme",
   "dependencies": {
     "discord.js": "13.1.0",
     "dotenv": "9.0.1",
     "pg": "8.6.0",
-    "winston": "3.3.3",
-    "zlib-sync": "0.1.7"
+    "winston": "3.3.3"
   },
   "devDependencies": {
     "@types/jest": "26.0.23",

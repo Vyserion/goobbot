@@ -1,4 +1,4 @@
-import * as DataManager from "../../../core/util/dataManager";
+import * as DataManager from "../../../core/database";
 import { TRow } from "../typings";
 import { getRow, getRows, createRow, updateRowName, deleteRows, deleteRow } from "./rows";
 
