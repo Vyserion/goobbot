@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from "pg";
-import logger from "./logger";
+import logger from "../util/logger";
 
 const port: number = (process.env.POSTGRES_PORT as unknown) as number;
 let pool: Pool;
@@ -7,7 +7,9 @@ let pool: Pool;
 /**
  * Initialises the database connection pool.
  */
-export async function init(): Promise<void> {
+export async function initialiseDatabaseConnection(): Promise<void> {
+	logger.info("Attempting connection to database...");
+
 	pool = new Pool({
 		user: process.env.POSTGRES_USER,
 		host: process.env.POSTGRES_HOST,

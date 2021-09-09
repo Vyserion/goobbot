@@ -1,5 +1,5 @@
 import { TList } from "../typings/lists";
-import { execQuery } from "../../../core/util/dataManager";
+import { execQuery } from "../../../core/database";
 
 /**
  * Retrieves a set of lists for a guild.

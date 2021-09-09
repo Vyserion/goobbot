@@ -2,7 +2,7 @@ import { createLogger, format, transports } from "winston";
 
 const { combine, timestamp, printf } = format;
 
-const vybotLogFormat = printf((info) => {
+const logFormat = printf((info) => {
 	return `${info.timestamp} - ${info.level} :: ${info.message}`;
 });
 
@@ -12,7 +12,7 @@ const consoleTransport = new transports.Console();
 consoleTransport.silent = process.env.NODE_ENV === "test";
 
 const logger = createLogger({
-	format: combine(timestamp(), vybotLogFormat),
+	format: combine(timestamp(), logFormat),
 	level: logLevel,
 	transports: [consoleTransport],
 });
