@@ -1,5 +1,5 @@
 import { Client, Message } from "discord.js";
-import { processMessage, isPluginMessage } from "./util/plugins";
+import { isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
 import { initialiseDatabaseConnection } from "./database";
 import { intents, partials } from "./config";
