@@ -34,7 +34,7 @@ function onMessage(message: Message): void {
 		logger.debug("Command recieved: ");
 		logger.debug(`                 ${message.content}`);
 
-		processMessage(message);
+		// processMessage(smessage);
 	}
 }
 
