@@ -1,6 +1,6 @@
 # Leaderboards Plugin
 
-This plugin is designed to handle the storage and management of leaderboards within VyBot.
+This plugin is designed to handle the storage and management of leaderboards within Goobbot.
 
 ----------
 

@@ -1,5 +1,5 @@
 import { TLeaderboard } from "../typings";
-import { execQuery } from "../../../core/util/dataManager";
+import { execQuery } from "../../../core/database";
 
 /**
  * Retrieves a single leaderbaord.

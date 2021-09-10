@@ -1,4 +1,4 @@
-import * as DataManager from "../../../core/util/dataManager";
+import * as DataManager from "../../../core/database";
 import { TList } from "../typings/lists";
 import { getLists, getList, createList, updateListName, deleteList } from "./lists";
 

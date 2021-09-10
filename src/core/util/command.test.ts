@@ -46,7 +46,7 @@ describe("core/util/command", () => {
 		});
 
 		it("should map the plugin correctly with a longer prefix", () => {
-			process.env.BOTPREFIX = "Vybot, ";
+			process.env.BOTPREFIX = "Goobbot, ";
 
 			const messageContent = createMockMessageContent(false, false);
 			const message = createMockedMessage(messageContent);
