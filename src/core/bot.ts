@@ -1,5 +1,5 @@
 import { Client, Message } from "discord.js";
-import { isPluginMessage } from "./util/plugins";
+import { processMessage, isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
 import { initialiseDatabaseConnection } from "./database";
 import { intents, partials } from "./config";
@@ -33,8 +33,6 @@ function onMessage(message: Message): void {
 	if (isPluginMessage(message.content)) {
 		logger.debug("Command recieved: ");
 		logger.debug(`                 ${message.content}`);
-
-		// processMessage(smessage);
 	}
 }
 
