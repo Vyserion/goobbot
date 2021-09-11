@@ -1,7 +1,7 @@
 import { ApplicationCommandData, Client, Message } from "discord.js";
 import { createCommand } from "./command";
 import { TCommand, PluginHandlerStrategy } from "../typings";
-import { activeSlashCommandPlugins, Plugins } from "../config";
+import { activeSlashCommandPlugins, GUILD_ID, Plugins } from "../config";
 import { FFHandler, LeaderboardHandler, ListsHandler, MissingPluginHandler } from "../../plugins";
 import { AdminHandler } from "../../plugins/admin/handler";
 
@@ -76,11 +76,8 @@ export async function registerSlashCommands(client: Client): Promise<void> {
 	});
 
 	if (process.env.DEBUG) {
-		// await client.guilds.cache.get(GUILD_ID)?.commands.set([]);
-		// await client.guilds.cache.get(GUILD_ID)?.commands.set(allCommands);
-		const testGuildId = "834803114590339112";
-		await client.guilds.cache.get(testGuildId)?.commands.set([]);
-		await client.guilds.cache.get(testGuildId)?.commands.set(allCommands);
+		await client.guilds.cache.get(GUILD_ID)?.commands.set([]);
+		await client.guilds.cache.get(GUILD_ID)?.commands.set(allCommands);
 	} else {
 		await client.application?.commands.set([]);
 		await client.application?.commands.set(allCommands);

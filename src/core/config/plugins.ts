@@ -5,4 +5,5 @@ export enum Plugins {
 	admin = "admin",
 }
 
-export const activeSlashCommandPlugins: string[] = ["raid-planner", "role-assigner"];
+// This can go away once all plugins are slash commanded
+export const activeSlashCommandPlugins: string[] = ["lfg", "role-assigner"];
