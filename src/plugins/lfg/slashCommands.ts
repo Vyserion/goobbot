@@ -1,9 +1,9 @@
 import { ApplicationCommandData } from "discord.js";
-import { lfgCommand } from "./commands";
+import { Commands } from "../../core/commands";
 
 export const slashCommands: ApplicationCommandData[] = [
 	{
-		name: lfgCommand,
+		name: Commands.LFG,
 		description: "Setup a lfg message",
 		options: [
 			{

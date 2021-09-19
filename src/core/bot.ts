@@ -3,7 +3,7 @@ import { isPluginMessage } from "./util/plugins";
 import logger from "./util/logger";
 import { initialiseDatabaseConnection } from "./database";
 import { intents, partials } from "./config";
-import { onGuildMemberAdd, onInteraction, onReady } from "./events";
+import { onInteraction, onReady } from "./events";
 import { setupDb } from "./database/setupDb";
 
 let client: Client;
@@ -44,7 +44,6 @@ async function registerActions(): Promise<void> {
 	// Legacy
 	await client.on("messageCreate", onMessage);
 	// New
-	await client.on("guildMemberAdd", onGuildMemberAdd);
 	await client.on("interactionCreate", onInteraction);
 	await client.on("ready", onReady);
 }
