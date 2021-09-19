@@ -1,12 +1,6 @@
 import { CommandInteraction, GuildMember, MessageEmbed, TextChannel } from "discord.js";
-import { FFXIV_ROLE_ID, LFG_CHANNEL_ID } from "../../../core/config";
+import { sendDefaultDeferredError, FFXIV_ROLE_ID, LFG_CHANNEL_ID, getUserNickname } from "../../../core";
 import logger from "../../../core/util/logger";
-import { getUserNickname } from "../../../core/util/members";
-
-/**
- * The role command key.
- */
-export const lfgCommand = "lfg";
 
 /**
  * Handle the lfg slash command.
@@ -22,14 +16,14 @@ export const handleLFGCommand = async (interaction: CommandInteraction): Promise
 
 	const ffxivRole = interaction.guild.roles.cache.get(FFXIV_ROLE_ID);
 	if (!ffxivRole) {
-		logger.error("Error finding FFXIV role");
-		interaction.editReply("Something went wrong! Please contact an FC Admin.");
+		logger.error("Could not get the FFXIV role from cache");
+		await sendDefaultDeferredError(interaction);
 		return;
 	}
 
 	const guildMember = interaction.member as GuildMember;
 	if (!guildMember.roles.cache.has(ffxivRole.id)) {
-		logger.info("User without the FFXIV role tried to use /lfg");
+		logger.debug("User without the FFXIV role tried to use /lfg");
 		interaction.editReply("Sorry, only members of the FFXIV role can set up a group!");
 		return;
 	}
